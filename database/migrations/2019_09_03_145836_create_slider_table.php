@@ -14,12 +14,13 @@ class CreateSliderTable extends Migration
     public function up()
     {
         Schema::create('slider', function (Blueprint $table) {
-            $table->bigIncrements('idslider');
+            $table->id();
+
             $table->string('nombreslider', 100)->nullable();
             $table->boolean('estado')->default('0');
             $table->integer('posicion');
-            $table->string('fotografia', 100);  
-            $table->string('link', 500)->nullable();            
+            $table->string('fotografia', 100);
+            $table->string('link', 500)->nullable();
         });
     }
 

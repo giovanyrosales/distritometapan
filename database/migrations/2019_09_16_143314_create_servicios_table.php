@@ -14,14 +14,15 @@ class CreateServiciosTable extends Migration
     public function up()
     {
         Schema::create('servicios', function (Blueprint $table) {
-            $table->bigIncrements('idservicio');
+            $table->id();
+
             $table->string('nombreservicio', 450);
-            $table->boolean('estado')->default('0');           
+            $table->boolean('estado')->default('0');
             $table->string('logo', 100);
             $table->text('descorta');
-            $table->text('deslarga');   
+            $table->text('deslarga');
             $table->string('imagen', 250)->nullable();
-            $table->string('slug', 150)->unique(); 
+            $table->string('slug', 150)->unique();
         });
     }
 

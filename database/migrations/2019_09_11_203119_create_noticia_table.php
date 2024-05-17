@@ -14,12 +14,13 @@ class CreateNoticiaTable extends Migration
     public function up()
     {
         Schema::create('noticia', function (Blueprint $table) {
-            $table->bigIncrements('idnoticia');
+            $table->id();
+
             $table->string('nombrenoticia', 450);
-            $table->boolean('estado')->default('0');       
+            $table->boolean('estado')->default('0');
             $table->date('fecha');
             $table->text('descorta');
-            $table->text('deslarga');  
+            $table->text('deslarga');
             $table->string('slug', 150)->unique();
         });
     }

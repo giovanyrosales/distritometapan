@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-12 mx-auto">
                         <div class="text-center image-size-small position-relative">
-                            <img src="{{ asset('images/logo.png') }}" class="rounded-circle p-2 bg-white">
+                            <img src="{{ asset('images/logonuevo.png') }}" class="rounded-circle p-2 bg-white">
                         </div>
                         <div class="p-5 bg-white rounded shadow-lg">
                             <h3 class="mb-2 text-center pt-5"><strong>Alcaldía Municipal de Metapán</strong></h3>
@@ -104,10 +104,18 @@
 
 <script type="text/javascript">
 
-    // onkey Enter
-    var input = document.getElementById("password");
-    input.addEventListener("keyup", function(event) {
-        if (event.keyCode === 13) {
+    var inputPassword = document.getElementById("password");
+    var inputUsuario = document.getElementById("usuario");
+
+    inputPassword.addEventListener("keyup", function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            login();
+        }
+    });
+
+    inputUsuario.addEventListener("keyup", function(event) {
+        if (event.key === 'Enter') {
             event.preventDefault();
             login();
         }
@@ -120,12 +128,12 @@
         var password = document.getElementById('password').value;
 
         if(usuario === ''){
-            toastr.error('usuario es requerido');
+            toastr.error('Usuario es requerido');
             return;
         }
 
         if(password === ''){
-            toastr.error('contraseña es requerida');
+            toastr.error('Contraseña es requerida');
             return;
         }
 
@@ -135,34 +143,30 @@
         formData.append('usuario', usuario);
         formData.append('password', password);
 
-        //clinica.com
+        //distritometapan.com
 
         axios.post('/login', formData, {
         })
             .then((response) => {
                 closeLoading();
-                verificar(response);
+
+                if (response.data.success === 0) {
+                    toastr.error('Validación incorrecta')
+                } else if (response.data.success === 1) {
+                    window.location = response.data.ruta;
+                } else if (response.data.success === 2) {
+                    toastr.error('Contraseña incorrecta');
+                } else if (response.data.success === 3) {
+                    toastr.error('Usuario no encontrado')
+                } else {
+                    toastr.error('Error al iniciar sesión');
+                }
+
             })
             .catch((error) => {
                 toastr.error('error al iniciar sesión');
                 closeLoading();
             });
-    }
-
-    // estados de la verificacion
-    function verificar(response) {
-
-        if (response.data.success === 0) {
-            toastr.error('validación incorrecta')
-        } else if (response.data.success === 1) {
-            window.location = response.data.ruta;
-        } else if (response.data.success === 2) {
-            toastr.error('contraseña incorrecta');
-        } else if (response.data.success === 3) {
-            toastr.error('usuario no encontrado')
-        } else {
-            toastr.error('error al iniciar sesión');
-        }
     }
 
 

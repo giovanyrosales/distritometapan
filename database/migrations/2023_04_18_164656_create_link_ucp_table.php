@@ -14,7 +14,7 @@ class CreateLinkUcpTable extends Migration
     public function up()
     {
         Schema::create('link_ucp', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->boolean('activo');
             $table->string('titulo', 300);

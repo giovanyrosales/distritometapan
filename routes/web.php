@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\Perfil\PerfilController;
 use App\Http\Controllers\Backend\Roles\RolesController;
 use App\Http\Controllers\Controles\ControlController;
 use App\Http\Controllers\Backend\Roles\PermisoController;
+use App\Http\Controllers\Backend\Extras\Slider\SliderController;
 
 
 
@@ -47,7 +48,21 @@ Route::post('/admin/editar-perfil/actualizar', [PerfilController::class, 'editar
 Route::get('sin-permisos', [ControlController::class,'indexSinPermiso'])->name('no.permisos.index');
 
 
-Route::get('/admin/inicio/vista', [PerfilController::class,'inicio'])->name('admin.inicio.index');
+// SLIDER
+Route::get('/admin/slider/index', [SliderController::class,'indexSlider'])->name('admin.slider.index');
+Route::get('/admin/slider/tabla', [SliderController::class,'tablaSlider']);
+Route::post('/admin/slider/nuevo', [SliderController::class, 'nuevoSlider']);
+Route::post('/admin/slider/informacion', [SliderController::class, 'informacionSlider']);
+Route::post('/admin/slider/posicion', [SliderController::class, 'actualizarPosicionSlider']);
+Route::post('/admin/slider/editar', [SliderController::class, 'editarSlider']);
+Route::post('/admin/slider/borrar', [SliderController::class, 'borrarSlider']);
+
+
+
+
+
+
+
 
 
 
