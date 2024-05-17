@@ -122,7 +122,6 @@ class SliderController extends Controller
             return ['success' => 0];
         }
 
-
         if ($request->hasFile('imagen')) {
 
             $infoDato = Slider::where('id', $request->id)->first();
@@ -188,13 +187,13 @@ class SliderController extends Controller
 
         if($infoSlider = Slider::where('id', $request->id)->first()){
 
-            Slider::where('id', $request->id)->delete();
-
             if($infoSlider->fotografia != null){
                 if(Storage::disk('archivos')->exists($infoSlider->fotografia)){
                     Storage::disk('archivos')->delete($infoSlider->fotografia);
                 }
             }
+
+            Slider::where('id', $request->id)->delete();
 
             return ['success' => 1];
         }else{

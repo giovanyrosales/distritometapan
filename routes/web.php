@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\Roles\RolesController;
 use App\Http\Controllers\Controles\ControlController;
 use App\Http\Controllers\Backend\Roles\PermisoController;
 use App\Http\Controllers\Backend\Extras\Slider\SliderController;
+use App\Http\Controllers\Backend\Extras\Noticia\NoticiaController;
 
 
 
@@ -58,9 +59,17 @@ Route::post('/admin/slider/editar', [SliderController::class, 'editarSlider']);
 Route::post('/admin/slider/borrar', [SliderController::class, 'borrarSlider']);
 
 
+// NOTICIA
+Route::get('/admin/noticia/index', [NoticiaController::class,'indexNoticia'])->name('admin.noticia.index');
+Route::get('/admin/noticia/tabla', [NoticiaController::class,'tablaNoticia']);
+Route::post('/admin/noticia/nuevo', [NoticiaController::class, 'nuevoNoticia']);
+Route::post('/admin/noticia/informacion', [NoticiaController::class, 'informacionNoticia']);
+Route::post('/admin/noticia/editar', [NoticiaController::class, 'editarNoticia']);
+Route::post('/admin/noticia/borrar', [NoticiaController::class, 'borrarNoticia']);
 
-
-
+// IMAGENES - NOTICIA
+Route::get('/admin/noticiaimagen/index/{id}', [NoticiaController::class,'indexNoticiaImagen']);
+Route::get('/admin/noticiaimagen/tabla/{id}', [NoticiaController::class,'tablaNoticiaImagen']);
 
 
 
