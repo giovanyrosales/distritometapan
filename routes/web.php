@@ -8,6 +8,7 @@ use App\Http\Controllers\Controles\ControlController;
 use App\Http\Controllers\Backend\Roles\PermisoController;
 use App\Http\Controllers\Backend\Extras\Slider\SliderController;
 use App\Http\Controllers\Backend\Extras\Noticia\NoticiaController;
+use App\Http\Controllers\Backend\Extras\Finanzas\FinanzasController;
 
 
 
@@ -74,6 +75,13 @@ Route::post('/admin/noticiaimagen/nuevo', [NoticiaController::class, 'nuevoNotic
 Route::post('/admin/noticiaimagen/borrar', [NoticiaController::class, 'borrarNoticiaImagen']);
 
 
+// FINANZAS
+Route::get('/admin/finanzas/index', [FinanzasController::class,'indexFinanzas'])->name('admin.finanzas.index');
+Route::get('/admin/finanzas/tabla', [FinanzasController::class,'tablaFinanzsas']);
+Route::post('/admin/finanzas/nuevo', [FinanzasController::class, 'nuevoFinanzas']);
+Route::post('/admin/finanzas/informacion', [FinanzasController::class, 'informacionFinanzas']);
+Route::post('/admin/finanzas/editar', [FinanzasController::class, 'editarFinanzas']);
+Route::post('/admin/finanzas/borrar', [FinanzasController::class, 'borrarFinanzas']);
 
 
 
