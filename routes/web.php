@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\Roles\PermisoController;
 use App\Http\Controllers\Backend\Extras\Slider\SliderController;
 use App\Http\Controllers\Backend\Extras\Noticia\NoticiaController;
 use App\Http\Controllers\Backend\Extras\Finanzas\FinanzasController;
+use App\Http\Controllers\Backend\Extras\Compras\ComprasController;
 
 
 
@@ -77,12 +78,11 @@ Route::post('/admin/noticiaimagen/borrar', [NoticiaController::class, 'borrarNot
 
 // FINANZAS
 Route::get('/admin/finanzas/index', [FinanzasController::class,'indexFinanzas'])->name('admin.finanzas.index');
-Route::get('/admin/finanzas/tabla', [FinanzasController::class,'tablaFinanzsas']);
+Route::get('/admin/finanzas/tabla', [FinanzasController::class,'tablaFinanzas']);
 Route::post('/admin/finanzas/nuevo', [FinanzasController::class, 'nuevoFinanzas']);
 Route::post('/admin/finanzas/informacion', [FinanzasController::class, 'informacionFinanzas']);
 Route::post('/admin/finanzas/editar', [FinanzasController::class, 'editarFinanzas']);
 Route::post('/admin/finanzas/borrar', [FinanzasController::class, 'borrarFinanzas']);
-
 
 // UCP
 
@@ -91,4 +91,14 @@ Route::get('/admin/ucp/tabla', [FinanzasController::class,'tablaUcp']);
 Route::post('/admin/ucp/informacion', [FinanzasController::class, 'informacionUcp']);
 Route::post('/admin/ucp/editar', [FinanzasController::class, 'editarUcp']);
 
+
+// COMPRAS
+Route::get('/admin/compras/index', [ComprasController::class,'indexCompras'])->name('admin.compras.index');
+Route::get('/admin/compras/tabla', [ComprasController::class,'tablaCompras']);
+Route::post('/admin/compras/nuevo', [ComprasController::class, 'nuevoCompras']);
+Route::post('/admin/compras/informacion', [ComprasController::class, 'informacionCompras']);
+Route::post('/admin/compras/editar', [ComprasController::class, 'editarCompras']);
+
+
+Route::post('/admin/compras/borrar', [ComprasController::class, 'borrarCompras']);
 

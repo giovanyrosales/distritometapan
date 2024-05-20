@@ -1,48 +1,43 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Extras\Finanzas;
+namespace App\Http\Controllers\Backend\Extras\Compras;
 
 use App\Http\Controllers\Controller;
-use App\Models\Finanzas;
-use App\Models\Linkucp;
+use App\Models\Compras;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-
-class FinanzasController extends Controller
+class ComprasController extends Controller
 {
-
     public function __construct(){
         $this->middleware('auth');
     }
 
-    public function indexFinanzas(){
-
+    public function indexCompras(){
         $fechaActual = Carbon::now('America/El_Salvador');
 
-        return view('backend.admin.finanzas.vistafinanzas', compact('fechaActual'));
+        return view('backend.admin.compras.vistacompras', compact('fechaActual'));
     }
 
+    public function tablaCompras(){
 
-    public function tablaFinanzas(){
-
-        $listado = Finanzas::orderBy('id', 'ASC')->get();
+        $listado = Compras::orderBy('fecha', 'ASC')->get();
 
         foreach ($listado as $dato){
             $dato->fechaFormat = date("d-m-Y", strtotime($dato->fecha));
         }
 
-        return view('backend.admin.finanzas.tablafinanzas', compact('listado'));
+        return view('backend.admin.compras.tablacompras', compact('listado'));
     }
 
 
-    public function nuevoFinanzas(Request $request){
+    public function nuevoCompras(Request $request){
 
         $regla = array(
-            'titulo' => 'required',
             'fecha' => 'required',
+            'titulo' => 'required',
         );
 
         // descripcion, documento
@@ -66,7 +61,7 @@ class FinanzasController extends Controller
 
             if ($upload) {
 
-                $registro = new Finanzas();
+                $registro = new Compras();
                 $registro->titulo = $request->titulo;
                 $registro->descripcion = $request->descripcion;
                 $registro->fecha = $request->fecha;
@@ -85,7 +80,7 @@ class FinanzasController extends Controller
     }
 
 
-    public function informacionFinanzas(Request $request){
+    public function informacionCompras(Request $request){
 
         $regla = array(
             'id' => 'required',
@@ -95,7 +90,7 @@ class FinanzasController extends Controller
 
         if ($validar->fails()){ return ['success' => 0];}
 
-        if($info = Finanzas::where('id', $request->id)->first()){
+        if($info = Compras::where('id', $request->id)->first()){
 
             return ['success' => 1, 'info' => $info];
         }else{
@@ -104,7 +99,7 @@ class FinanzasController extends Controller
     }
 
 
-    public function editarFinanzas(Request $request){
+    public function editarCompras(Request $request){
 
         $rules = array(
             'id' => 'required',
@@ -122,7 +117,7 @@ class FinanzasController extends Controller
 
         if ($request->hasFile('documento')) {
 
-            $infoDato = Finanzas::where('id', $request->id)->first();
+            $infoDato = Compras::where('id', $request->id)->first();
 
             $imagenOld = $infoDato->documento;
 
@@ -131,14 +126,14 @@ class FinanzasController extends Controller
             $union = $cadena . $tiempo;
             $nombre = str_replace(' ', '_', $union);
 
-            $extension = '.' . $request->imagen->getClientOriginalExtension();
+            $extension = '.' . $request->documento->getClientOriginalExtension();
             $nombreFoto = $nombre . strtolower($extension);
-            $avatar = $request->file('imagen');
+            $avatar = $request->file('documento');
             $upload = Storage::disk('archivos')->put($nombreFoto, \File::get($avatar));
 
             if ($upload) {
 
-                Finanzas::where('id', $request->id)
+                Compras::where('id', $request->id)
                     ->update([
                         'titulo' => $request->titulo,
                         'descripcion' => $request->descripcion,
@@ -158,7 +153,7 @@ class FinanzasController extends Controller
                 return ['success' => 99];
             }
         } else {
-            Finanzas::where('id', $request->id)
+            Compras::where('id', $request->id)
                 ->update([
                     'titulo' => $request->titulo,
                     'descripcion' => $request->descripcion,
@@ -169,7 +164,9 @@ class FinanzasController extends Controller
         }
     }
 
-    public function borrarFinanzas(Request $request){
+
+
+    public function borrarCompras(Request $request){
 
         $regla = array(
             'id' => 'required',
@@ -179,7 +176,7 @@ class FinanzasController extends Controller
 
         if ($validar->fails()){ return ['success' => 0];}
 
-        $infoFila = Finanzas::where('id', $request->id)->first();
+        $infoFila = Compras::where('id', $request->id)->first();
 
         if($infoFila->documento != null){
             if(Storage::disk('archivos')->exists($infoFila->documento)){
@@ -188,75 +185,9 @@ class FinanzasController extends Controller
         }
 
         // borrar
-        Finanzas::where('id', $request->id)->delete();
+        Compras::where('id', $request->id)->delete();
 
         return ['success' => 1];
     }
-
-
-
-
-
-    //****************************** UCP *******************************************************************
-
-
-
-    public function indexUcp(){
-
-        return view('backend.admin.ucp.vistaucp');
-    }
-
-
-    public function tablaUcp(){
-
-        $listado = Linkucp::where('id', 1)->get();
-
-        return view('backend.admin.ucp.tablaucp', compact('listado'));
-    }
-
-    public function informacionUcp(Request $request){
-
-        $regla = array(
-            'id' => 'required',
-        );
-
-        $validar = Validator::make($request->all(), $regla);
-
-        if ($validar->fails()){ return ['success' => 0];}
-
-        if($info = Linkucp::where('id', $request->id)->first()){
-
-            return ['success' => 1, 'info' => $info];
-        }else{
-            return ['success' => 2];
-        }
-    }
-
-
-    public function editarUcp(Request $request){
-
-        $regla = array(
-            'id' => 'required',
-            'link' => 'required',
-            'toggle' => 'required'
-        );
-
-        // titulo, descripcion
-
-        $validar = Validator::make($request->all(), $regla);
-
-        if ($validar->fails()){ return ['success' => 0];}
-
-        Linkucp::where('id', $request->id)
-            ->update([
-                'titulo' => $request->titulo,
-                'descripcion' => $request->descripcion,
-                'linkucp' => $request->link,
-                'activo' => $request->toggle
-            ]);
-
-        return ['success' => 1];
-    }
-
 
 }
