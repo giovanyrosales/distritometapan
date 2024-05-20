@@ -84,6 +84,11 @@ Route::post('/admin/finanzas/editar', [FinanzasController::class, 'editarFinanza
 Route::post('/admin/finanzas/borrar', [FinanzasController::class, 'borrarFinanzas']);
 
 
+// UCP
 
+Route::get('/admin/ucp/index', [FinanzasController::class,'indexUcp'])->name('admin.ucp.index');
+Route::get('/admin/ucp/tabla', [FinanzasController::class,'tablaUcp']);
+Route::post('/admin/ucp/informacion', [FinanzasController::class, 'informacionUcp']);
+Route::post('/admin/ucp/editar', [FinanzasController::class, 'editarUcp']);
 
 

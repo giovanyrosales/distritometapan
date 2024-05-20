@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Extras\Finanzas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Finanzas;
+use App\Models\Linkucp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -192,6 +193,70 @@ class FinanzasController extends Controller
         return ['success' => 1];
     }
 
+
+
+
+
+    //****************************** UCP *******************************************************************
+
+
+
+    public function indexUcp(){
+
+        return view('backend.admin.ucp.vistaucp');
+    }
+
+
+    public function tablaUcp(){
+
+        $listado = Linkucp::where('id', 1)->get();
+
+        return view('backend.admin.ucp.tablaucp', compact('listado'));
+    }
+
+    public function informacionUcp(Request $request){
+
+        $regla = array(
+            'id' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        if($info = Linkucp::where('id', $request->id)->first()){
+
+            return ['success' => 1, 'info' => $info];
+        }else{
+            return ['success' => 2];
+        }
+    }
+
+
+    public function editarUcp(Request $request){
+
+        $regla = array(
+            'id' => 'required',
+            'link' => 'required',
+            'toggle' => 'required'
+        );
+
+        // titulo, descripcion
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        Linkucp::where('id', $request->id)
+            ->update([
+                'titulo' => $request->titulo,
+                'descripcion' => $request->descripcion,
+                'linkucp' => $request->link,
+                'activo' => $request->toggle
+            ]);
+
+        return ['success' => 1];
+    }
 
 
 }
