@@ -187,8 +187,81 @@ class NoticiaController extends Controller
 
     public function tablaNoticiaImagen($id){
 
-        return "fefs";
+        $listado = Fotografia::where('noticia_id', $id)
+            ->orderBy('id', 'ASC')
+            ->get();
 
-        return view('backend.admin.noticia.imagenes.tablaimagenes');
+        return view('backend.admin.noticia.imagenes.tablaimagenes', compact('listado'));
     }
+
+
+    public function nuevoNoticiaImagen(Request $request){
+
+        $regla = array(
+            'id' => 'required',
+        );
+
+        // imagen[]
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            foreach($request->file('imagen') as $img){
+
+                $cadena = Str::random(15);
+                $tiempo = microtime();
+                $union = $cadena . $tiempo;
+                $nombre = str_replace(' ', '_', $union);
+
+                $extension = '.'.$img->getClientOriginalExtension();
+                $nombreFoto = $nombre . strtolower($extension);
+
+                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
+
+                $detalle = new Fotografia();
+                $detalle->noticia_id = $request->id;
+                $detalle->nombrefotografia = $nombreFoto;
+                $detalle->save();
+            }
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+    public function borrarNoticiaImagen(Request $request){
+
+        $regla = array(
+            'id' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        $infoImagen = Fotografia::where('id', $request->id)->first();
+
+        if($infoImagen->nombrefotografia != null){
+            if(Storage::disk('archivos')->exists($infoImagen->nombrefotografia)){
+                Storage::disk('archivos')->delete($infoImagen->nombrefotografia);
+            }
+        }
+
+        // borrar fotografia
+        Fotografia::where('id', $request->id)->delete();
+
+        return ['success' => 1];
+    }
+
+
 }

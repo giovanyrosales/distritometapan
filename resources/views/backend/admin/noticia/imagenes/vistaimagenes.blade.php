@@ -130,39 +130,20 @@
     <script>
 
         function recargar(){
-            var ruta = "{{ URL::to('/admin/noticiaimagen/tabla') }}";
+            var id = {{ $id }};
+            var ruta = "{{ URL::to('/admin/noticiaimagen/tabla') }}/" + id;
             $('#tablaDatatable').load(ruta);
         }
 
         function modalAgregar(){
             document.getElementById("formulario-nuevo").reset();
-            varGlobalEditor1_Nuevo.setData("");
-            varGlobalEditor2_Nuevo.setData("");
 
             $('#modalAgregar').modal('show');
         }
 
         function nuevoRegistro(){
 
-            var nombre = document.getElementById('nombre-nuevo').value;
-            var slug = document.getElementById('slug-nuevo').value;
-            var fecha = document.getElementById('fecha-nuevo').value;
             var imagen = document.getElementById('imagenes');
-
-            if(nombre === ''){
-                toastr.error('Nombre es requerido')
-                return
-            }
-
-            if(fecha === ''){
-                toastr.error('Fecha es requerido')
-                return
-            }
-
-            if(slug === ''){
-                toastr.error('Slug es requerido')
-                return
-            }
 
             if(imagen.files && imagen.files[0]){
                 // nada
@@ -170,20 +151,6 @@
                 toastr.error('Imagenes son requeridas');
                 return
             }
-
-            const editorCorta = varGlobalEditor1_Nuevo.getData();
-            const editorLarga = varGlobalEditor2_Nuevo.getData();
-
-            if(editorCorta === ''){
-                toastr.error('Editor Corta es requerido')
-                return
-            }
-
-            if(editorLarga === ''){
-                toastr.error('Editor Larga es requerido')
-                return
-            }
-
 
             var files = imagen.files;
             for (var i = 0; i < files.length; i++){
@@ -198,11 +165,6 @@
 
             openLoading();
             var formData = new FormData();
-            formData.append('nombre', nombre);
-            formData.append('fecha', fecha);
-            formData.append('slug', slug);
-            formData.append('editorc', editorCorta);
-            formData.append('editorl', editorLarga);
 
             var filesAdd = imagen.files;
             for (var i = 0; i < filesAdd.length; i++){
@@ -212,7 +174,11 @@
                 formData.append('imagen[]', fileq, fileq.name);
             }
 
-            axios.post('/admin/noticia/nuevo', formData, {
+            let id = {{ $id }};
+            formData.append('id', id);
+
+
+            axios.post('/admin/noticiaimagen/nuevo', formData, {
             })
                 .then((response) => {
                     closeLoading();
@@ -227,113 +193,6 @@
                 })
                 .catch((error) => {
                     toastr.error('Error al registrar');
-                    closeLoading();
-                });
-        }
-
-
-
-        function informacion(id){
-            openLoading();
-            document.getElementById("formulario-editar").reset();
-
-            axios.post('/admin/noticia/informacion',{
-                'id': id
-            })
-                .then((response) => {
-                    closeLoading();
-                    if(response.data.success === 1){
-                        $('#modalEditar').modal('show');
-                        $('#id-editar').val(id);
-
-                        $('#nombre-editar').val(response.data.info.nombrenoticia);
-                        $('#fecha-editar').val(response.data.info.fecha);
-                        $('#slug-editar').val(response.data.info.slug);
-
-                        if(response.data.info.estado === 1){
-                            $("#toggle").prop("checked", true);
-                        }else{
-                            $("#toggle").prop("checked", false);
-                        }
-
-                        varGlobalEditor3_Nuevo.setData(response.data.info.descorta);
-                        varGlobalEditor4_Nuevo.setData(response.data.info.deslarga);
-
-                    }else{
-                        toastr.error('Información no encontrada');
-                    }
-
-                })
-                .catch((error) => {
-                    closeLoading();
-                    toastr.error('Información no encontrada');
-                });
-        }
-
-
-        function editarRegistro(){
-            var id = document.getElementById('id-editar').value;
-            var nombre = document.getElementById('nombre-editar').value;
-            var slug = document.getElementById('slug-editar').value;
-            var fecha = document.getElementById('fecha-editar').value;
-            let t = document.getElementById('toggle').checked;
-            let toggle = t ? 1 : 0;
-
-            if(nombre === ''){
-                toastr.error('Nombre es requerido')
-                return
-            }
-
-            if(fecha === ''){
-                toastr.error('Fecha es requerido')
-                return
-            }
-
-            if(slug === ''){
-                toastr.error('Slug es requerido')
-                return
-            }
-
-            const editorCorta = varGlobalEditor3_Nuevo.getData();
-            const editorLarga = varGlobalEditor4_Nuevo.getData();
-
-            if(editorCorta === ''){
-                toastr.error('Editor Corta es requerido')
-                return
-            }
-
-            if(editorLarga === ''){
-                toastr.error('Editor Larga es requerido')
-                return
-            }
-
-
-            openLoading();
-            var formData = new FormData();
-            formData.append('id', id);
-            formData.append('nombre', nombre);
-            formData.append('fecha', fecha);
-            formData.append('slug', slug);
-            formData.append('editorc', editorCorta);
-            formData.append('editorl', editorLarga);
-            formData.append('toggle', toggle);
-
-            axios.post('/admin/noticia/editar', formData, {
-            })
-                .then((response) => {
-                    closeLoading();
-
-                    if(response.data.success === 1){
-                        toastr.success('Actualizado');
-                        $('#modalEditar').modal('hide');
-                        recargar();
-                    }
-                    else {
-                        toastr.error('Error al actualizar');
-                    }
-                })
-                .catch((error) => {
-                    toastr.error('Error al actualizar');
                     closeLoading();
                 });
         }
@@ -361,7 +220,7 @@
 
             openLoading();
 
-            axios.post('/admin/noticia/borrar',{
+            axios.post('/admin/noticiaimagen/borrar',{
                 'id': idfila
             })
                 .then((response) => {

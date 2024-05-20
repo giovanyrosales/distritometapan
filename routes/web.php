@@ -70,6 +70,8 @@ Route::post('/admin/noticia/borrar', [NoticiaController::class, 'borrarNoticia']
 // IMAGENES - NOTICIA
 Route::get('/admin/noticiaimagen/index/{id}', [NoticiaController::class,'indexNoticiaImagen']);
 Route::get('/admin/noticiaimagen/tabla/{id}', [NoticiaController::class,'tablaNoticiaImagen']);
+Route::post('/admin/noticiaimagen/nuevo', [NoticiaController::class, 'nuevoNoticiaImagen']);
+Route::post('/admin/noticiaimagen/borrar', [NoticiaController::class, 'borrarNoticiaImagen']);
 
 
 
