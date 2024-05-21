@@ -8,9 +8,7 @@ use App\Models\Fotografia;
 use App\Models\Noticia;
 use App\Models\Programa;
 use App\Models\Servicio;
-use App\Models\Slider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
@@ -18,7 +16,7 @@ class FrontendController extends Controller
     // Metodo para cargar informacion en pagina Index Publica
     public function index(){
 
-        return "Alcaldia Metapan";
+        return "Alcaldia Metapan.";
 
        /* $slider = Slider::all()->sortBy('posicion');
         $programas = Programa::all()->sortByDesc('id')->take(4);
