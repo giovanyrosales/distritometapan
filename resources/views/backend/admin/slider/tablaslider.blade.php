@@ -24,9 +24,9 @@
                                 <td>{{ $dato->nombreslider }}</td>
                                 <td>
                                     @if($dato->estado == 1)
-                                        <span class="badge bg-success">Si</span>
+                                        <span class="badge bg-success">Activo</span>
                                     @else
-                                        <span class="badge bg-danger">No</span>
+                                        <span class="badge bg-danger">Inactivo</span>
                                     @endif
                                 </td>
 

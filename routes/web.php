@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\Extras\Slider\SliderController;
 use App\Http\Controllers\Backend\Extras\Noticia\NoticiaController;
 use App\Http\Controllers\Backend\Extras\Finanzas\FinanzasController;
 use App\Http\Controllers\Backend\Extras\Compras\ComprasController;
+use App\Http\Controllers\Backend\Extras\Programa\ProgramaController;
 
 
 
@@ -85,7 +86,6 @@ Route::post('/admin/finanzas/editar', [FinanzasController::class, 'editarFinanza
 Route::post('/admin/finanzas/borrar', [FinanzasController::class, 'borrarFinanzas']);
 
 // UCP
-
 Route::get('/admin/ucp/index', [FinanzasController::class,'indexUcp'])->name('admin.ucp.index');
 Route::get('/admin/ucp/tabla', [FinanzasController::class,'tablaUcp']);
 Route::post('/admin/ucp/informacion', [FinanzasController::class, 'informacionUcp']);
@@ -98,7 +98,13 @@ Route::get('/admin/compras/tabla', [ComprasController::class,'tablaCompras']);
 Route::post('/admin/compras/nuevo', [ComprasController::class, 'nuevoCompras']);
 Route::post('/admin/compras/informacion', [ComprasController::class, 'informacionCompras']);
 Route::post('/admin/compras/editar', [ComprasController::class, 'editarCompras']);
-
-
 Route::post('/admin/compras/borrar', [ComprasController::class, 'borrarCompras']);
 
+
+// PROGRAMA MUNICIPAL
+Route::get('/admin/programa/index', [ProgramaController::class,'indexPrograma'])->name('admin.programa.index');
+Route::get('/admin/programa/tabla', [ProgramaController::class,'tablaPrograma']);
+Route::post('/admin/programa/nuevo', [ProgramaController::class, 'nuevoPrograma']);
+Route::post('/admin/programa/informacion', [ProgramaController::class, 'informacionPrograma']);
+Route::post('/admin/programa/editar', [ProgramaController::class, 'editarPrograma']);
+Route::post('/admin/programa/borrar', [ProgramaController::class, 'borrarPrograma']);

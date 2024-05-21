@@ -39,7 +39,7 @@
 
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">Noticias</li>
+                    <li class="breadcrumb-item">Programa</li>
                     <li class="breadcrumb-item active">Listado</li>
                 </ol>
             </div>
@@ -85,10 +85,7 @@
                                         <input style="color:#191818" type="text" id="nombre-nuevo" class="form-control" maxlength="450" />
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Fecha</label>
-                                        <input style="color:#191818; width: 18%" value="{{ $fechaActual->format('Y-m-d') }}" type="date" id="fecha-nuevo" class="form-control" />
-                                    </div>
+
 
                                     <div class="form-group">
                                         <label>Slug</label>
@@ -97,10 +94,17 @@
 
 
                                     <div class="form-group">
-                                        <label>Imagenes</label>
-                                        <input type="file" class="form-control" id="imagenes" name="imagenes[]" multiple accept="image/jpeg, image/jpg, image/png" />
+                                        <label>Logo</label>
+                                        <input type="file" class="form-control" id="logo-nuevo" accept="image/jpeg, image/jpg, image/png" />
                                     </div>
 
+
+                                    <div class="form-group">
+                                        <label>Imagen</label>
+                                        <input type="file" class="form-control" id="imagen-nuevo" accept="image/jpeg, image/jpg, image/png" />
+                                    </div>
+
+                                    <hr>
 
                                     <div class="row">
 
@@ -163,20 +167,32 @@
                                         <input type="hidden" id="id-editar"/>
                                     </div>
 
+
                                     <div class="form-group">
                                         <label>Nombre</label>
                                         <input style="color:#191818" type="text" id="nombre-editar" class="form-control" maxlength="450" />
                                     </div>
 
-                                    <div class="form-group">
-                                        <label>Fecha</label>
-                                        <input style="color:#191818; width: 18%" type="date" id="fecha-editar" class="form-control" />
-                                    </div>
+
 
                                     <div class="form-group">
                                         <label>Slug</label>
                                         <input style="color:#191818" type="text" id="slug-editar" class="form-control" maxlength="150" />
                                     </div>
+
+
+                                    <div class="form-group">
+                                        <label>Logo</label>
+                                        <input type="file" class="form-control" id="logo-editar" accept="image/jpeg, image/jpg, image/png" />
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label>Imagen</label>
+                                        <input type="file" class="form-control" id="imagen-editar" accept="image/jpeg, image/jpg, image/png" />
+                                    </div>
+
+
 
 
                                     <div class="form-group">
@@ -251,7 +267,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var ruta = "{{ URL::to('/admin/noticia/tabla') }}";
+            var ruta = "{{ URL::to('/admin/programa/tabla') }}";
             $('#tablaDatatable').load(ruta);
 
 
@@ -318,7 +334,7 @@
     <script>
 
         function recargar(){
-            var ruta = "{{ URL::to('/admin/noticia/tabla') }}";
+            var ruta = "{{ URL::to('/admin/programa/tabla') }}";
             $('#tablaDatatable').load(ruta);
         }
 
@@ -334,22 +350,38 @@
 
             var nombre = document.getElementById('nombre-nuevo').value;
             var slug = document.getElementById('slug-nuevo').value;
-            var fecha = document.getElementById('fecha-nuevo').value;
-            var imagen = document.getElementById('imagenes');
+            var logo = document.getElementById('logo-nuevo');
+            var imagen = document.getElementById('imagen-nuevo');
 
             if(nombre === ''){
                 toastr.error('Nombre es requerido')
                 return
             }
 
-            if(fecha === ''){
-                toastr.error('Fecha es requerido')
-                return
-            }
-
             if(slug === ''){
                 toastr.error('Slug es requerido')
                 return
+            }
+
+
+            if(logo.files && logo.files[0]){ // si trae imagen
+                if (!logo.files[0].type.match('image/jpeg|image/jpeg|image/png')){
+                    toastr.error('Formato de imagen permitido: .png .jpg .jpeg');
+                    return;
+                }
+            }else{
+                toastr.error('Logo es Requerido')
+                return;
+            }
+
+            if(imagen.files && imagen.files[0]){ // si trae imagen
+                if (!imagen.files[0].type.match('image/jpeg|image/jpeg|image/png')){
+                    toastr.error('Formato de imagen permitido: .png .jpg .jpeg');
+                    return;
+                }
+            }else{
+                toastr.error('Imagen es Requerida')
+                return;
             }
 
             const editorCorta = varGlobalEditor1_Nuevo.getData();
@@ -365,39 +397,38 @@
                 return
             }
 
-
-            var files = imagen.files;
-            for (var i = 0; i < files.length; i++){
-                var file = files[i];
-
-                if (!file.type.match('image/jpeg|image/jpeg|image/png')){
-                    toastr.error('Formatos de imagen validos unicamente .jpg .jpeg .png');
-                    return false;
-                    break;
-                }
-            }
-
             openLoading();
             var formData = new FormData();
             formData.append('nombre', nombre);
-            formData.append('fecha', fecha);
             formData.append('slug', slug);
+            formData.append('logo', logo.files[0]);
+            formData.append('imagen', imagen.files[0]);
             formData.append('editorc', editorCorta);
             formData.append('editorl', editorLarga);
 
-            var filesAdd = imagen.files;
-            for (var i = 0; i < filesAdd.length; i++){
-                var fileq = filesAdd[i];
-
-                // Add the file to the request.
-                formData.append('imagen[]', fileq, fileq.name);
-            }
-
-            axios.post('/admin/noticia/nuevo', formData, {
+            axios.post('/admin/programa/nuevo', formData, {
             })
                 .then((response) => {
                     closeLoading();
-                    if(response.data.success === 1){
+
+                    if(response.data.success === 1) {
+
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Se encontro el Slug Repetido",
+                            icon: 'info',
+                            showCancelButton: false,
+                            confirmButtonColor: '#28a745',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Aceptar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                            }
+                        })
+                    }
+                    else if(response.data.success === 2){
                         toastr.success('Registrado');
                         $('#modalAgregar').modal('hide');
                         recargar();
@@ -418,7 +449,7 @@
             openLoading();
             document.getElementById("formulario-editar").reset();
 
-            axios.post('/admin/noticia/informacion',{
+            axios.post('/admin/programa/informacion',{
                 'id': id
             })
                 .then((response) => {
@@ -427,8 +458,7 @@
                         $('#modalEditar').modal('show');
                         $('#id-editar').val(id);
 
-                        $('#nombre-editar').val(response.data.info.nombrenoticia);
-                        $('#fecha-editar').val(response.data.info.fecha);
+                        $('#nombre-editar').val(response.data.info.nombreprograma);
                         $('#slug-editar').val(response.data.info.slug);
 
                         if(response.data.info.estado === 1){
@@ -456,7 +486,8 @@
             var id = document.getElementById('id-editar').value;
             var nombre = document.getElementById('nombre-editar').value;
             var slug = document.getElementById('slug-editar').value;
-            var fecha = document.getElementById('fecha-editar').value;
+            var logo = document.getElementById('logo-editar');
+            var imagen = document.getElementById('imagen-editar');
             let t = document.getElementById('toggle').checked;
             let toggle = t ? 1 : 0;
 
@@ -465,14 +496,24 @@
                 return
             }
 
-            if(fecha === ''){
-                toastr.error('Fecha es requerido')
-                return
-            }
-
             if(slug === ''){
                 toastr.error('Slug es requerido')
                 return
+            }
+
+
+            if(logo.files && logo.files[0]){ // si trae imagen
+                if (!logo.files[0].type.match('image/jpeg|image/jpeg|image/png')){
+                    toastr.error('Formato de imagen permitido: .png .jpg .jpeg');
+                    return;
+                }
+            }
+
+            if(imagen.files && imagen.files[0]){ // si trae imagen
+                if (!imagen.files[0].type.match('image/jpeg|image/jpeg|image/png')){
+                    toastr.error('Formato de imagen permitido: .png .jpg .jpeg');
+                    return;
+                }
             }
 
             const editorCorta = varGlobalEditor3_Nuevo.getData();
@@ -488,23 +529,40 @@
                 return
             }
 
-
             openLoading();
             var formData = new FormData();
             formData.append('id', id);
             formData.append('nombre', nombre);
-            formData.append('fecha', fecha);
             formData.append('slug', slug);
+            formData.append('logo', logo.files[0]);
+            formData.append('imagen', imagen.files[0]);
             formData.append('editorc', editorCorta);
             formData.append('editorl', editorLarga);
             formData.append('toggle', toggle);
 
-            axios.post('/admin/noticia/editar', formData, {
+            axios.post('/admin/programa/editar', formData, {
             })
                 .then((response) => {
                     closeLoading();
 
-                    if(response.data.success === 1){
+                    if(response.data.success === 1) {
+
+                        Swal.fire({
+                            title: 'Error',
+                            text: "Se encontro el Slug Repetido",
+                            icon: 'info',
+                            showCancelButton: false,
+                            confirmButtonColor: '#28a745',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonText: 'Aceptar'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
+                            }
+                        })
+                    }
+                    else if(response.data.success === 2){
                         toastr.success('Actualizado');
                         $('#modalEditar').modal('hide');
                         recargar();
@@ -542,7 +600,7 @@
 
             openLoading();
 
-            axios.post('/admin/noticia/borrar',{
+            axios.post('/admin/programa/borrar',{
                 'id': idfila
             })
                 .then((response) => {

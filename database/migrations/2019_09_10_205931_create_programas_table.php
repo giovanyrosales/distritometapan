@@ -14,7 +14,7 @@ class CreateProgramasTable extends Migration
     public function up()
     {
         Schema::create('programas', function (Blueprint $table) {
-            $ $table->id();
+            $table->id();
 
             $table->string('nombreprograma', 450);
             $table->boolean('estado')->default('0');
