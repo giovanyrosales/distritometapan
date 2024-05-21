@@ -18,7 +18,9 @@ class FrontendController extends Controller
     // Metodo para cargar informacion en pagina Index Publica
     public function index(){
 
-        $slider = Slider::all()->sortBy('posicion');
+        return "Alcaldia Metapan";
+
+       /* $slider = Slider::all()->sortBy('posicion');
         $programas = Programa::all()->sortByDesc('id')->take(4);
         $servicios = Servicio::all()->sortByDesc('id')->take(6);
         $fotografia = Fotografia::all()->sortByDesc('id')->take(8);
@@ -33,6 +35,7 @@ class FrontendController extends Controller
         $noticia = $this->getRecentNew(5);
 
         return view('frontend.principal.vistaprincipal',compact(['slider','programas','servicios','noticia','fotografia','serviciosMenu']));
+       */
     }
 
 
