@@ -11,6 +11,7 @@ use App\Http\Controllers\Backend\Extras\Noticia\NoticiaController;
 use App\Http\Controllers\Backend\Extras\Finanzas\FinanzasController;
 use App\Http\Controllers\Backend\Extras\Compras\ComprasController;
 use App\Http\Controllers\Backend\Extras\Programa\ProgramaController;
+use App\Http\Controllers\Backend\Extras\Servicio\ServicioController;
 
 
 
@@ -108,3 +109,12 @@ Route::post('/admin/programa/nuevo', [ProgramaController::class, 'nuevoPrograma'
 Route::post('/admin/programa/informacion', [ProgramaController::class, 'informacionPrograma']);
 Route::post('/admin/programa/editar', [ProgramaController::class, 'editarPrograma']);
 Route::post('/admin/programa/borrar', [ProgramaController::class, 'borrarPrograma']);
+
+
+// SERVICIO MUNICIPAL
+Route::get('/admin/servicio/index', [ServicioController::class,'indexServicio'])->name('admin.servicio.index');
+Route::get('/admin/servicio/tabla', [ServicioController::class,'tablaServicio']);
+Route::post('/admin/servicio/nuevo', [ServicioController::class, 'nuevoServicio']);
+Route::post('/admin/servicio/informacion', [ServicioController::class, 'informacionServicio']);
+Route::post('/admin/servicio/editar', [ServicioController::class, 'editarServicio']);
+Route::post('/admin/servicio/borrar', [ServicioController::class, 'borrarServicio']);

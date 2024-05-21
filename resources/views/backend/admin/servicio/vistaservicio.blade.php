@@ -39,7 +39,7 @@
 
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item">Programa</li>
+                    <li class="breadcrumb-item">Servicio</li>
                     <li class="breadcrumb-item active">Listado</li>
                 </ol>
             </div>
@@ -267,7 +267,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
 
-            var ruta = "{{ URL::to('/admin/programa/tabla') }}";
+            var ruta = "{{ URL::to('/admin/servicio/tabla') }}";
             $('#tablaDatatable').load(ruta);
 
 
@@ -334,7 +334,7 @@
     <script>
 
         function recargar(){
-            var ruta = "{{ URL::to('/admin/programa/tabla') }}";
+            var ruta = "{{ URL::to('/admin/servicio/tabla') }}";
             $('#tablaDatatable').load(ruta);
         }
 
@@ -406,7 +406,7 @@
             formData.append('editorc', editorCorta);
             formData.append('editorl', editorLarga);
 
-            axios.post('/admin/programa/nuevo', formData, {
+            axios.post('/admin/servicio/nuevo', formData, {
             })
                 .then((response) => {
                     closeLoading();
@@ -449,7 +449,7 @@
             openLoading();
             document.getElementById("formulario-editar").reset();
 
-            axios.post('/admin/programa/informacion',{
+            axios.post('/admin/servicio/informacion',{
                 'id': id
             })
                 .then((response) => {
@@ -458,7 +458,7 @@
                         $('#modalEditar').modal('show');
                         $('#id-editar').val(id);
 
-                        $('#nombre-editar').val(response.data.info.nombreprograma);
+                        $('#nombre-editar').val(response.data.info.nombreservicio);
                         $('#slug-editar').val(response.data.info.slug);
 
                         if(response.data.info.estado === 1){
@@ -540,7 +540,7 @@
             formData.append('editorl', editorLarga);
             formData.append('toggle', toggle);
 
-            axios.post('/admin/programa/editar', formData, {
+            axios.post('/admin/servicio/editar', formData, {
             })
                 .then((response) => {
                     closeLoading();
@@ -600,7 +600,7 @@
 
             openLoading();
 
-            axios.post('/admin/programa/borrar',{
+            axios.post('/admin/servicio/borrar',{
                 'id': idfila
             })
                 .then((response) => {
