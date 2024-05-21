@@ -12,10 +12,10 @@ use App\Http\Controllers\Backend\Extras\Finanzas\FinanzasController;
 use App\Http\Controllers\Backend\Extras\Compras\ComprasController;
 use App\Http\Controllers\Backend\Extras\Programa\ProgramaController;
 use App\Http\Controllers\Backend\Extras\Servicio\ServicioController;
+use App\Http\Controllers\Frontend\Front\FrontendController;
 
 
-
-Route::get('/', [LoginController::class,'index'])->name('login');
+Route::get('/admin', [LoginController::class,'index'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('admin.logout');
@@ -118,3 +118,50 @@ Route::post('/admin/servicio/nuevo', [ServicioController::class, 'nuevoServicio'
 Route::post('/admin/servicio/informacion', [ServicioController::class, 'informacionServicio']);
 Route::post('/admin/servicio/editar', [ServicioController::class, 'editarServicio']);
 Route::post('/admin/servicio/borrar', [ServicioController::class, 'borrarServicio']);
+
+
+
+
+//*****************************   FRONTEND   ******************************************
+
+Route::get('/', [FrontendController::class,'index']);
+
+Route::get('/servicios',[FrontendController::class,'obtenerTodosServicios']);
+Route::get('/servicio/{nombre}',[FrontendController::class,'serviciosPorNombre']);
+
+Route::get('/contravencional',[FrontendController::class,'paginaContravencional']);
+Route::get('/downloadc/{nombre}',[FrontendController::class,'descargaContravencional']);
+
+Route::get('/galeria',[FrontendController::class,'todasFotografias']);
+
+Route::get('/noticias', [FrontendController::class,'todasNoticias']);
+Route::get('/noticia/{nombre}',[FrontendController::class,'noticiaPorNombre']);
+Route::get('/download/{nombre}',[FrontendController::class,'descargarArchivo']);
+
+Route::get('/programas',[FrontendController::class,'todosLosProgramas']);
+Route::get('/programa/{nombre}',[FrontendController::class,'programaPorNombre']);
+
+//TU ALCALDIA
+Route::get('/historia',[FrontendController::class,'paginaHistoria']);
+Route::get('/direccion',[FrontendController::class,'paginaGobierno']);
+
+//REVISTA
+//Route::get('/revista','FrontendController@getRevista');
+
+
+
+// UCP
+
+Route::post('/admin/informacion-ucp',[FrontendController::class,'index']);
+
+
+
+
+// --- NOTICIAS FRONTEND ---
+
+// --- FINANZAS FRONTEND ---
+Route::get('/finanzas', [FrontendController::class,'index']);
+Route::get('/descargar/finanzas/documento/{id}', [FrontendController::class,'index']);
+
+// --- COMPRAS FRONTEND ---
+Route::get('/compras', [FrontendController::class,'index'])->name('compras.publicas');
