@@ -77,14 +77,6 @@
                             </a>
                         </li>
 
-
-                        <li class="nav-item">
-                            <a href="{{ route('admin.ucp.index') }}" target="frameprincipal" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>UCP</p>
-                            </a>
-                        </li>
-
                         <li class="nav-item">
                             <a href="{{ route('admin.compras.index') }}" target="frameprincipal" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>

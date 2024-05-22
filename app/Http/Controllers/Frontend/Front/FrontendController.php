@@ -10,6 +10,7 @@ use App\Models\Programa;
 use App\Models\Servicio;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {

@@ -19,11 +19,19 @@
     <link href="{{ asset('plugins/animaciones/animaciones.css') }}" type="text/css" rel="stylesheet" />
 
 
-    <script src="{{ asset('js/jquery.min.js') }}" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.3.2.min.js"></script>
+
 
 
     <script src="{{ asset('js/modernizr-2.6.2.min.js') }}" type="text/javascript"></script>
     <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
     @yield('header')
     <style>

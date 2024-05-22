@@ -128,6 +128,9 @@
 
 <!--End Noticias recientes-->
 
+
+
+
 <!--Servicios municipales-->
 <div id="colorlib-blog" style="background: #fafafa;">
     <div class="container colorlib-light-grey">
@@ -242,6 +245,27 @@
             $("html,body").animate({
                 scrollTop: $(codigo).offset().top
             }, 300);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+        $(".owl-carousel").owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 5
+                }
+            }
         });
     });
 </script>
