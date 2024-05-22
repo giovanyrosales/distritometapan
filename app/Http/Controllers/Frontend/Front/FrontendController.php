@@ -53,7 +53,7 @@ class FrontendController extends Controller
         $noticiaReciente = Noticia::orderBy('fecha', 'DESC')->take($filtro)->get();
 
         foreach ($noticiaReciente  as $secciones) {
-            $foto = Fotografia::where('noticia_id', $secciones->idnoticia)->pluck('nombrefotografia')->first();
+            $foto = Fotografia::where('noticia_id', $secciones->id)->pluck('nombrefotografia')->first();
             $secciones->nombrefotografia = $foto;
         }
         return $noticiaReciente;
