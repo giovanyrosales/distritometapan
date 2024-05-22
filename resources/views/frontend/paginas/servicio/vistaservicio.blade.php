@@ -46,7 +46,7 @@
                     </center>
                 </div>
                 <div class="col-md-8">
-                    <center>{!! $servicio->deslarga !!} </center>
+                    {!! $servicio->deslarga !!}
                 </div>
                 @if($documentos->count()>0)
                     <div class="row text-center">

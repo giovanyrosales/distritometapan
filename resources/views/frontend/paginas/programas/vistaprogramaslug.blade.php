@@ -45,7 +45,7 @@
                         </center>
                     </div>
                     <div class="col-md-8">
-                        <center>{!! $programa->deslarga  !!} </center>
+                     {!! $programa->deslarga  !!}
                     </div>
                 </div>
 
