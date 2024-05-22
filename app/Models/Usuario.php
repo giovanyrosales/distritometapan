@@ -13,7 +13,7 @@ class Usuario extends Authenticatable
     use HasFactory, Notifiable;
     use HasRoles;
 
-    protected $table = 'users';
+    protected $table = 'usuario';
     public $timestamps = false;
 
     /**

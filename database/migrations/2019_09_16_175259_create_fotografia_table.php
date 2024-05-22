@@ -19,7 +19,7 @@ class CreateFotografiaTable extends Migration
             $table->bigInteger('noticia_id')->unsigned();
             $table->string('nombrefotografia', 100);
 
-            $table->foreign('noticia_id')->references('idnoticia')->on('noticia');
+            $table->foreign('noticia_id')->references('id')->on('noticia');
         });
     }
 

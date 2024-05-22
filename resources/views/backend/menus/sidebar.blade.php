@@ -10,6 +10,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
 
 
+                @can('sidebar.roles.y.permisos')
 
                     <li class="nav-item">
 
@@ -45,6 +46,8 @@
 
                         </ul>
                     </li>
+
+                @endcan
 
 
                 @can('sidebar.comunicaciones')

@@ -17,13 +17,9 @@ class RolesSeeder extends Seeder
         // Administrador
         $roleAdmin = Role::create(['name' => 'admin']);
 
-        // Editor
-        $roleEditor = Role::create(['name' => 'editor']);
-
 
         Permission::create(['name' => 'sidebar.roles.y.permisos', 'description' => 'sidebar seccion roles y permisos'])->syncRoles($roleAdmin);
 
-        Permission::create(['name' => 'sidebar.editor', 'description' => 'sidebar para editores'])->syncRoles($roleEditor);
 
     }
 }

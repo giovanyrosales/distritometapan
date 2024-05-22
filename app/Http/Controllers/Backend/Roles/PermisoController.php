@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Roles;
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -33,17 +35,26 @@ class PermisoController extends Controller
             return ['success' => 1];
         }
 
-        $u = new Usuario();
-        $u->nombre = $request->nombre;
-        $u->usuario = $request->usuario;
-        $u->password = bcrypt($request->password);
-        $u->activo = 1;
+        DB::beginTransaction();
+        try {
 
-        if ($u->save()) {
-            $u->assignRole($request->rol);
+        $registro = new Usuario();
+        $registro->nombre = $request->nombre;
+        $registro->usuario = $request->usuario;
+        $registro->password = bcrypt($request->password);
+        $registro->activo = 1;
+        $registro->save();
+
+        $role = Role::findById($request->rol);
+        $registro->assignRole($role->name);
+
+            DB::commit();
             return ['success' => 2];
-        } else {
-            return ['success' => 3];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
         }
     }
 
@@ -82,10 +93,8 @@ class PermisoController extends Controller
                 $usuario->password = bcrypt($request->password);
             }
 
-            //$usuario->assignRole($request->rol); asigna un rol extra
-
-            //elimina el rol existente y agrega el nuevo.
-            $usuario->syncRoles($request->rol);
+            $role = Role::findById($request->rol);
+            $usuario->syncRoles($role->name);
 
             $usuario->save();
 

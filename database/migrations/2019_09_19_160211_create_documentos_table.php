@@ -20,7 +20,7 @@ class CreateDocumentosTable extends Migration
             $table->string('nombre', 300);
             $table->string('url', 100);
 
-            $table->foreign('servicio_id')->references('idservicio')->on('servicios');
+            $table->foreign('servicio_id')->references('id')->on('servicios');
         });
     }
 

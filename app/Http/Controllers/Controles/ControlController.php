@@ -22,11 +22,15 @@ class ControlController extends Controller
             $ruta = 'admin.roles.index';
         }
 
-        // EDITOR
-        else if($user->hasRole('editor')){
-            $ruta = 'admin.inicio.index';
+        // COMUNICACIONES
+        else if($user->hasRole('comunicaciones')){
+            $ruta = 'admin.slider.index';
         }
 
+        // UCP
+        else if($user->hasRole('ucp')){
+            $ruta = 'admin.ucp.index';
+        }
         else{
             $ruta = 'no.permisos.index';
         }
