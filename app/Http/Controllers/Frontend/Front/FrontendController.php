@@ -113,7 +113,7 @@ class FrontendController extends Controller
 
         foreach($noticias  as $dato){
             $foto = Fotografia::where('noticia_id', $dato->id)->first();
-            $dato->nombrefotografia = $foto;
+            $dato->nombrefotografia = $foto->nombrefotografia;
         }
 
         $serviciosMenu = $this->getServiciosMenu();
