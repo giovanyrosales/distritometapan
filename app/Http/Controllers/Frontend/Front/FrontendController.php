@@ -20,7 +20,10 @@ class FrontendController extends Controller
 
         $slider = Slider::all()->sortBy('posicion');
         $programas = Programa::all()->sortByDesc('id')->take(4);
-        $servicios = Servicio::all()->sortByDesc('id')->take(6);
+        $servicios = Servicio::where('estado', 1)
+                                ->sortByDesc('id')
+                                ->take(6);
+
         $fotografia = Fotografia::all()->sortByDesc('id')->take(8);
         $serviciosMenu = $this->getServiciosMenu();
 
@@ -37,7 +40,9 @@ class FrontendController extends Controller
 
 
     public function getServiciosMenu(){
-        return Servicio::all()->sortByDesc('id')->take(4);
+        return Servicio::where('estado', 1)
+                ->sortByDesc('id')
+                ->take(4);
     }
 
     public function getRecentNew($filtro){
@@ -52,13 +57,16 @@ class FrontendController extends Controller
 
 
     public function obtenerTodosServicios(){
-        $servicios = Servicio::all();
+        $servicios = Servicio::where('estado', 1)->get();
         $serviciosMenu = $this->getServiciosMenu();
         return view('frontend.paginas.servicio.vistaservicios', compact('servicios','serviciosMenu'));
     }
 
     public function serviciosPorNombre($slug){
-        $servicio =  Servicio::where('slug', $slug)->first();
+        $servicio =  Servicio::where('slug', $slug)
+                               ->where('estado', 1)
+                                ->first();
+
         $serviciosMenu = $this->getServiciosMenu();
         $documentos = Documento::where('servicio_id', $servicio->idservicio)->get();
         return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
