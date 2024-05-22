@@ -95,6 +95,7 @@
 <!--End Programas Municipales-->
 
 <!--Noticias recientes-->
+
 <div id="colorlib-hotel">
     <div class="container">
         <div class="row">
@@ -124,6 +125,7 @@
         </div>
     </div>
 </div>
+
 <!--End Noticias recientes-->
 
 <!--Servicios municipales-->

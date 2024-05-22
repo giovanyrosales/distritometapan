@@ -14657,7 +14657,7 @@ img.mfp-img {
 
 /* =======================================================
 *
-* 	Template Style 
+* 	Template Style
 *
 * ======================================================= */
 body {
@@ -15026,7 +15026,7 @@ h1, h2, h3, h4, h5, h6, figure {
               width: 100%; } }
 
 .colorlib-light-grey {
-  background: #fafafa; 
+  background: #fafafa;
 }
 
 #colorlib-hotel,
@@ -15077,7 +15077,7 @@ h1, h2, h3, h4, h5, h6, figure {
     display: block;
     position: relative;
     z-index: 9;
-    /**margin-top: -4em !important;**/  
+    /**margin-top: -4em !important;**/
     padding: 0%; }
   #colorlib-reservation .booknow {
     margin-top: 5px;
@@ -15952,7 +15952,7 @@ article {
       bottom: 0;
       content: '';
       width: 360%;
-      background: #213F59; 
+      background: #213F59;
     }
   .about-flex .about {
     text-align: right; }
