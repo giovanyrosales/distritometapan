@@ -21,10 +21,11 @@ class FrontendController extends Controller
         $slider = Slider::all()->sortBy('posicion');
         $programas = Programa::all()->sortByDesc('id')->take(4);
         $servicios = Servicio::where('estado', 1)
-                                ->sortByDesc('id')
+                                ->orderBy('id', 'DESC')
                                 ->take(6);
 
         $fotografia = Fotografia::all()->sortByDesc('id')->take(8);
+
         $serviciosMenu = $this->getServiciosMenu();
 
         foreach($fotografia  as $secciones){
@@ -41,7 +42,7 @@ class FrontendController extends Controller
 
     public function getServiciosMenu(){
         return Servicio::where('estado', 1)
-                ->sortByDesc('id')
+                ->orderBy('id', 'DESC')
                 ->take(4);
     }
 
