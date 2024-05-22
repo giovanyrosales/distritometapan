@@ -1,3 +1,6 @@
+
+
+
 <!--Parte superior de las paginas -  hasta head  -->
 @include('frontend.menu.indexsuperior')
 
@@ -6,12 +9,13 @@
 <div id="page">
     <!--Barra de navegacion -->
     @include("frontend.menu.navbar")
-
+    <!--End Barra de navegacion-->
+    <!--Imagenes de cabecera-->
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
                 @foreach($slider as $dato)
-                    <li style="background-image: url('storage/archivos/{{ $dato->fotografia }}');">
+                    <li style="background-image: url('storage/slider/{{ $dato->fotografia }}');">
                         <a href="{{ $dato->link }}">
                             <div class="overlay"></div>
                         </a>
@@ -35,17 +39,17 @@
             <div class="search-wrap">
                 <div class="tab-content" style="padding:25px;"  >
                     <center>
-                        <a style="margin-right:15px;" id = "soc" target="_blank" href="https://www.facebook.com/AlcaldiadeMetapan/"><span class="icon-facebook"></span>
-                            <span id="socno">Facebook</span>
+                        <a style="margin-right:15px;" id = "soc"  href="#">
+                            <span id="socno">Distrito de Metapán</span>
                         </a>&nbsp;
-                        <a style="margin-right:15px;" id = "soc" target="_blank"  href="https://twitter.com/Alcaldia_Met"><span class="icon-twitter"></span>
-                            <span id="socno">Twitter</span>
+                        <a style="margin-right:15px;" id = "soc"  href="#">
+                            <span id="socno">Distrito de Santa Rosa</span>
                         </a>&nbsp;
-                        <a style="margin-right:15px;" id = "soc" target="_blank"  href="https://www.youtube.com/channel/UCnpOyOGoF8CNrwwuOsddcuA"><span class="icon-youtube"></span>
-                            <span id="socno">YouTube</span>
+                        <a style="margin-right:15px;" id = "soc"   href="#">
+                            <span id="socno">Distrito de Masahuat</span>
                         </a>&nbsp;
-                        <a style="margin-right:15px;" id = "soc" target="_blank"  href="https://www.instagram.com/alcaldiademetapan/"><span class="icon-instagram"></span>
-                            <span id="socno">Instagram</span>
+                        <a style="margin-right:15px;" id = "soc"   href="#">
+                            <span id="socno">Distrito de Texistepeque</span>
                         </a>&nbsp;
                     </center>
                 </div>
@@ -56,27 +60,27 @@
 </div>
 
 <!--Programas Municipales-->
-<div id="colorlib-services">
+<div class="colorlib-services colorlib-light-grey">
     <div class="container">
         <div class="row  no-gutters">
             <div class="col-md-12 tex-center ">
                 <br><br>
                 <center>
-                    <h1>Programas Municipales</h1>
+                    <h2>Programas Municipales</h2>
                 </center>
             </div>
         </div>
         <div class="row no-gutters">
             @foreach($programas as $dato2)
                 @if ($loop->first)
-                    <div class="col-md-3 animate-box text-center aside-stretch">
+                    <div class="col-md-3 animate-box text-center ">
                         @else
                             <div class="col-md-3 animate-box text-center ">
                                 @endif
                                 <div class="services">
                                     <a href="{{ url('programa/'.$dato2->slug) }}">
 								<span class="icon">
-									<img src="{{ asset('storage/archivos/'.$dato2->logo) }}" alt="Programa Municipal" style="width:120px; height:120px;" />
+									<img src="{{ asset('storage/programa/'.$dato2->logo) }}" alt="Programa Municipal" style="width:120px; height:120px;" />
 								</span>
                                         <h3>{{ $dato2->nombreprograma }}</h3>
                                     </a>
@@ -105,7 +109,7 @@
                     @foreach($noticia as $dato5)
                         <div class="item">
                             <div class="hotel-entry">
-                                <a href="{{ url('noticia/'.$dato5->slug) }}" class="hotel-img" style="background-image: url('storage/archivos/{{ $dato5->nombrefotografia }}');"></a>
+                                <a href="{{ url('noticia/'.$dato5->slug) }}" class="hotel-img" style="background-image: url('storage/noticia/{{ $dato5->nombrefotografia }}');"></a>
 
                                 <div class="desc">
                                     <h3><a href="{{ url('noticia/'.$dato5->slug) }}">{{ $dato5->nombrenoticia }}</a></h3>
@@ -123,8 +127,8 @@
 <!--End Noticias recientes-->
 
 <!--Servicios municipales-->
-<div id="colorlib-blog">
-    <div class="container">
+<div id="colorlib-blog" style="background: #fafafa;">
+    <div class="container colorlib-light-grey">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
                 <h2>Servicios</h2>
@@ -137,7 +141,7 @@
                     <div class="col-md-6 animate-box">
 
                         <a href="{{ url('servicio/'.$dato3->slug) }}" class="blog-post">
-                            <span class="img" style="background-image: url('storage/archivos/{{ $dato3->logo }}');"></span>
+                            <span class="img" style="background-image: url('storage/servicio/{{ $dato3->logo }}');"></span>
                             <div class="desc">
                                 <h3>{{ $dato3->nombreservicio }}</h3>
                                 <span>{!! $dato3->descorta !!}</span>
@@ -160,19 +164,19 @@
 <!--End Servicios municipales-->
 
 <!--Fotografías recientes-->
-<div class="colorlib-tour colorlib-light-grey">
+<div class="colorlib-tour">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-                <h2>Fotografías</h2>
-                <p>Fotograf&iacute;as recientes publicadas en las noticias.</p>
+                <h2>Galería</h2>
+                <p>Fotografías recientes publicadas.</p>
             </div>
         </div>
     </div>
     <div class="tour-wrap">
         @foreach($fotografia as $dato4)
             <a class="tour-entry animate-box">
-                <div class="tour-img" style="background-image: url('{{ asset('storage/archivos/'.$dato4->nombrefotografia ) }}');" data-toggle="modal" data-target="#modal1" onclick="getPath(this)"></div>
+                <div class="tour-img" style="background-image: url('{{ asset('storage/noticia/'.$dato4->nombrefotografia ) }}');" data-toggle="modal" data-target="#modal1" onclick="getPath(this)"></div>
                 <span class="desc">
 					<h2>{{ $dato4->nombre }}</h2>
 					<span class="city">{{ $dato4->fecha }}</span>
@@ -239,9 +243,6 @@
         });
     });
 </script>
-
-
-
 
 </body>
 
