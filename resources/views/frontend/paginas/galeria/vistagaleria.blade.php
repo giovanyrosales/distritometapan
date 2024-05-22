@@ -1,5 +1,5 @@
 <!--Parte superior de las paginas -  hasta head  -->
-@include('frontend.menu.indexSuperior')
+@include('frontend.menu.indexsuperior')
 
 <body>
 <div class="colorlib-loader"></div>
