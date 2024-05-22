@@ -109,7 +109,7 @@
                     @foreach($noticia as $dato5)
                         <div class="item">
                             <div class="hotel-entry">
-                                <a href="{{ url('noticia/'.$dato5->slug) }}" class="hotel-img" style="background-image: url('storage/noticia/{{ $dato5->nombrefotografia }}');"></a>
+                                <a href="{{ url('noticia/'.$dato5->slug) }}" class="hotel-img" style="background-image: url('storage/archivos/{{ $dato5->nombrefotografia }}');"></a>
 
                                 <div class="desc">
                                     <h3><a href="{{ url('noticia/'.$dato5->slug) }}">{{ $dato5->nombrenoticia }}</a></h3>
