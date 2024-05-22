@@ -15,7 +15,7 @@
         <div class="flexslider">
             <ul class="slides">
                 @foreach($slider as $dato)
-                    <li style="background-image: url('storage/slider/{{ $dato->fotografia }}');">
+                    <li style="background-image: url('storage/archivos/{{ $dato->fotografia }}');">
                         <a href="{{ $dato->link }}">
                             <div class="overlay"></div>
                         </a>
@@ -80,7 +80,7 @@
                                 <div class="services">
                                     <a href="{{ url('programa/'.$dato2->slug) }}">
 								<span class="icon">
-									<img src="{{ asset('storage/programa/'.$dato2->logo) }}" alt="Programa Municipal" style="width:120px; height:120px;" />
+									<img src="{{ asset('storage/archivos/'.$dato2->logo) }}" alt="Programa Municipal" style="width:120px; height:120px;" />
 								</span>
                                         <h3>{{ $dato2->nombreprograma }}</h3>
                                     </a>
@@ -141,7 +141,7 @@
                     <div class="col-md-6 animate-box">
 
                         <a href="{{ url('servicio/'.$dato3->slug) }}" class="blog-post">
-                            <span class="img" style="background-image: url('storage/servicio/{{ $dato3->logo }}');"></span>
+                            <span class="img" style="background-image: url('storage/archivos/{{ $dato3->logo }}');"></span>
                             <div class="desc">
                                 <h3>{{ $dato3->nombreservicio }}</h3>
                                 <span>{!! $dato3->descorta !!}</span>
@@ -176,7 +176,7 @@
     <div class="tour-wrap">
         @foreach($fotografia as $dato4)
             <a class="tour-entry animate-box">
-                <div class="tour-img" style="background-image: url('{{ asset('storage/noticia/'.$dato4->nombrefotografia ) }}');" data-toggle="modal" data-target="#modal1" onclick="getPath(this)"></div>
+                <div class="tour-img" style="background-image: url('{{ asset('storage/archivos/'.$dato4->nombrefotografia ) }}');" data-toggle="modal" data-target="#modal1" onclick="getPath(this)"></div>
                 <span class="desc">
 					<h2>{{ $dato4->nombre }}</h2>
 					<span class="city">{{ $dato4->fecha }}</span>
