@@ -11,7 +11,7 @@
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
-                <li style="background-image: url( {{ asset('storage/programa/'.$programa->imagen ) }} );">
+                <li style="background-image: url( {{ asset('storage/archivos/'.$programa->imagen ) }} );">
                     <div class="overlay"></div>
                     <div class="container-fluid">
                         <div class="row">
@@ -41,7 +41,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <center>
-                            <img src="{{ asset('storage/programa/'.$programa->logo) }}" alt="Programa Municipal" style="width:300px; height:300px;"/>
+                            <img src="{{ asset('storage/archivos/'.$programa->logo) }}" alt="Programa Municipal" style="width:300px; height:300px;"/>
                         </center>
                     </div>
                     <div class="col-md-8">

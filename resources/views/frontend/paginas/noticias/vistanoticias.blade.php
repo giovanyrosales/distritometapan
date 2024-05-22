@@ -37,7 +37,7 @@
                         <div class="wrap-division">
                             <a href="{{ url('noticia/'.$item->slug) }}" >
                                 <article class="animated zoomIn">
-                                    <div class="blog-img" style="background-image: url( {{ asset('storage/noticia/'.$item->nombrefotografia) }});"></div>
+                                    <div class="blog-img" style="background-image: url( {{ asset('storage/archivos/'.$item->nombrefotografia) }});"></div>
                                     <div class="desc">
                                         <div class="meta">
                                             <h6>

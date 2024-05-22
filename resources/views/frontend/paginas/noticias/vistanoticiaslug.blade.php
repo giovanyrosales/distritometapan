@@ -42,7 +42,7 @@
                         </strong>
                         <div class="row row-pb-sm">
                             <div class="col-md-12 animate-box">
-                                <img class="img-responsive" src="{{ asset('storage/noticia/'.$noticia->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
+                                <img class="img-responsive" src="{{ asset('storage/archivos/'.$noticia->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
                             </div>
 
                         </div>
@@ -55,7 +55,7 @@
                         <div class="row">
                             @foreach($fotografias as $foto)
                                 <div class="col-md-4 animate-box">
-                                    <img class="img-responsive" src="{{ asset('storage/noticia/'.$foto->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
+                                    <img class="img-responsive" src="{{ asset('storage/archivos/'.$foto->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
                                 </div>
                             @endforeach
 
@@ -69,7 +69,7 @@
                             @foreach($noticiaReciente as $item)
                                 <div class="blog-entry-side">
                                     <a href="{{ url('noticia/'.$item->slug) }}" class="blog-post">
-                                        <span class="img" style="background-image: url({{ asset('storage/noticia/'.$item->nombrefotografia)}});"></span>
+                                        <span class="img" style="background-image: url({{ asset('storage/archivos/'.$item->nombrefotografia)}});"></span>
                                         <div class="desc">
                                             <span class="cat">{{ $item->fecha }}</span>
                                             <h4>{{ $item->nombrenoticia }}</h4>

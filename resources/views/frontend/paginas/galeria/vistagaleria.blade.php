@@ -39,7 +39,7 @@
                             @foreach($fotografias as $foto)
                                 <div class="col-md-4 col-sm-4 animated zoomIn">
                                     <div class="tour">
-                                        <a class="tour-img" style="background-image: url(storage/noticia/{{ $foto->nombrefotografia }});" data-toggle="modal" data-target="#modal1" onclick="getPath(this)" alt="error"></a>
+                                        <a class="tour-img" style="background-image: url(storage/archivos/{{ $foto->nombrefotografia }});" data-toggle="modal" data-target="#modal1" onclick="getPath(this)" alt="error"></a>
                                     </div>
                                 </div>
                             @endforeach

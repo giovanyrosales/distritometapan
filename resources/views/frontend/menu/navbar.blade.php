@@ -8,9 +8,11 @@
     				<div class="col-xs-9 text-right menu-1">
     					<ul>
     						<li class="active"><strong><a href="/">Inicio</a></strong></li>
-							<!-- Pestaña para revista -->
+							<!-- Pestaña para revista
 							<li><strong><a href="{{ url('https://metapanfiestas.alcaldiademetapan.gob.sv/index.html') }}" target="_blank">Revista</a></strong></li>
-							<!-- fin pesta;a revista -->
+ -->
+
+                            <!-- fin pesta;a revista -->
     						<li><strong><a href="{{ url('noticias/') }}">Noticias</a></strong></li>
     						<li class="has-dropdown"><strong>
     							<a >Servicios</a></strong>

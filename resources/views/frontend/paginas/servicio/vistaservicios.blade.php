@@ -45,7 +45,7 @@
                         <a href="{{ asset('servicio/'.$item->slug) }}">
                             <div class="col-md-3  text-center">
                                 <center>
-                                    <img src="{{ asset('storage/servicio/'.$item->logo) }}" alt="Programa Municipal" style="width:180px; height:180px;"/>
+                                    <img src="{{ asset('storage/archivos/'.$item->logo) }}" alt="Programa Municipal" style="width:180px; height:180px;"/>
                                 </center>
                             </div>
                         </a>
