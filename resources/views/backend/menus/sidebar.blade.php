@@ -77,12 +77,6 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a href="{{ route('admin.finanzas.index') }}" target="frameprincipal" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Finanzas</p>
-                            </a>
-                        </li>
 
                         <li class="nav-item">
                             <a href="{{ route('admin.ucp.index') }}" target="frameprincipal" class="nav-link">
