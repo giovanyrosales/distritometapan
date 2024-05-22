@@ -2,11 +2,58 @@
 @include('frontend.menu.indexsuperior')
 
 <body>
+
+
+<style>
+
+    .pagination {
+        justify-content: center;
+        list-style: none;
+        padding: 0;
+        display: block !important;
+    }
+
+    .pagination li {
+        margin: 0 5px;
+    }
+
+    .pagination li a,
+    .pagination li span {
+        display: inline-block;
+        padding: 8px 12px;
+        color: #333;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .pagination li.active span {
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .pagination li.disabled span {
+        color: #6c757d;
+        cursor: not-allowed;
+        background-color: #f8f9fa;
+        border-color: #dee2e6;
+    }
+
+</style>
+
+
 <div class="colorlib-loader"></div>
 <div id="page">
     <!--Barra de navegacion -->
     @include("frontend.menu.navbar")
     <!--End Barra de navegacion-->
+
+
+
+
 
     <!--Imagen de cabecera-->
     <aside id="colorlib-hero">
@@ -30,8 +77,8 @@
     <!--End Imagen de cabecera-->
     <!--Contenido-->
     <div id="colorlib-blog">
-        <div class="container infinite-scroll">
-            @foreach($noticias as $item)
+        <div class="container">
+            @foreach($paginator as $item)
                 <div class="row ">
                     <div class="col-md-10">
                         <div class="wrap-division">
@@ -52,9 +99,16 @@
                     </div>
                 </div>
             @endforeach
-            {{ $noticias->links() }}
+
+                <div class="pagination" id="pagination">
+                    {{ $paginator->links('frontend.paginas.paginacion.vistapaginacion') }}
+                </div>
+
+
         </div>
     </div>
+
+
 </div>
 <!--End Contenido-->
 
@@ -72,6 +126,15 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var pagination = document.getElementById('pagination');
+        pagination.style.display = 'block';
+    });
+</script>
+
+
 <script type="text/javascript">
     $('ul.pagination').hide();
     $(function() {

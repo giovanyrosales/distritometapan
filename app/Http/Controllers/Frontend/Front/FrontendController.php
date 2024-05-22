@@ -107,17 +107,17 @@ class FrontendController extends Controller
 
     public function todasNoticias(){
 
-        $noticias = Noticia::orderBy('fecha', 'DESC')
+        $paginator = Noticia::orderBy('fecha', 'DESC')
             ->where('estado', 1)
-            ->paginate(3);
+            ->paginate(20);
 
-        foreach($noticias  as $dato){
+        foreach($paginator  as $dato){
             $foto = Fotografia::where('noticia_id', $dato->id)->first();
             $dato->nombrefotografia = $foto->nombrefotografia;
         }
 
         $serviciosMenu = $this->getServiciosMenu();
-        return view('frontend.paginas.noticias.vistanoticias', compact(['serviciosMenu','noticias']));
+        return view('frontend.paginas.noticias.vistanoticias', compact(['serviciosMenu','paginator']));
     }
 
 
