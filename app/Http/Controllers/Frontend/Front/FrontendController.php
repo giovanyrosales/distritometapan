@@ -17,19 +17,21 @@ class FrontendController extends Controller
     // Metodo para cargar informacion en pagina Index Publica
     public function index(){
 
+        $slider = Slider::orderBy('posicion', 'ASC')->get();
 
-        $slider = Slider::all()->sortBy('posicion');
-        $programas = Programa::all()->sortByDesc('id')->take(4);
+        $programas = Programa::orderBy('id','ASC')->take(4)->get();
+
         $servicios = Servicio::where('estado', 1)
                                 ->orderBy('id', 'DESC')
-                                ->take(6);
+                                ->take(6)
+                                ->get();
 
-        $fotografia = Fotografia::all()->sortByDesc('id')->take(8);
+        $fotografia = Fotografia::orderBy('id', 'DESC')->take(8)->get();
 
         $serviciosMenu = $this->getServiciosMenu();
 
         foreach($fotografia  as $secciones){
-            $noticia = Noticia::where('id', $secciones->noticia_id)->select('nombrenoticia', 'fecha')->first();
+            $noticia = Noticia::where('id', $secciones->noticia_id)->first();
             $secciones->nombre = $noticia->nombrenoticia;
             $secciones->fecha = $noticia->fecha;
         }
@@ -42,12 +44,13 @@ class FrontendController extends Controller
 
     public function getServiciosMenu(){
         return Servicio::where('estado', 1)
-                ->orderBy('id', 'DESC')
-                ->take(4);
+                ->orderBy('id', 'ASC')
+                ->take(4)
+                ->get();
     }
 
     public function getRecentNew($filtro){
-        $noticiaReciente = Noticia::orderBy('fecha', 'DESC')->take($filtro);
+        $noticiaReciente = Noticia::orderBy('fecha', 'DESC')->take($filtro)->get();
 
         foreach ($noticiaReciente  as $secciones) {
             $foto = Fotografia::where('noticia_id', $secciones->idnoticia)->pluck('nombrefotografia')->first();
@@ -58,22 +61,27 @@ class FrontendController extends Controller
 
 
     public function obtenerTodosServicios(){
-        $servicios = Servicio::where('estado', 1)->get();
+        $servicios = Servicio::where('estado', 1)
+                ->orderBy('nombreservicio', 'ASC')
+                ->get();
+
         $serviciosMenu = $this->getServiciosMenu();
         return view('frontend.paginas.servicio.vistaservicios', compact('servicios','serviciosMenu'));
     }
 
     public function serviciosPorNombre($slug){
-        $servicio =  Servicio::where('slug', $slug)
+
+        if($servicio =  Servicio::where('slug', $slug)
                                ->where('estado', 1)
-                                ->first();
-
-        $serviciosMenu = $this->getServiciosMenu();
-        $documentos = Documento::where('servicio_id', $servicio->idservicio)->get();
-        return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
+                               ->first()){
+            $serviciosMenu = $this->getServiciosMenu();
+            $documentos = Documento::where('servicio_id', $servicio->idservicio)->get();
+            return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
+        }
+        else{
+            return view('errors.404');
+        }
     }
-
-
 
 
     public function paginaContravencional(){
@@ -98,10 +106,12 @@ class FrontendController extends Controller
 
     public function todasNoticias(){
 
-        $noticias = Noticia::orderBy('fecha', 'DESC')->paginate(3);
+        $noticias = Noticia::orderBy('fecha', 'DESC')
+            ->where('estado', 1)
+            ->paginate(3);
 
         foreach($noticias  as $dato){
-            $foto = Fotografia::where('noticia_id', $dato->id)->pluck('nombrefotografia')->first();
+            $foto = Fotografia::where('noticia_id', $dato->id)->first();
             $dato->nombrefotografia = $foto;
         }
 
@@ -112,16 +122,20 @@ class FrontendController extends Controller
 
     public function noticiaPorNombre($slug){
 
-        $noticia =  Noticia::where('slug', $slug)->first();
-        $fotoInicial = Fotografia::where('noticia_id', $noticia->id)->pluck('nombrefotografia')->first();
+        if($noticia =  Noticia::where('slug', $slug)->where('estado', 1)->first()){
 
-        // Forget se utiliza para eliminar el primer elemento de una coleccion
-        $fotografias = Fotografia::where('noticia_id', $noticia->id)->get()->forget(0);
-        $noticia->nombrefotografia = $fotoInicial;
-        $noticiaReciente = $this->getRecentNew(3);
-        $serviciosMenu = $this->getServiciosMenu();
+            $fotoInicial = Fotografia::where('noticia_id', $noticia->id)->first();
 
-        return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias']));
+            // Forget se utiliza para eliminar el primer elemento de una coleccion
+            $fotografias = Fotografia::where('noticia_id', $noticia->id)->get()->forget(0);
+            $noticia->nombrefotografia = $fotoInicial;
+            $noticiaReciente = $this->getRecentNew(3);
+            $serviciosMenu = $this->getServiciosMenu();
+
+            return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias']));
+        }else{
+            return view('errors.404');
+        }
     }
 
 
@@ -134,7 +148,7 @@ class FrontendController extends Controller
 
 
     public function todosLosProgramas(){
-        $programas = Programa::all();
+        $programas = Programa::where('estado', 1)->orderBy('nombreprograma', 'ASC')->get();
         $serviciosMenu = $this->getServiciosMenu();
 
         return view('frontend.paginas.programas.vistaprogramas',compact('programas','serviciosMenu'));
@@ -143,10 +157,13 @@ class FrontendController extends Controller
 
     public function programaPorNombre($slug){
 
-        $programa = Programa::where('slug', $slug)->first();
-        $serviciosMenu = $this->getServiciosMenu();
+        if($programa = Programa::where('slug', $slug)->where('estado', 1)->first()){
+            $serviciosMenu = $this->getServiciosMenu();
 
-        return view('frontend.paginas.programas.vistaprogramaslug',compact(['programa','serviciosMenu']));
+            return view('frontend.paginas.programas.vistaprogramaslug',compact(['programa','serviciosMenu']));
+        }else{
+            return view('errors.404');
+        }
     }
 
 
@@ -158,7 +175,6 @@ class FrontendController extends Controller
 
 
     public function paginaGobierno(){
-
         $serviciosMenu = $this->getServiciosMenu();
         return view('frontend.paginas.gobierno.vistagobierno',compact('serviciosMenu'));
     }
