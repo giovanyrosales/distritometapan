@@ -151,8 +151,7 @@ Route::get('/direccion',[FrontendController::class,'paginaGobierno']);
 
 
 // UCP
-
-Route::post('/admin/informacion-ucp',[FrontendController::class,'index']);
+Route::post('/admin/informacion-ucp',[ProgramaController::class,'informacionUCP']);
 
 
 
@@ -160,8 +159,8 @@ Route::post('/admin/informacion-ucp',[FrontendController::class,'index']);
 // --- NOTICIAS FRONTEND ---
 
 // --- FINANZAS FRONTEND ---
-Route::get('/finanzas', [FrontendController::class,'index']);
-Route::get('/descargar/finanzas/documento/{id}', [FrontendController::class,'index']);
+Route::get('/finanzas', [FrontendController::class,'indexFinanzas']);
+Route::get('/descargar/finanzas/documento/{id}', [FrontendController::class,'descargarDocumentoFinanzas']);
 
 // --- COMPRAS FRONTEND ---
-Route::get('/compras', [FrontendController::class,'index'])->name('compras.publicas');
+Route::get('/compras', [FrontendController::class,'indexCompras'])->name('compras.publicas');

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Frontend\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Compras;
 use App\Models\Documento;
+use App\Models\Finanzas;
 use App\Models\Fotografia;
 use App\Models\Noticia;
 use App\Models\Programa;
@@ -181,7 +183,48 @@ class FrontendController extends Controller
     }
 
 
+    public function indexFinanzas(){
+
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+
+        $finanzas = Finanzas::orderBy('fecha', 'DESC')->get();
+
+        foreach($finanzas as $dato){
+            $dato->fechaformato = date("d-m-Y", strtotime($dato->fecha));
+
+            $dato->fechaanio = date("Y", strtotime($dato->fecha));
+        }
+
+        return view('frontend.paginas.finanzas.vistafinanzas', compact('serviciosMenu', 'finanzas'));
+    }
 
 
+    public function descargarDocumentoFinanzas($id){
+
+        $infoFinanza = Finanzas::where('id', $id)->first();
+
+        $nombre = str_replace(' ', '_', $infoFinanza->titulo);
+
+        $pathToFile = "storage/archivos/" . $infoFinanza->documento;
+        $extension = pathinfo(($pathToFile), PATHINFO_EXTENSION);
+        $nombre = $nombre . "." . $extension;
+        return response()->download($pathToFile, $nombre);
+    }
+
+
+    public function indexCompras(){
+
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+
+        $arrayCompras = Compras::orderBy('fecha', 'ASC')->get();
+
+        foreach ($arrayCompras as $dato){
+
+            $dato->fechaFormat = date("d-m-Y", strtotime($dato->fecha));
+            $dato->fechaAnio = date("Y", strtotime($dato->fecha));
+        }
+
+        return view('frontend.paginas.compras.vistacompras', compact('arrayCompras', 'serviciosMenu'));
+    }
 
 }

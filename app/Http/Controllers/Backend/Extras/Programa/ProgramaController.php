@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Extras\Programa;
 
 use App\Http\Controllers\Controller;
+use App\Models\Linkucp;
 use App\Models\Programa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -254,5 +255,19 @@ class ProgramaController extends Controller
 
         return ['success' => 1];
     }
+
+
+    public function informacionUCP(Request $request){
+
+        $infoTabla = Linkucp::where('id', 1)->first();
+
+        if($infoTabla->activo == 0){
+            return ['success' => 1];
+        }
+
+        return ['success' => 2, 'titulo' => $infoTabla->titulo, 'descripcion' => $infoTabla->descripcion,
+            'urllink' => $infoTabla->linkucp];
+    }
+
 
 }
