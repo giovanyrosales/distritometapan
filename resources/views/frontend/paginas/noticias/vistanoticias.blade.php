@@ -49,7 +49,7 @@
 <div id="page">
     <!--Barra de navegacion -->
     @include("frontend.menu.navbar")
-    <!--End Barra de navegacion-->
+    <!--End Barra de navegacion -->
 
 
 
