@@ -77,7 +77,7 @@
                             <img src="{{ asset('images/logonuevo.png') }}" class="rounded-circle p-2 bg-white">
                         </div>
                         <div class="p-5 bg-white rounded shadow-lg">
-                            <h3 class="mb-2 text-center pt-5"><strong>Alcaldía Municipal de Metapán</strong></h3>
+                            <h3 class="mb-2 text-center pt-5"><strong>Municipio de Santa Ana Norte</strong></h3>
                             <p class="text-center lead">Panel de Control</p>
                             <form>
                                 <label style="margin-top: 10px" class="font-500">Usuario</label>
