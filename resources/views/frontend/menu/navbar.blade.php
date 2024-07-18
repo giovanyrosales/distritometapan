@@ -25,7 +25,7 @@
                             </ul>
                         </li>
                         <li class="has-dropdown"><strong>
-                                <a>Tu Alcad&iacute;a</a></strong>
+                                <a>Tu Municipio</a></strong>
                             <ul class="dropdown">
                                 <li><strong><a href="{{ url('programas/') }}">Programas Municipales</a></strong></li>
                                 <li><strong><a href="{{ url('direccion/') }}">Gobierno municipal</a></strong></li>
@@ -35,7 +35,7 @@
                         <li><strong><a href="{{ url('galeria/') }}">Galer&iacute;a</a></strong></li>
                         <li><strong><a href="{{ url('finanzas/') }}">Finanzas</a></strong></li>
                         <li><strong><a href="{{ url('contravencional/') }}">Contravencional</a></strong></li>
-                        <li><strong><a href="https://www.transparencia.gob.sv/institutions/alc-metapan">Transparencia</a></strong></li>
+                        <li><strong><a href="https://www.transparencia.gob.sv/institutions/municipalidad-de-santa-ana-norte">Transparencia</a></strong></li>
                         <li><strong><a href="{{ route('compras.publicas') }}">Compras</a></strong></li>
                     </ul>
                 </div>
