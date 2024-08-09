@@ -59,7 +59,7 @@
     <aside id="colorlib-hero">
         <div class="flexslider">
             <ul class="slides">
-                <li style="background-image: url({{ asset('images/Slider/noticias.jpg')}});">
+                <li style="background-image: url({{ asset('images/Slider/portadaslider.jpg')}});">
                     <div class="overlay"></div>
                     <div class="container-fluid">
                         <div class="row">
