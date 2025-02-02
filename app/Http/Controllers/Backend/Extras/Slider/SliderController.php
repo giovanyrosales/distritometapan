@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Extras\Slider;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -35,46 +37,57 @@ class SliderController extends Controller
 
         // descripcion, link, imagen
 
-        if ($request->hasFile('imagen')) {
+        DB::beginTransaction();
+        try {
 
 
-            $cadena = Str::random(15);
-            $tiempo = microtime();
-            $union = $cadena . $tiempo;
-            $nombre = str_replace(' ', '_', $union);
+            if ($request->hasFile('imagen')) {
 
-            $extension = '.' . $request->imagen->getClientOriginalExtension();
-            $nombreFoto = $nombre . strtolower($extension);
 
-            // Inicializar Intervention Image
-            $manager = new ImageManager(new Driver());
-            $img = $manager->read($request->file('imagen'));
-            $compressedImage = $img->toJpeg(75);
+                $cadena = Str::random(15);
+                $tiempo = microtime();
+                $union = $cadena . $tiempo;
+                $nombre = str_replace(' ', '_', $union);
 
-            $upload = Storage::disk('archivos')->put($nombreFoto, $compressedImage);
+                $extension = '.' . $request->imagen->getClientOriginalExtension();
+                $nombreFoto = $nombre . strtolower($extension);
 
-            if($upload) {
-                if ($info = Slider::orderBy('posicion', 'DESC')->first()) {
-                    $nuevaPosicion = $info->posicion + 1;
-                } else {
-                    $nuevaPosicion = 1;
+                // Inicializar Intervention Image
+                $manager = new ImageManager(new Driver());
+                $img = $manager->read($request->file('imagen'));
+                $compressedImage = $img->toJpeg(75);
+
+                $upload = Storage::disk('archivos')->put($nombreFoto, $compressedImage);
+
+                if($upload) {
+                    if ($info = Slider::orderBy('posicion', 'DESC')->first()) {
+                        $nuevaPosicion = $info->posicion + 1;
+                    } else {
+                        $nuevaPosicion = 1;
+                    }
+
+                    $registro = new Slider();
+                    $registro->nombreslider = $request->descripcion;
+                    $registro->estado = 1;
+                    $registro->posicion = $nuevaPosicion;
+                    $registro->fotografia = $nombreFoto;
+                    $registro->link = $request->link;
+                    $registro->save();
+
+                    DB::commit();
+                    return ['success' => 1];
+
+                }else {
+                    Log::info('error en UPLOAD');
+                    return ['success' => 99];
                 }
-
-                $registro = new Slider();
-                $registro->nombreslider = $request->descripcion;
-                $registro->estado = 1;
-                $registro->posicion = $nuevaPosicion;
-                $registro->fotografia = $nombreFoto;
-                $registro->link = $request->link;
-                $registro->save();
-
-                return ['success' => 1];
-
-            }else {
+            }else{
+                Log::info('error NO VIENE IMAGEN');
                 return ['success' => 99];
             }
-
-        }else{
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
             return ['success' => 99];
         }
     }
