@@ -40,7 +40,6 @@ class SliderController extends Controller
         DB::beginTransaction();
         try {
 
-
             if ($request->hasFile('imagen')) {
 
                 $cadena = Str::random(15);
