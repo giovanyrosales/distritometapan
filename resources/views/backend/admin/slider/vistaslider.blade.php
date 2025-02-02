@@ -224,6 +224,10 @@
             })
                 .then((response) => {
                     closeLoading();
+
+                    console.log("RESPUESTA")
+                    console.log(response)
+
                     if(response.data.success === 1){
                         toastr.success('Registrado');
                         $('#modalAgregar').modal('hide');

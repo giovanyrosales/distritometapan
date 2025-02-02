@@ -43,7 +43,6 @@ class SliderController extends Controller
 
             if ($request->hasFile('imagen')) {
 
-
                 $cadena = Str::random(15);
                 $tiempo = microtime();
                 $union = $cadena . $tiempo;
