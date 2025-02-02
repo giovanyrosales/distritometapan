@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class SliderController extends Controller
 {
@@ -35,6 +37,7 @@ class SliderController extends Controller
 
         if ($request->hasFile('imagen')) {
 
+
             $cadena = Str::random(15);
             $tiempo = microtime();
             $union = $cadena . $tiempo;
@@ -42,11 +45,15 @@ class SliderController extends Controller
 
             $extension = '.' . $request->imagen->getClientOriginalExtension();
             $nombreFoto = $nombre . strtolower($extension);
-            $avatar = $request->file('imagen');
-            $upload = Storage::disk('archivos')->put($nombreFoto, \File::get($avatar));
 
-            if ($upload) {
+            // Inicializar Intervention Image
+            $manager = new ImageManager(new Driver());
+            $img = $manager->read($request->file('imagen'));
+            $compressedImage = $img->toJpeg(75);
 
+            $upload = Storage::disk('archivos')->put($nombreFoto, $compressedImage);
+
+            if($upload) {
                 if ($info = Slider::orderBy('posicion', 'DESC')->first()) {
                     $nuevaPosicion = $info->posicion + 1;
                 } else {
@@ -62,8 +69,8 @@ class SliderController extends Controller
                 $registro->save();
 
                 return ['success' => 1];
-            }
-            else {
+
+            }else {
                 return ['success' => 99];
             }
 

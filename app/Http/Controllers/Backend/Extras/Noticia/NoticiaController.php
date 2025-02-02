@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class NoticiaController extends Controller
 {
@@ -70,7 +72,15 @@ class NoticiaController extends Controller
                 $extension = '.'.$img->getClientOriginalExtension();
                 $nombreFoto = $nombre . strtolower($extension);
 
-                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
+
+
+
+                // Inicializar Intervention Image
+                $manager = new ImageManager(new Driver());
+                $imgData = $manager->read($img);
+                $compressedImage = $imgData->toJpeg(75);
+
+                Storage::disk('archivos')->put($nombreFoto, $compressedImage);
 
                 $detalle = new Fotografia();
                 $detalle->noticia_id = $registro->id;
@@ -220,7 +230,15 @@ class NoticiaController extends Controller
                 $extension = '.'.$img->getClientOriginalExtension();
                 $nombreFoto = $nombre . strtolower($extension);
 
-                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
+
+
+                // Inicializar Intervention Image
+                $manager = new ImageManager(new Driver());
+                $imgData = $manager->read($img);
+                $compressedImage = $imgData->toJpeg(75);
+
+                Storage::disk('archivos')->put($nombreFoto, $compressedImage);
+
 
                 $detalle = new Fotografia();
                 $detalle->noticia_id = $request->id;
