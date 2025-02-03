@@ -216,7 +216,7 @@ class FrontendController extends Controller
 
         $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
 
-        $arrayCompras = Compras::orderBy('fecha', 'DESC')->get();
+        $arrayCompras = Compras::orderBy('fecha', 'DESC')->take(20)->get();
 
         foreach ($arrayCompras as $dato){
 
