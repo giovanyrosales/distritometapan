@@ -40,7 +40,7 @@
                 <div class="tab-content" style="padding:25px;"  >
                     <center>
                         <a style="margin-right:15px;" id = "soc"  href="#">
-                            <span id="socno">Distrito de Metapán</span>
+                            <span id="socno">Distrito de Metapán..</span>
                         </a>&nbsp;
                         <a style="margin-right:15px;" id = "soc"  href="#">
                             <span id="socno">Distrito de Santa Rosa</span>
