@@ -40,7 +40,7 @@
                 <div class="tab-content" style="padding:25px;"  >
                     <center>
                         <a style="margin-right:15px;" id = "soc"  href="#">
-                            <span id="socno">Distrito de Metapán..</span>
+                            <span id="socno">Distrito de Metapán</span>
                         </a>&nbsp;
                         <a style="margin-right:15px;" id = "soc"  href="#">
                             <span id="socno">Distrito de Santa Rosa</span>
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
                 <h2>Noticias </h2>
-                <p>Noticias publicadas recientemente </p>
+                <p>Noticias publicadas recientemente. </p>
             </div>
         </div>
         <div class="row">
