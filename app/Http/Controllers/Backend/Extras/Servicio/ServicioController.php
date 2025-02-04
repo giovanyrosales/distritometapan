@@ -256,4 +256,15 @@ class ServicioController extends Controller
         return ['success' => 1];
     }
 
+    public function descargarDocServicio()
+    {
+        $doc = "Escaneo.pdf";
+        $pathToFile = public_path("images/" . $doc->documento);
+        $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
+    
+        $nombre = "Solicitud_de_Solvencia";
+    
+        $nombreFinal = $nombre . "." . $extension;
+        return response()->download($pathToFile, $nombreFinal);
+    }
 }

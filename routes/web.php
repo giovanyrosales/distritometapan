@@ -164,3 +164,7 @@ Route::get('/descargar/finanzas/documento/{id}', [FrontendController::class,'des
 
 // --- COMPRAS FRONTEND ---
 Route::get('/compras', [FrontendController::class,'indexCompras'])->name('compras.publicas');
+
+
+// Ruta para descargar el archivo del servicio de Catastro
+Route::get('/descargar/solicitud_solvencia/documento/', [ServicioController::class,'descargarDocServicio']);
