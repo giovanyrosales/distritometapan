@@ -259,7 +259,7 @@ class ServicioController extends Controller
     public function descargarDocServicio()
     {
         $doc = "Escaneo.pdf";
-        $pathToFile = public_path("images/" . $doc->documento);
+        $pathToFile = public_path("images/" . $doc);
         $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
     
         $nombre = "Solicitud_de_Solvencia";
