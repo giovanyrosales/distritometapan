@@ -288,6 +288,8 @@
 
         </div>
     </div>
+
+
     <!--End Contenido-->
     @include("frontend.menu.footer")
     <script src="{{ asset('js/frontend.js') }}" type="text/javascript"></script>
@@ -302,6 +304,11 @@
             });
         });
     </script>
+
+
+    </div>
+</div>
 </body>
+
 
 </html>
