@@ -47,7 +47,7 @@ class FrontendController extends Controller
 
     public function getServiciosMenu(){
         return Servicio::where('estado', 1)
-                ->orderBy('id', 'ASC')
+                ->orderBy('posicion', 'ASC')
                 ->take(4)
                 ->get();
     }
@@ -65,7 +65,8 @@ class FrontendController extends Controller
 
     public function obtenerTodosServicios(){
         $servicios = Servicio::where('estado', 1)
-                ->orderBy('nombreservicio', 'ASC')
+                ->whereNotIn('id', [8])
+                ->orderBy('posicion', 'ASC')
                 ->get();
 
         $serviciosMenu = $this->getServiciosMenu();
@@ -77,9 +78,16 @@ class FrontendController extends Controller
         if($servicio =  Servicio::where('slug', $slug)
                                ->where('estado', 1)
                                ->first()){
+
             $serviciosMenu = $this->getServiciosMenu();
             $documentos = Documento::where('servicio_id', $servicio->idservicio)->get();
-            return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
+
+            // VISTA PARA ANTI SOBORNO
+            if($servicio->id == 8){
+                return view('frontend.paginas.antisoborno.vistaantisoborno', compact(['servicio','serviciosMenu','documentos']));
+            }else{
+                return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
+            }
         }
         else{
             return view('errors.404');
@@ -226,5 +234,16 @@ class FrontendController extends Controller
 
         return view('frontend.paginas.compras.vistacompras', compact('arrayCompras', 'serviciosMenu'));
     }
+
+
+
+
+    public function descargarPoliticaAntiSoborno(){
+        $pathToFile = "storage/documentos/pdf_antisoborno";
+        $extension = pathinfo(($pathToFile), PATHINFO_EXTENSION);
+        $nombre = "Documento" . "." . $extension;
+        return response()->download($pathToFile, $nombre);
+    }
+
 
 }

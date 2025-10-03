@@ -52,13 +52,13 @@
                     <div class="row text-center">
                         <h4>Documentos disponibles</h4>
                         <center>
-                            <table style="border: 0px; font-size:18x;">
+                            <table style="border: 0px; font-size:18px;">
                                 @foreach($documentos as $doc)
                                     <tr>
                                         <td style="margin: 15px; padding: 12px;">
                                             <i class="icon icon-file-pdf"></i>
                                         </td>
-                                        <td style="margin: 15px; padding: 12x;">
+                                        <td style="margin: 15px; padding: 12px;">
                                             <a style="color: black;" href="{{ url('/download/'.$doc->url) }}"><strong>{{$doc->nombre}} </strong></a>
                                         </td>
                                         <td style="margin: 15px; padding: 12px;">
