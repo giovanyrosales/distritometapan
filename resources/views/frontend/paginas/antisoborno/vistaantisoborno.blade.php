@@ -218,7 +218,7 @@
                                             </svg>
                                             <div>
                                                 <strong>Servicios públicos de calidad.</strong>
-                                                <div class="muted small">Compromiso con la atención incluyente y la mejora continua.</div>
+                                                <div style="font-size: 13px">Compromiso con la atención incluyente y la mejora continua.</div>
                                             </div>
                                         </li>
                                         <li>
@@ -227,7 +227,7 @@
                                             </svg>
                                             <div>
                                                 <strong>Cero tolerancia al soborno.</strong>
-                                                <div class="muted small">Cumplimiento de leyes, normas y requisitos internacionales.</div>
+                                                <div style="font-size: 13px">Cumplimiento de leyes, normas y requisitos internacionales.</div>
                                             </div>
                                         </li>
                                         <li>
@@ -236,7 +236,7 @@
                                             </svg>
                                             <div>
                                                 <strong>Participación ciudadana.</strong>
-                                                <div class="muted small">Mecanismos de denuncia y supervisión del sistema antisoborno.</div>
+                                                <div style="font-size: 13px">Mecanismos de denuncia y supervisión del sistema antisoborno.</div>
                                             </div>
                                         </li>
                                     </ul>
