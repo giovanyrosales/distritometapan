@@ -283,7 +283,7 @@
                             <section class="wrap" style="margin-top: 0px">
                                 <div class="card" style="padding: 25px">
                                     <h2 style="margin-top: 0; color:#475569; font-weight: 700;">
-                                        Documentos Anti Soborno
+                                        Documentos
                                     </h2>
                                     <p class="muted" style="margin-bottom: 15px">
                                         Descargue los documentos oficiales relacionados con la Política Antisoborno.
