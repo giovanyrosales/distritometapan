@@ -188,10 +188,6 @@
     <div id="colorlib-services">
         <div class="container">
             <div class="row">
-
-
-
-
                 <div class="col-md-12">
                     <main class="wrap">
                         <section class="banner" aria-label="Presentación institucional">
@@ -281,7 +277,57 @@
                                     </div>
                                 </aside>
                             </div>
+
+
+                            <!-- Sección de Documentos Anti Soborno -->
+                            <section class="wrap" style="margin-top: 0px">
+                                <div class="card" style="padding: 25px">
+                                    <h2 style="margin-top: 0; color:#475569; font-weight: 700;">
+                                        Documentos Anti Soborno
+                                    </h2>
+                                    <p class="muted" style="margin-bottom: 15px">
+                                        Descargue los documentos oficiales relacionados con la Política Antisoborno.
+                                    </p>
+
+                                    <ul class="list-checked">
+                                        <li>
+                                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <a href="{{ asset('pdf/docu1.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                                Documento 1 – Política Antisoborno
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <a href="{{ asset('pdf/docu2.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                                Documento 2 – Lineamientos y Normativa
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <a href="{{ asset('pdf/docu3.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                                Documento 3 – Procedimiento de Denuncias
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
                         </section>
+
+
+
+
+
+
+
+
                     </main>
                 </div>
 

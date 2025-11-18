@@ -186,6 +186,13 @@ Route::get('/descargar/solicitud_solvencia/documento/', [ServicioController::cla
 Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descargarPoliticaAntiSoborno']);
 
 
+// vista politica anti soborno
+Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSoborno']);
+
+
+
+
+
 
 
 // ========= VOTACION ============

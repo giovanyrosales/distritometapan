@@ -84,12 +84,7 @@ class FrontendController extends Controller
             $serviciosMenu = $this->getServiciosMenu();
             $documentos = Documento::where('servicio_id', $servicio->idservicio)->get();
 
-            // VISTA PARA ANTI SOBORNO
-            if($servicio->id == 8){
-                return view('frontend.paginas.antisoborno.vistaantisoborno', compact(['servicio','serviciosMenu','documentos']));
-            }else{
-                return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
-            }
+            return view('frontend.paginas.servicio.vistaservicio',compact(['servicio','serviciosMenu','documentos']));
         }
         else{
             return view('errors.404');
@@ -244,6 +239,11 @@ class FrontendController extends Controller
         return response()->download($pathToFile, $nombre);
     }
 
+    public function politicaAntiSoborno(){
+        $serviciosMenu = $this->getServiciosMenu();
+
+        return view('frontend.paginas.antisoborno.vistaantisoborno', compact(['serviciosMenu']));
+    }
 
 
 
