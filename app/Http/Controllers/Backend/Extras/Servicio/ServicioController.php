@@ -439,6 +439,33 @@ class ServicioController extends Controller
     }
 
 
+    public function borrarVotacionConteo(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+
+        try {
+
+            VotacionRegistro::where('id_votacion', $request->id)->delete();
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
 
 
     public function indexVotacionConteo()

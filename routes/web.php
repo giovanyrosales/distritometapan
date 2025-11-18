@@ -126,7 +126,7 @@ Route::post('/admin/votacion/nuevo', [ServicioController::class, 'nuevoVotacion'
 Route::post('/admin/votacion/informacion', [ServicioController::class, 'informacionVotacion']);
 Route::post('/admin/votacion/editar', [ServicioController::class, 'editarVotacion']);
 Route::post('/admin/votacion/borrar', [ServicioController::class, 'borrarVotacion']);
-Route::post('/admin/votacion/posicion', [ServicioController::class, 'actualizarPosicionVotacion']);
+Route::post('/admin/votacion/borrar-conteo', [ServicioController::class, 'borrarVotacionConteo']);
 
 // CONTEO VOTACION
 

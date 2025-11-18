@@ -363,6 +363,45 @@
         }
 
 
+        function modalBorrarConteo(id){
+            Swal.fire({
+                title: 'Borrar Conteo?',
+                text: "Reseteo a cero",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    solicitarBorrarConteo(id);
+                }
+            })
+        }
+
+        function solicitarBorrarConteo(idfila){
+
+            openLoading();
+
+            axios.post('/admin/votacion/borrar-conteo',{
+                'id': idfila
+            })
+                .then((response) => {
+                    closeLoading();
+                    if(response.data.success === 1){
+
+                        toastr.success('Conteo Borrado');
+                        recargar();
+                    }else{
+                        toastr.error('Error al borrar');
+                    }
+                })
+                .catch((error) => {
+                    toastr.error('Error al borrar');
+                    closeLoading();
+                });
+        }
 
 
     </script>
