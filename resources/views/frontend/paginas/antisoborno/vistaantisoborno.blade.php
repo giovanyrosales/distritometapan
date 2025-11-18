@@ -294,7 +294,7 @@
                                             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                 <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                            <a href="{{ asset('pdf/docu1.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                            <a href="{{ asset('pdf/politicasga.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
                                                 Documento 1 – Política Antisoborno
                                             </a>
                                         </li>
@@ -303,7 +303,7 @@
                                             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                                 <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
-                                            <a href="{{ asset('pdf/docu2.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                            <a href="{{ asset('pdf/codigoetica.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
                                                 Documento 2 – Código de ética para socios de negocios
                                             </a>
                                         </li>
