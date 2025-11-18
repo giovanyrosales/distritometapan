@@ -11,6 +11,8 @@ use App\Models\Noticia;
 use App\Models\Programa;
 use App\Models\Servicio;
 use App\Models\Slider;
+use App\Models\Votacion;
+use App\Models\VotacionRegistro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -235,15 +237,86 @@ class FrontendController extends Controller
         return view('frontend.paginas.compras.vistacompras', compact('arrayCompras', 'serviciosMenu'));
     }
 
-
-
-
     public function descargarPoliticaAntiSoborno(){
         $pathToFile = "storage/documentos/pdf_antisoborno";
         $extension = pathinfo(($pathToFile), PATHINFO_EXTENSION);
         $nombre = "Documento" . "." . $extension;
         return response()->download($pathToFile, $nombre);
     }
+
+
+
+
+    public function vistaVotacion(Request $request)
+    {
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+
+        // IP del usuario
+        $ip = $request->ip();
+
+        // Verificar si ya votó esta IP
+        $yaVoto = VotacionRegistro::where('ip', $ip)->exists();
+
+        // Si ya votó, solo enviamos una bandera a la vista
+        if ($yaVoto) {
+            return view('frontend.paginas.votacion.vistavotacion', [
+                'yaVoto' => true,
+                'serviciosMenu' => $serviciosMenu
+            ]);
+        }
+
+        // Si NO ha votado, mostrar las opciones
+        $opciones = Votacion::where('activo', 1)
+            ->inRandomOrder()
+            ->get();
+
+        return view('frontend.paginas.votacion.vistavotacion', [
+            'yaVoto' => false,
+            'opciones' => $opciones,
+            'serviciosMenu' => $serviciosMenu
+        ]);
+    }
+
+
+
+    public function registrarVotacion(Request $request)
+    {
+        // Validar que venga una opción válida
+        $request->validate([
+            'id_votacion' => 'required|exists:votacion,id',
+        ]);
+
+        $ip = $request->ip();
+
+        // Verificar si esta IP ya votó
+        $yaVoto = DB::table('votacion_registro')
+            ->where('ip', $ip)
+            ->exists();
+
+        if ($yaVoto) {
+            return response()->json([
+                'success' => 0,
+                'msg' => 'Ya has realizado tu voto anteriormente.',
+            ]);
+        }
+
+        // Registrar voto
+        DB::table('votacion_registro')->insert([
+            'id_votacion' => $request->id_votacion,
+            'ip'          => $ip,
+            'user_agent'  => $request->userAgent(),
+            'fecha'       => now('America/El_Salvador'),
+        ]);
+
+        return response()->json([
+            'success' => 1,
+            'msg' => '¡Gracias! Su voto ha sido registrado correctamente.',
+        ]);
+    }
+
+
+
+
 
 
 }

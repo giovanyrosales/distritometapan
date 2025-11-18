@@ -119,6 +119,19 @@ Route::post('/admin/servicio/informacion', [ServicioController::class, 'informac
 Route::post('/admin/servicio/editar', [ServicioController::class, 'editarServicio']);
 Route::post('/admin/servicio/borrar', [ServicioController::class, 'borrarServicio']);
 
+// VOTACION
+Route::get('/admin/votacion/index', [ServicioController::class,'indexVotacion'])->name('admin.votacion.index');
+Route::get('/admin/votacion/tabla', [ServicioController::class,'tablaVotacion']);
+Route::post('/admin/votacion/nuevo', [ServicioController::class, 'nuevoVotacion']);
+Route::post('/admin/votacion/informacion', [ServicioController::class, 'informacionVotacion']);
+Route::post('/admin/votacion/editar', [ServicioController::class, 'editarVotacion']);
+Route::post('/admin/votacion/borrar', [ServicioController::class, 'borrarVotacion']);
+Route::post('/admin/votacion/posicion', [ServicioController::class, 'actualizarPosicionVotacion']);
+
+// CONTEO VOTACION
+
+Route::get('/admin/votacion/conteo/index', [ServicioController::class,'indexVotacionConteo'])->name('admin.votacion.conteo.index');
+Route::get('/admin/votacion/conteo/tabla', [ServicioController::class,'tablaVotacionConteo']);
 
 
 
@@ -171,3 +184,29 @@ Route::get('/descargar/solicitud_solvencia/documento/', [ServicioController::cla
 
 // DESCARGA POLITICA ANTI SOBORNO
 Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descargarPoliticaAntiSoborno']);
+
+
+
+
+// ========= VOTACION ============
+
+Route::get('/votacion', [FrontendController::class,'vistaVotacion']);
+Route::post('/votacion/registrar',[FrontendController::class,'registrarVotacion']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

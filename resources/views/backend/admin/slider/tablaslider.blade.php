@@ -31,7 +31,7 @@
                                 </td>
 
                                 <td>
-                                    <center><img alt="comascosv" src="{{ url('storage/archivos/'.$dato->fotografia) }}"  width="75px" height="75px" /></center>
+                                    <center><img alt="santaananorte" src="{{ url('storage/archivos/'.$dato->fotografia) }}"  width="75px" height="75px" /></center>
                                 </td>
                                 <td>{{ $dato->link }}</td>
                                 <td>

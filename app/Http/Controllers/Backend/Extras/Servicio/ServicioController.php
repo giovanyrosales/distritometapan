@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend\Extras\Servicio;
 
 use App\Http\Controllers\Controller;
 use App\Models\Servicio;
+use App\Models\Votacion;
+use App\Models\VotacionRegistro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -261,10 +263,199 @@ class ServicioController extends Controller
         $doc = "Escaneo.pdf";
         $pathToFile = public_path("images/" . $doc);
         $extension = pathinfo($pathToFile, PATHINFO_EXTENSION);
-    
+
         $nombre = "Solicitud_de_Solvencia";
-    
+
         $nombreFinal = $nombre . "." . $extension;
         return response()->download($pathToFile, $nombreFinal);
     }
+
+
+
+    //************************************************************************************
+
+
+    public function indexVotacion(){
+        return view('backend.admin.votacion.vistavotacion');
+    }
+
+
+    public function tablaVotacion()
+    {
+        $arrayVotacion = Votacion::get();
+
+        return view('backend.admin.votacion.tablavotacion', compact('arrayVotacion'));
+    }
+
+    public function nuevoVotacion(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $cadena = Str::random(15);
+            $tiempo = microtime();
+            $union = $cadena . $tiempo;
+            $nombre = str_replace(' ', '_', $union);
+
+            $extension = '.' . $request->imagen->getClientOriginalExtension();
+            $nombreFoto = $nombre . strtolower($extension);
+            $avatar = $request->file('imagen');
+            Storage::disk('archivos')->put($nombreFoto, \File::get($avatar));
+
+
+            $registro = new Votacion();
+            $registro->nombre = $request->nombre;
+            $registro->descripcion = $request->descripcion;
+            $registro->imagen = $nombreFoto;
+            $registro->activo = 1;
+            $registro->save();
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+    public function informacionVotacion(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        if($info = Votacion::where('id', $request->id)->first()){
+
+            return ['success' => 1, 'info' => $info];
+        }else{
+            return ['success' => 2];
+        }
+    }
+
+
+    public function editarVotacion(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+
+        try {
+            if ($request->hasFile('imagen')) {
+
+                $cadena = Str::random(15);
+                $tiempo = microtime();
+                $union = $cadena . $tiempo;
+                $nombre = str_replace(' ', '_', $union);
+
+                $extension = '.' . $request->imagen->getClientOriginalExtension();
+                $nombreFoto = $nombre . strtolower($extension);
+                $avatar = $request->file('imagen');
+                Storage::disk('archivos')->put($nombreFoto, \File::get($avatar));
+
+                $infoFila = Votacion::where('id', $request->id)->first();
+                $imagenOld = $infoFila->imagen;
+
+                if($imagenOld != null){
+                    if(Storage::disk('archivos')->exists($imagenOld)){
+                        Storage::disk('archivos')->delete($imagenOld);
+                    }
+                }
+
+                Votacion::where('id', $request->id)
+                    ->update([
+                        'nombre' => $request->nombre,
+                        'descripcion' => $request->descripcion,
+                        'imagen' => $nombreFoto,
+                        'activo' => $request->toggle,
+                    ]);
+            }else{
+                Votacion::where('id', $request->id)
+                    ->update([
+                        'nombre' => $request->nombre,
+                        'descripcion' => $request->descripcion,
+                        'activo' => $request->toggle,
+                    ]);
+            }
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+    public function borrarVotacion(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+
+        try {
+
+            VotacionRegistro::where('id_votacion', $request->id)->delete();
+
+            $infoVotacion = Votacion::where('id', $request->id)->first();
+            $imagenOld = $infoVotacion->imagen;
+            if($imagenOld != null){
+                if(Storage::disk('archivos')->exists($imagenOld)){
+                    Storage::disk('archivos')->delete($imagenOld);
+                }
+            }
+
+            Votacion::where('id', $request->id)->delete();
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+
+
+    public function indexVotacionConteo()
+    {
+        return view('backend.admin.votacion.listado.vistatotalvotacion');
+    }
+
+    public function tablaVotacionConteo()
+    {
+        $arrayVotacion = Votacion::withCount('votos')->get();
+
+        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion'));
+    }
+
+
+
+
+
+
 }
