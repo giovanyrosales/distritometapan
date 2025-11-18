@@ -1,19 +1,20 @@
-<!-- Main content -->
 <section class="content">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <table id="table" class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th style="width: 10%">Nombre</th>
-                            <th style="width: 15%">Descripción</th>
-                            <th style="width: 15%">Imagen</th>
-                            <th style="width: 6%">Opciones</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tablecontents">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="tabla" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%">Nombre</th>
+                                <th style="width: 15%">Descripción</th>
+                                <th style="width: 15%">Imagen</th>
+                                <th style="width: 6%">Opciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
                             @foreach($arrayVotacion as $dato)
                                 <tr>
                                     <td style="width: 10%">{{ $dato->nombre }}</td>
@@ -47,8 +48,10 @@
 
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,14 +59,10 @@
 </section>
 
 
-
-
 <script>
     $(function () {
         $("#tabla").DataTable({
-            columnDefs: [
-                { type: 'date-euro', targets: 0 } // Suponiendo que la columna de fecha es la primera (índice 0)
-            ],
+
             "paging": true,
             "lengthChange": true,
             "searching": true,
