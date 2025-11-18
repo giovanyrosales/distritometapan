@@ -304,7 +304,7 @@
                                                 <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                             <a href="{{ asset('pdf/docu2.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
-                                                Documento 2 – Lineamientos y Normativa
+                                                Documento 2 – Código de ética para socios de negocios
                                             </a>
                                         </li>
 
@@ -313,7 +313,7 @@
                                                 <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                             </svg>
                                             <a href="{{ asset('pdf/docu3.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
-                                                Documento 3 – Procedimiento de Denuncias
+                                                Documento 3 – Pólitica de regalos y hospitalidades
                                             </a>
                                         </li>
                                     </ul>
