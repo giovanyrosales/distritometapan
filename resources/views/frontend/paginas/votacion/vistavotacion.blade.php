@@ -222,7 +222,7 @@
                                     text: response.data.msg,
                                 }).then(() => {
                                     // Recargar para que ahora muestre "Su voto ya ha sido registrado"
-                                    window.location.reload();
+                                    window.location.href = response.data.redirect;
                                 });
                             } else {
                                 Swal.fire({

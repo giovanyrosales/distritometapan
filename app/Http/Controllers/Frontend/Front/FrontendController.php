@@ -310,6 +310,7 @@ class FrontendController extends Controller
 
         return response()->json([
             'success' => 1,
+            'redirect' => route('index'),
             'msg' => '¡Gracias! Su voto ha sido registrado correctamente.',
         ]);
     }
