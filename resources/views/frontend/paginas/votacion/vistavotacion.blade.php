@@ -92,6 +92,23 @@
             flex-grow: 1;
         }
 
+        /* GRID para los cards de votación */
+        .grid-votacion{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;               /* separación entre cards */
+        }
+
+        /* Cards flex para que el botón quede abajo */
+        .vote-card{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .vote-desc{
+            flex-grow: 1;            /* empuja el botón hacia abajo */
+        }
 
     </style>
 
@@ -139,30 +156,27 @@
             </p>
 
             <!-- CARDS -->
-            <div class="row">
+        <div class="grid-votacion">
 
                 @foreach ($opciones as $item)
-                    <div class="col-md-4 d-flex">
-                        <div class="vote-card h-100 d-flex flex-column">
+                    <div class="vote-card">
+                        <img
+                            src="{{ $item->imagen ? url('storage/archivos/'.$item->imagen) : asset('images/starbu.jpg') }}"
+                            class="vote-img"
+                            alt="Imagen">
 
-                            <img
-                                src="{{ $item->imagen ? url('storage/archivos/'.$item->imagen) : asset('images/starbu.jpg') }}"
-                                class="vote-img"
-                                alt="Imagen">
+                        <h4 class="vote-title">{{ $item->nombre }}</h4>
 
-                            <h4 class="vote-title">{{ $item->nombre }}</h4>
+                        <p class="vote-desc">
+                            {{ $item->descripcion }}
+                        </p>
 
-                            <p class="vote-desc">
-                                {{ $item->descripcion }}
-                            </p>
-
-                            <button class="vote-btn mt-auto" onclick="votar({{ $item->id }})">
-                                Votar
-                            </button>
-
-                        </div>
+                        <button class="vote-btn" onclick="votar({{ $item->id }})">
+                            Votar
+                        </button>
                     </div>
                 @endforeach
+
 
             </div>
 
