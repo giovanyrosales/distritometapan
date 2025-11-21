@@ -83,6 +83,14 @@
             padding: 10px 24px !important;
         }
 
+        .vote-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vote-desc {
+            flex-grow: 1;
+        }
 
 
     </style>
@@ -134,19 +142,21 @@
             <div class="row">
 
                 @foreach ($opciones as $item)
-                    <div class="col-md-4">
-                        <div class="vote-card">
+                    <div class="col-md-4 d-flex">
+                        <div class="vote-card h-100 d-flex flex-column">
 
                             <img
                                 src="{{ $item->imagen ? url('storage/archivos/'.$item->imagen) : asset('images/starbu.jpg') }}"
                                 class="vote-img"
-                                alt="Imagen"
-                            >
+                                alt="Imagen">
 
                             <h4 class="vote-title">{{ $item->nombre }}</h4>
-                            <p class="vote-desc">{{ $item->descripcion }}</p>
 
-                            <button class="vote-btn" onclick="votar({{ $item->id }})">
+                            <p class="vote-desc">
+                                {{ $item->descripcion }}
+                            </p>
+
+                            <button class="vote-btn mt-auto" onclick="votar({{ $item->id }})">
                                 Votar
                             </button>
 
