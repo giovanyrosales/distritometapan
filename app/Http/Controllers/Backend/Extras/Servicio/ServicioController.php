@@ -475,13 +475,8 @@ class ServicioController extends Controller
 
     public function tablaVotacionConteo()
     {
-        $arrayVotacion = Votacion::withCount([
-            'votos' => function ($q) {
-                $q->where('fecha', '<=', '2025-11-26 12:00:00');
-            }
-        ])
-            ->orderBy('votos_count', 'DESC') // opcional: ordenar por votos
-            ->get();
+        $arrayVotacion = Votacion::withCount('votos')->get();
+
 
         return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion'));
     }

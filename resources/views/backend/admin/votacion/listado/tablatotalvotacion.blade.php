@@ -16,7 +16,7 @@
 
                             @foreach($arrayVotacion as $dato)
                                 <tr>
-                                    <td style="width: 10%">{{ $dato->votos_count }}</td>
+                                    <td style="width: 10%">{{ $dato->votados }}</td>
                                     <td style="width: 15%">{{ $dato->nombre }}</td>
 
                                     <td>
