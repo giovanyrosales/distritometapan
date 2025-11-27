@@ -195,14 +195,6 @@ Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSobo
 
 
 
-// ========= VOTACION ============
-
-Route::get('/votacion', [FrontendController::class,'vistaVotacion']);
-Route::post('/votacion/registrar',[FrontendController::class,'registrarVotacion']);
-
-
-
-
 
 
 
