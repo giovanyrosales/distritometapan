@@ -7,6 +7,7 @@
                         <table id="tabla" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th style="width: 5%">Posición</th>
                                 <th style="width: 5%">Votos</th>
                                 <th style="width: 10%">Nombre</th>
                                 <th style="width: 15%">Imagen</th>
@@ -16,6 +17,7 @@
 
                             @foreach($arrayVotacion as $dato)
                                 <tr>
+                                    <td style="width: 10%">{{ $dato->posicion }}</td>
                                     <td style="width: 10%">{{ $dato->votados }}</td>
                                     <td style="width: 15%">{{ $dato->nombre }}</td>
 
