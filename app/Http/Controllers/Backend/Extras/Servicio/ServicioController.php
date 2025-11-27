@@ -470,15 +470,17 @@ class ServicioController extends Controller
 
     public function indexVotacionConteo()
     {
-        return view('backend.admin.votacion.listado.vistatotalvotacion');
+        $arrayVotacion = Votacion::withCount('votos')->get();
+        $totalVotados = $arrayVotacion->sum('votados');
+
+        return view('backend.admin.votacion.listado.vistatotalvotacion', compact( 'totalVotados'));
     }
 
     public function tablaVotacionConteo()
     {
         $arrayVotacion = Votacion::withCount('votos')->get();
-        $totalVotados = $arrayVotacion->sum('votados');
 
-        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion', 'totalVotados'));
+        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion'));
     }
 
 
