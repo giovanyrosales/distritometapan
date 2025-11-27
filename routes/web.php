@@ -137,7 +137,7 @@ Route::get('/admin/votacion/conteo/tabla', [ServicioController::class,'tablaVota
 
 //*****************************   FRONTEND   ******************************************
 
-Route::get('/', [FrontendController::class,'index']);
+Route::get('/', [FrontendController::class,'index'])->name('index');
 
 Route::get('/servicios',[FrontendController::class,'obtenerTodosServicios']);
 Route::get('/servicio/{nombre}',[FrontendController::class,'serviciosPorNombre']);

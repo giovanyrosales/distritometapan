@@ -255,7 +255,7 @@ class FrontendController extends Controller
         $ip = $request->ip();
 
         // Verificar si ya votó esta IP
-        $yaVoto = VotacionRegistro::where('ip', $ip)->exists();
+        /*$yaVoto = VotacionRegistro::where('ip', $ip)->exists();
 
         // Si ya votó, solo enviamos una bandera a la vista
         if ($yaVoto) {
@@ -263,7 +263,7 @@ class FrontendController extends Controller
                 'yaVoto' => true,
                 'serviciosMenu' => $serviciosMenu
             ]);
-        }
+        }*/
 
         // Si NO ha votado, mostrar las opciones
         $opciones = Votacion::where('activo', 1)
@@ -289,7 +289,7 @@ class FrontendController extends Controller
         $ip = $request->ip();
 
         // Verificar si esta IP ya votó
-        $yaVoto = DB::table('votacion_registro')
+        /*$yaVoto = DB::table('votacion_registro')
             ->where('ip', $ip)
             ->exists();
 
@@ -298,7 +298,7 @@ class FrontendController extends Controller
                 'success' => 0,
                 'msg' => 'Ya has realizado tu voto anteriormente.',
             ]);
-        }
+        }*/
 
         // Registrar voto
         DB::table('votacion_registro')->insert([
@@ -310,6 +310,7 @@ class FrontendController extends Controller
 
         return response()->json([
             'success' => 1,
+            'redirect' => route('index'),
             'msg' => '¡Gracias! Su voto ha sido registrado correctamente.',
         ]);
     }
