@@ -476,9 +476,9 @@ class ServicioController extends Controller
     public function tablaVotacionConteo()
     {
         $arrayVotacion = Votacion::withCount('votos')->get();
+        $totalVotados = $arrayVotacion->sum('votados');
 
-
-        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion'));
+        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion', 'totalVotados'));
     }
 
 
