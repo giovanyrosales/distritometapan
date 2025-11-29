@@ -40,12 +40,7 @@
                         <strong>
                             <h1>{{ $noticia->nombrenoticia }}</h1>
                         </strong>
-                        <div class="row row-pb-sm">
-                            <div class="col-md-12 animate-box">
-                                <img class="img-responsive" src="{{ asset('storage/archivos/'.$noticia->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
-                            </div>
 
-                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {!! $noticia->deslarga !!}
