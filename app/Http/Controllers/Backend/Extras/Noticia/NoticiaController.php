@@ -36,64 +36,54 @@ class NoticiaController extends Controller
     }
 
 
-    public function nuevoNoticia(Request $request)
-    {
+    public function nuevoNoticia(Request $request){
+
         $regla = array(
             'nombre' => 'required',
-            'fecha'  => 'required',
-            'slug'   => 'required',
-            // opcional pero recomendado:
-            // 'imagen.*' => 'image|mimes:jpg,jpeg,png,webp|max:4096',
+            'fecha' => 'required',
+            'slug' => 'required',
         );
 
         // nombre, fecha, slug, editorc, editorl, imagen[]
 
         $validar = Validator::make($request->all(), $regla);
 
-        if ($validar->fails()) {
-            return ['success' => 0];
-        }
+        if ($validar->fails()){ return ['success' => 0];}
 
         DB::beginTransaction();
         try {
 
             $registro = new Noticia();
             $registro->nombrenoticia = $request->nombre;
-            $registro->estado        = 0;
-            $registro->fecha         = $request->fecha;
-            $registro->descorta      = $request->editorc;
-            $registro->deslarga      = $request->editorl;
-            $registro->slug          = $request->slug;
+            $registro->estado = 0;
+            $registro->fecha = $request->fecha;
+            $registro->descorta = $request->editorc;
+            $registro->deslarga = $request->editorl;
+            $registro->slug = $request->slug;
             $registro->save();
 
-            if ($request->hasFile('imagen')) {
-                foreach ($request->file('imagen') as $img) {
+            foreach($request->file('imagen') as $img){
 
-                    $cadena = Str::random(15);
-                    $tiempo = microtime();
-                    $union  = $cadena . $tiempo;
-                    $nombre = str_replace(' ', '_', $union);
+                $cadena = Str::random(15);
+                $tiempo = microtime();
+                $union = $cadena . $tiempo;
+                $nombre = str_replace(' ', '_', $union);
 
-                    $extension  = '.' . $img->getClientOriginalExtension();
-                    $nombreFoto = $nombre . strtolower($extension);
+                $extension = '.'.$img->getClientOriginalExtension();
+                $nombreFoto = $nombre . strtolower($extension);
 
-                    // 👉 Sin Intervention: guardar el archivo tal cual en el disk 'archivos'
-                    // storage/app/archivos (dependiendo de cómo tengas configurado el disk)
-                    $img->storeAs('/', $nombreFoto, 'archivos');
-                    // Alternativa equivalente:
-                    // Storage::disk('archivos')->putFileAs('', $img, $nombreFoto);
+                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
 
-                    $detalle = new Fotografia();
-                    $detalle->noticia_id      = $registro->id;
-                    $detalle->nombrefotografia = $nombreFoto;
-                    $detalle->save();
-                }
+                $detalle = new Fotografia();
+                $detalle->noticia_id = $registro->id;
+                $detalle->nombrefotografia = $nombreFoto;
+                $detalle->save();
             }
 
             DB::commit();
             return ['success' => 1];
 
-        } catch (\Throwable $e) {
+        }catch(\Throwable $e){
             Log::info('error: ' . $e);
             DB::rollback();
             return ['success' => 99];
@@ -207,54 +197,50 @@ class NoticiaController extends Controller
     }
 
 
-    public function nuevoNoticiaImagen(Request $request)
-    {
+    public function nuevoNoticiaImagen(Request $request){
+
         $regla = array(
             'id' => 'required',
-            // opcional recomendado:
-            // 'imagen.*' => 'image|mimes:jpg,jpeg,png,webp|max:4096',
         );
+
+        // imagen[]
 
         $validar = Validator::make($request->all(), $regla);
 
-        if ($validar->fails()) {
-            return ['success' => 0];
-        }
+        if ($validar->fails()){ return ['success' => 0];}
 
         DB::beginTransaction();
         try {
 
-            if ($request->hasFile('imagen')) {
-                foreach ($request->file('imagen') as $img) {
+            foreach($request->file('imagen') as $img){
 
-                    $cadena = Str::random(15);
-                    $tiempo = microtime();
-                    $union  = $cadena . $tiempo;
-                    $nombre = str_replace(' ', '_', $union);
+                $cadena = Str::random(15);
+                $tiempo = microtime();
+                $union = $cadena . $tiempo;
+                $nombre = str_replace(' ', '_', $union);
 
-                    $extension  = '.' . $img->getClientOriginalExtension();
-                    $nombreFoto = $nombre . strtolower($extension);
 
-                    // 👉 Guardar directamente SIN Intervention
-                    $img->storeAs('/', $nombreFoto, 'archivos');
 
-                    $detalle = new Fotografia();
-                    $detalle->noticia_id = $request->id;
-                    $detalle->nombrefotografia = $nombreFoto;
-                    $detalle->save();
-                }
+                $extension = '.'.$img->getClientOriginalExtension();
+                $nombreFoto = $nombre . strtolower($extension);
+
+                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
+
+                $detalle = new Fotografia();
+                $detalle->noticia_id = $request->id;
+                $detalle->nombrefotografia = $nombreFoto;
+                $detalle->save();
             }
 
             DB::commit();
             return ['success' => 1];
 
-        } catch (\Throwable $e) {
+        }catch(\Throwable $e){
             Log::info('error: ' . $e);
             DB::rollback();
             return ['success' => 99];
         }
     }
-
 
 
     public function borrarNoticiaImagen(Request $request){
