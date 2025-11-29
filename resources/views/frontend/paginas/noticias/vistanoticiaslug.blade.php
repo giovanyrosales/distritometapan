@@ -40,21 +40,26 @@
                         <strong>
                             <h1>{{ $noticia->nombrenoticia }}</h1>
                         </strong>
-
+                        <div class="row row-pb-sm">
+                            <div class="col-md-12 animate-box">
+                                <img class="img-responsive" src="{{ asset('storage/archivos/'.$primeraFoto->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-12">
                                 {!! $noticia->deslarga !!}
                                 <br>
                             </div>
                         </div>
-                        <div class="row">
-                            @foreach($fotografias as $foto)
-                                <div class="col-md-4 animate-box">
-                                    <img class="img-responsive" src="{{ asset('storage/archivos/'.$foto->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
-                                </div>
-                            @endforeach
-
-                        </div>
+                        @if ($fotografias->count() > 1)
+                            <div class="row">
+                                @foreach($fotografias as $foto)
+                                    <div class="col-md-4 animate-box">
+                                        <img class="img-responsive" src="{{ asset('storage/archivos/'.$foto->nombrefotografia)}}" alt="" data-toggle="modal" data-target="#modal1" onclick="getPath(this)">
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                         <br><br>
                     </div>
                     <div class="col-md-4">

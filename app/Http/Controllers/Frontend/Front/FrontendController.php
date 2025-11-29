@@ -136,11 +136,15 @@ class FrontendController extends Controller
             // Forget se utiliza para eliminar el primer elemento de una coleccion
             $fotografias = Fotografia::where('noticia_id', $noticia->id)->get();
 
+            $primeraFoto = Fotografia::where('noticia_id', $noticia->id)
+                ->orderBy('id', 'ASC')
+                ->first();
+
             $noticiaReciente = $this->getRecentNew(3);
             $serviciosMenu = $this->getServiciosMenu();
 
 
-            return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias']));
+            return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias', 'primeraFoto']));
         }else{
             return view('errors.404');
         }
