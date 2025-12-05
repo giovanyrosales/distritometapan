@@ -30,6 +30,7 @@
                                 <li><strong><a href="{{ url('/politica-anti-soborno') }}">Política antisoborno</a></strong></li>
                                 <li><strong><a href="{{ url('programas/') }}">Programas Municipales</a></strong></li>
                                 <li><strong><a href="{{ url('direccion/') }}">Gobierno municipal</a></strong></li>
+                                <li><strong><a href="{{ url('/sugerencias') }}">Sugerencias</a></strong></li>
                                 <li><strong><a href="{{ url('historia/') }}">Historia</a></strong></li>
                             </ul>
                         </li>
