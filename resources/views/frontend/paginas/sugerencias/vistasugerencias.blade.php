@@ -26,14 +26,14 @@
         text-transform:uppercase;
         font-weight:800;
         letter-spacing:.08em;
-        font-size:2.2rem;
-        margin-bottom:.5rem;
+        font-size:17px!important;
+        margin-bottom: 0px;
     }
 
     .section-subtitle{
         color:var(--muted);
         max-width:900px;
-        font-size:1.05rem;
+        font-size: 17px!important;
         line-height:1.55;
     }
 
@@ -214,29 +214,12 @@
 
                     <div class="sugerencias-card">
                         <div class="sugerencias-header">
-                            <h3>Envíenos su sugerencia</h3>
-                            <span>Los campos marcados con <span style="color:#dc2626">*</span> son obligatorios.</span>
+                            <p style="font-weight: bold; font-size: 14px">Envíenos su sugerencia</p>
+                            <span style="font-size: 12px">Los campos marcados con <span style="color:#dc2626">*</span> son obligatorios.</span>
                         </div>
 
-                        {{-- Mensaje de éxito opcional --}}
-                        @if(session('success'))
-                            <div class="alert alert-success alert-custom">
-                                {{ session('success') }}
-                            </div>
-                        @endif
 
-                        {{-- Errores de validación --}}
-                        @if($errors->any())
-                            <div class="alert alert-danger alert-custom">
-                                <ul style="margin:0;padding-left:18px;">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form class="form-sugerencias"
+                        <form style="margin-top: 15px" class="form-sugerencias"
                               >
                             @csrf
 
