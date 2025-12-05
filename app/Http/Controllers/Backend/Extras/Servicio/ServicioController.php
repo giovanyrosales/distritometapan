@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Extras\Servicio;
 
 use App\Http\Controllers\Controller;
 use App\Models\Servicio;
+use App\Models\Sugerencias;
 use App\Models\Votacion;
 use App\Models\VotacionRegistro;
 use Illuminate\Http\Request;
@@ -401,89 +402,32 @@ class ServicioController extends Controller
     }
 
 
-    public function borrarVotacion(Request $request)
+    public function indexSugerencias()
+    {
+        return view('backend.admin.sugerencias.vistasugerencias');
+    }
+
+    public function tablaSugerencias()
+    {
+        $arraySugerencias = Sugerencias::orderBy('fecha', 'ASC')->get();
+
+        return view('backend.admin.sugerencias.tablasugerencias', compact('arraySugerencias'));
+    }
+
+
+    public function borrarSugerencias(Request $request)
     {
         $regla = array(
             'id' => 'required',
         );
 
-
         $validar = Validator::make($request->all(), $regla);
 
         if ($validar->fails()){ return ['success' => 0];}
 
-        DB::beginTransaction();
-
-        try {
-
-            VotacionRegistro::where('id_votacion', $request->id)->delete();
-
-            $infoVotacion = Votacion::where('id', $request->id)->first();
-            $imagenOld = $infoVotacion->imagen;
-            if($imagenOld != null){
-                if(Storage::disk('archivos')->exists($imagenOld)){
-                    Storage::disk('archivos')->delete($imagenOld);
-                }
-            }
-
-            Votacion::where('id', $request->id)->delete();
-
-            DB::commit();
-            return ['success' => 1];
-
-        }catch(\Throwable $e){
-            Log::info('error: ' . $e);
-            DB::rollback();
-            return ['success' => 99];
-        }
+        Sugerencias::where('id', $request->id)->delete();
+        return ['success' => 1];
     }
-
-
-    public function borrarVotacionConteo(Request $request)
-    {
-        $regla = array(
-            'id' => 'required',
-        );
-
-
-        $validar = Validator::make($request->all(), $regla);
-
-        if ($validar->fails()){ return ['success' => 0];}
-
-        DB::beginTransaction();
-
-        try {
-
-            VotacionRegistro::where('id_votacion', $request->id)->delete();
-
-            DB::commit();
-            return ['success' => 1];
-
-        }catch(\Throwable $e){
-            Log::info('error: ' . $e);
-            DB::rollback();
-            return ['success' => 99];
-        }
-    }
-
-
-
-    public function indexVotacionConteo()
-    {
-        $arrayVotacion = Votacion::withCount('votos')->get();
-        $totalVotados = $arrayVotacion->sum('votados');
-
-        return view('backend.admin.votacion.listado.vistatotalvotacion', compact( 'totalVotados'));
-    }
-
-    public function tablaVotacionConteo()
-    {
-        $arrayVotacion = Votacion::withCount('votos')->get();
-
-        return view('backend.admin.votacion.listado.tablatotalvotacion', compact('arrayVotacion'));
-    }
-
-
 
 
 

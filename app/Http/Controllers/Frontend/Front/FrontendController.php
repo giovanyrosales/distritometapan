@@ -11,10 +11,14 @@ use App\Models\Noticia;
 use App\Models\Programa;
 use App\Models\Servicio;
 use App\Models\Slider;
+use App\Models\Sugerencias;
 use App\Models\Votacion;
 use App\Models\VotacionRegistro;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
@@ -316,6 +320,48 @@ class FrontendController extends Controller
     }
 
 
+    public function vistaSugerencias()
+    {
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+
+        return view('frontend.paginas.sugerencias.vistasugerencias', [
+            'serviciosMenu' => $serviciosMenu
+        ]);
+    }
+
+
+    public function registrarSugerencia(Request $request)
+    {
+        $regla = array(
+            'nombre' => 'required',
+            'telefono' => 'required',
+        );
+
+        // correo, comentarios
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            $registro = new Sugerencias();
+            $registro->fecha = Carbon::now('America/El_Salvador');
+            $registro->nombre = $request->nombre;
+            $registro->telefono = $request->telefono;
+            $registro->correo = $request->correo;
+            $registro->comentarios = $request->comentarios;
+            $registro->save();
+
+            DB::commit();
+            return ['success' => 1];
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
 
 
 

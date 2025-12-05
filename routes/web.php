@@ -119,20 +119,16 @@ Route::post('/admin/servicio/informacion', [ServicioController::class, 'informac
 Route::post('/admin/servicio/editar', [ServicioController::class, 'editarServicio']);
 Route::post('/admin/servicio/borrar', [ServicioController::class, 'borrarServicio']);
 
-// VOTACION
-Route::get('/admin/votacion/index', [ServicioController::class,'indexVotacion'])->name('admin.votacion.index');
-Route::get('/admin/votacion/tabla', [ServicioController::class,'tablaVotacion']);
-Route::post('/admin/votacion/nuevo', [ServicioController::class, 'nuevoVotacion']);
-Route::post('/admin/votacion/informacion', [ServicioController::class, 'informacionVotacion']);
-Route::post('/admin/votacion/editar', [ServicioController::class, 'editarVotacion']);
-Route::post('/admin/votacion/borrar', [ServicioController::class, 'borrarVotacion']);
-Route::post('/admin/votacion/borrar-conteo', [ServicioController::class, 'borrarVotacionConteo']);
+// SUGERENCIAS
+Route::get('/admin/sugerencias/index', [ServicioController::class,'indexSugerencias'])->name('admin.sugerencias.index');
+Route::get('/admin/sugerencias/tabla', [ServicioController::class,'tablaSugerencias']);
+Route::post('/admin/sugerencias/borrar', [ServicioController::class, 'borrarSugerencias']);
 
 // CONTEO VOTACION
 
-Route::get('/admin/votacion/conteo/index', [ServicioController::class,'indexVotacionConteo'])->name('admin.votacion.conteo.index');
+/*Route::get('/admin/votacion/conteo/index', [ServicioController::class,'indexVotacionConteo'])->name('admin.votacion.conteo.index');
 Route::get('/admin/votacion/conteo/tabla', [ServicioController::class,'tablaVotacionConteo']);
-
+*/
 
 
 //*****************************   FRONTEND   ******************************************
@@ -189,6 +185,10 @@ Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descar
 // vista politica anti soborno
 Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSoborno']);
 
+
+// vista de Sugerencias
+Route::get('/sugerencias', [FrontendController::class,'vistaSugerencias']);
+Route::post('/enviar/sugerencias', [FrontendController::class,'registrarSugerencia']);
 
 
 
