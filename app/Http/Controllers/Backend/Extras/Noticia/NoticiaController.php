@@ -72,15 +72,7 @@ class NoticiaController extends Controller
                 $extension = '.'.$img->getClientOriginalExtension();
                 $nombreFoto = $nombre . strtolower($extension);
 
-
-
-
-                // Inicializar Intervention Image
-                $manager = new ImageManager(new Driver());
-                $imgData = $manager->read($img);
-                $compressedImage = $imgData->toJpeg(75);
-
-                Storage::disk('archivos')->put($nombreFoto, $compressedImage);
+                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
 
                 $detalle = new Fotografia();
                 $detalle->noticia_id = $registro->id;
@@ -227,18 +219,12 @@ class NoticiaController extends Controller
                 $union = $cadena . $tiempo;
                 $nombre = str_replace(' ', '_', $union);
 
+
+
                 $extension = '.'.$img->getClientOriginalExtension();
                 $nombreFoto = $nombre . strtolower($extension);
 
-
-
-                // Inicializar Intervention Image
-                $manager = new ImageManager(new Driver());
-                $imgData = $manager->read($img);
-                $compressedImage = $imgData->toJpeg(75);
-
-                Storage::disk('archivos')->put($nombreFoto, $compressedImage);
-
+                Storage::disk('archivos')->put($nombreFoto, \File::get($img));
 
                 $detalle = new Fotografia();
                 $detalle->noticia_id = $request->id;

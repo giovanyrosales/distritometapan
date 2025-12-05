@@ -136,15 +136,19 @@ class FrontendController extends Controller
 
         if($noticia =  Noticia::where('slug', $slug)->where('estado', 1)->first()){
 
-            $fotoInicial = Fotografia::where('noticia_id', $noticia->id)->first();
 
             // Forget se utiliza para eliminar el primer elemento de una coleccion
-            $fotografias = Fotografia::where('noticia_id', $noticia->id)->get()->forget(0);
-            $noticia->nombrefotografia = $fotoInicial;
+            $fotografias = Fotografia::where('noticia_id', $noticia->id)->get();
+
+            $primeraFoto = Fotografia::where('noticia_id', $noticia->id)
+                ->orderBy('id', 'ASC')
+                ->first();
+
             $noticiaReciente = $this->getRecentNew(3);
             $serviciosMenu = $this->getServiciosMenu();
 
-            return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias']));
+
+            return view('frontend.paginas.noticias.vistanoticiaslug',compact(['noticia','serviciosMenu','noticiaReciente','fotografias', 'primeraFoto']));
         }else{
             return view('errors.404');
         }
