@@ -31,6 +31,13 @@ class ControlController extends Controller
         else if($user->hasRole('ucp')){
             $ruta = 'admin.ucp.index';
         }
+
+        // BUZON
+        else if($user->hasRole('buzon')){
+            $ruta = 'admin.buzon.nuevo.index';
+        }
+
+
         else{
             $ruta = 'no.permisos.index';
         }

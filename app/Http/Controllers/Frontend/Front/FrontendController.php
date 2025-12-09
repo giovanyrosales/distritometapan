@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Compras;
+use App\Models\Distrito;
+use App\Models\DistritoServicios;
 use App\Models\Documento;
 use App\Models\Finanzas;
 use App\Models\Fotografia;
@@ -328,8 +330,11 @@ class FrontendController extends Controller
     {
         $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
 
+        $arrayDistrito = Distrito::orderBy('id', 'DESC')->get();
+
         return view('frontend.paginas.sugerencias.vistasugerencias', [
-            'serviciosMenu' => $serviciosMenu
+            'serviciosMenu' => $serviciosMenu,
+            'arrayDistrito' => $arrayDistrito
         ]);
     }
 
@@ -351,11 +356,13 @@ class FrontendController extends Controller
         try {
 
             $registro = new Sugerencias();
+            $registro->id_distritoservicios = $request->id_distritoservicios;
             $registro->fecha = Carbon::now('America/El_Salvador');
             $registro->nombre = $request->nombre;
             $registro->telefono = $request->telefono;
             $registro->correo = $request->correo;
             $registro->comentarios = $request->comentarios;
+            $registro->revisado = 0;
             $registro->save();
 
             DB::commit();
@@ -366,6 +373,39 @@ class FrontendController extends Controller
             return ['success' => 99];
         }
     }
+
+
+    public function informacionDistritoServicios(Request $request)
+    {
+        $regla = [
+            'id_distrito' => 'required|integer',
+        ];
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()) {
+            return ['success' => 0];
+        }
+
+        $lista = DistritoServicios::where('id_distrito', $request->id_distrito)
+            ->select('id', 'nombre')
+            ->orderBy('nombre')
+            ->get();
+
+        return [
+            'success' => 1,
+            'lista'   => $lista,
+        ];
+    }
+
+
+
+
+
+
+
+
+
 
 
 

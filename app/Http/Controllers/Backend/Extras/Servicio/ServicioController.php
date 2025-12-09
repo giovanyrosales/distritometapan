@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend\Extras\Servicio;
 
 use App\Http\Controllers\Controller;
+use App\Models\Distrito;
+use App\Models\DistritoServicios;
 use App\Models\Servicio;
 use App\Models\Sugerencias;
 use App\Models\Votacion;
@@ -428,6 +430,260 @@ class ServicioController extends Controller
         Sugerencias::where('id', $request->id)->delete();
         return ['success' => 1];
     }
+
+
+
+    public function indexDistrito()
+    {
+        return view('backend.admin.distrito.vistadistrito');
+    }
+
+
+    public function tablaDistrito()
+    {
+        $arrayDistrito = Distrito::orderBy('id', 'ASC')->get();
+
+        return view('backend.admin.distrito.tabladistrito', compact('arrayDistrito'));
+    }
+
+
+    public function indexDistritoServicios($id)
+    {
+        $infoDistrito = Distrito::where('id', $id)->first();
+
+
+        return view('backend.admin.distrito.servicios.vistadistritoservicios', compact('id', 'infoDistrito'));
+    }
+
+
+    public function tablaDistritoServicios($id)
+    {
+        $arrayServicios = DistritoServicios::where('id_distrito', $id)->orderBy('nombre', 'ASC')->get();
+
+        return view('backend.admin.distrito.servicios.tabladistritoservicios', compact('arrayServicios'));
+    }
+
+
+    public function registrarDistritoServicios(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+            'nombre' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        $registro = new DistritoServicios();
+        $registro->id_distrito = $request->id;
+        $registro->nombre = $request->nombre;
+        $registro->save();
+
+        return ['success' => 1];
+    }
+
+
+    public function informacionDistritoServicios(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        if($info = DistritoServicios::where('id', $request->id)->first()){
+
+            return ['success' => 1, 'info' => $info];
+        }else{
+            return ['success' => 2];
+        }
+    }
+
+    public function editarDistritoServicios(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+            'nombre' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            DistritoServicios::where('id', $request->id)
+                ->update([
+                    'nombre' => $request->nombre,
+                ]);
+
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+
+    public function indexBuzonNuevo()
+    {
+        $user = auth()->user();
+        $infoDistrito = Distrito::where('id', $user->id_distrito)->first();
+
+        return view('backend.admin.distrito.buzonusuario.nuevo.vistanuevobuzon', compact('infoDistrito'));
+    }
+
+
+    public function tablaBuzonNuevo()
+    {
+        $user = auth()->user();
+
+        $arrayDistritoServicios = DistritoServicios::where('id_distrito', $user->id_distrito)
+            ->select('id')
+            ->get();
+
+        $arraySugerencias = Sugerencias::where('revisado', 0)
+            ->whereIn('id_distritoservicios', $arrayDistritoServicios)
+            ->orderBy('fecha', 'ASC')
+            ->get()
+            ->map(function($item){
+
+                $item->fechaFormat = date("d-m-Y h:i A", strtotime($item->fecha));
+
+                $infoServicio = DistritoServicios::where('id', $item->id_distritoservicios)->first();
+                $item->nombreServicio = $infoServicio->nombre;
+
+                return $item;
+            });
+
+        return view('backend.admin.distrito.buzonusuario.nuevo.tablanuevobuzon', compact('arraySugerencias'));
+    }
+
+
+    public function registrarRevisado(Request $request)
+    {
+        $regla = [
+            'id' => 'required|integer',
+        ];
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()) {
+            return ['success' => 0]; // datos inválidos
+        }
+
+        $user = auth()->user();
+
+        DB::beginTransaction();
+        try {
+
+            // 1) Obtener los id de distrito_servicios que pertenecen al distrito del usuario
+            $idsDistritoServicios = DistritoServicios::where('id_distrito', $user->id_distrito)
+                ->pluck('id'); // importante: pluck para quedarnos solo con los IDs
+
+            // 2) Actualizar solo si la sugerencia pertenece a alguno de esos servicios
+            Sugerencias::where('id', $request->id)
+                ->whereIn('id_distritoservicios', $idsDistritoServicios)
+                ->update([
+                    'revisado' => 1,
+                ]);
+
+            DB::commit();
+            return ['success' => 1];
+
+        } catch (\Throwable $e) {
+            Log::info('error: ' . $e);
+            DB::rollBack();
+            return ['success' => 99];
+        }
+    }
+
+    public function indexBuzonTodos()
+    {
+        $user = auth()->user();
+        $infoDistrito = Distrito::where('id', $user->id_distrito)->first();
+
+        // FILTRO POR SERVICIOS DEL MISMO DISTRITO
+        $arrayServicios = DistritoServicios::where('id_distrito', $infoDistrito->id)->orderBy('nombre', 'ASC')->get();
+
+        return view('backend.admin.distrito.buzonusuario.todos.vistabuzontodos', compact('infoDistrito', 'arrayServicios'));
+    }
+
+
+    public function tablaBuzonTodos()
+    {
+        $user = auth()->user();
+
+        $arrayDistritoServicios = DistritoServicios::where('id_distrito', $user->id_distrito)
+            ->select('id')
+            ->get();
+
+        $arraySugerencias = Sugerencias::where('revisado', 0)
+            ->whereIn('id_distritoservicios', $arrayDistritoServicios)
+            ->orderBy('fecha', 'ASC')
+            ->get()
+            ->map(function($item){
+
+                $item->fechaFormat = date("d-m-Y h:i A", strtotime($item->fecha));
+
+                $infoServicio = DistritoServicios::where('id', $item->id_distritoservicios)->first();
+                $item->nombreServicio = $infoServicio->nombre;
+
+                return $item;
+            });
+
+
+        return view('backend.admin.distrito.buzonusuario.todos.tablabuzontodos', compact('arraySugerencias'));
+    }
+
+
+    public function tablaBuzonTodosBuscar($id) // id servicio y cada servicio tiene su distrito
+    {
+        $user = auth()->user();
+
+        if($id === '0'){
+            $arrayDistritoServicios = DistritoServicios::where('id_distrito', $user->id_distrito)
+                ->select('id')
+                ->get();
+        }else{
+            $arrayDistritoServicios = DistritoServicios::where('id_distrito', $user->id_distrito)
+                ->where('id', $id)
+                ->select('id')
+                ->get();
+        }
+
+        $arraySugerencias = Sugerencias::where('revisado', 1)
+            ->whereIn('id_distritoservicios', $arrayDistritoServicios)
+            ->orderBy('fecha', 'ASC')
+            ->get()
+            ->map(function($item){
+
+                $item->fechaFormat = date("d-m-Y h:i A", strtotime($item->fecha));
+
+                $infoServicio = DistritoServicios::where('id', $item->id_distritoservicios)->first();
+                $item->nombreServicio = $infoServicio->nombre;
+
+                return $item;
+            });
+
+        return view('backend.admin.distrito.buzonusuario.todos.tablabuzontodos', compact('arraySugerencias'));
+    }
+
+
+
+
+
+
+
 
 
 

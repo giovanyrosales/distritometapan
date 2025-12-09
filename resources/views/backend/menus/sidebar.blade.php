@@ -44,8 +44,41 @@
                                 </a>
                             </li>
 
+
+                            <!-- CONTROL DE DISTRITO PARA BUZON DE SUGERENCIAS -->
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.distritos.index') }}" target="frameprincipal" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Distritos</p>
+                                </a>
+                            </li>
+
+
+
+
+
+
+
                         </ul>
                     </li>
+
+                @endcan
+
+                @can('sidebar.buzon')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.buzon.nuevo.index') }}" target="frameprincipal" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Nuevo Buzón</p>
+                        </a>
+                    </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.buzon.todos.index') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Buzón Todos</p>
+                            </a>
+                        </li>
 
                 @endcan
 

@@ -17,6 +17,9 @@ return new class extends Migration
             $table->boolean('activo');
             $table->string('usuario', 50);
             $table->string('password', 255);
+
+            // ASIGNAR A UN DISTRITO PARA VER BUZON DE SUGERENCIAS
+            $table->integer('id_distrito');
         });
     }
 

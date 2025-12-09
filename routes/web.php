@@ -119,16 +119,42 @@ Route::post('/admin/servicio/informacion', [ServicioController::class, 'informac
 Route::post('/admin/servicio/editar', [ServicioController::class, 'editarServicio']);
 Route::post('/admin/servicio/borrar', [ServicioController::class, 'borrarServicio']);
 
+
+
+
+
+// DISTRITOS
+Route::get('/admin/distritos/index', [ServicioController::class,'indexDistrito'])->name('admin.distritos.index');
+Route::get('/admin/distritos/tabla', [ServicioController::class,'tablaDistrito']);
+
+Route::get('/admin/distritos/servicios/index/{id}', [ServicioController::class,'indexDistritoServicios']);
+Route::get('/admin/distritos/servicios/tabla/{id}', [ServicioController::class,'tablaDistritoServicios']);
+Route::post('/admin/distritos/servicios/nuevo', [ServicioController::class, 'registrarDistritoServicios']);
+Route::post('/admin/distritos/servicios/informacion', [ServicioController::class, 'informacionDistritoServicios']);
+Route::post('/admin/distritos/servicios/editar', [ServicioController::class, 'editarDistritoServicios']);
+
+
+
+
+
+// BUZON NUEVO
+Route::get('/admin/buzon/nuevo/index', [ServicioController::class,'indexBuzonNuevo'])->name('admin.buzon.nuevo.index');
+Route::get('/admin/buzon/nuevo/tabla', [ServicioController::class,'tablaBuzonNuevo']);
+Route::post('/admin/buzon/nuevo/revisado', [ServicioController::class,'registrarRevisado']);
+
+// TODOS DEL BUZON
+Route::get('/admin/buzon/todos/index', [ServicioController::class,'indexBuzonTodos'])->name('admin.buzon.todos.index');
+Route::get('/admin/buzon/todos/tabla', [ServicioController::class,'tablaBuzonTodos']);
+Route::get('/admin/buzon/todos/tabla/buscar/{id}', [ServicioController::class,'tablaBuzonTodosBuscar']);
+
+
 // SUGERENCIAS
 Route::get('/admin/sugerencias/index', [ServicioController::class,'indexSugerencias'])->name('admin.sugerencias.index');
 Route::get('/admin/sugerencias/tabla', [ServicioController::class,'tablaSugerencias']);
 Route::post('/admin/sugerencias/borrar', [ServicioController::class, 'borrarSugerencias']);
+Route::post('/admin/sugerencias/buscarservicio', [ServicioController::class, 'borrarSugerencias']);
 
-// CONTEO VOTACION
 
-/*Route::get('/admin/votacion/conteo/index', [ServicioController::class,'indexVotacionConteo'])->name('admin.votacion.conteo.index');
-Route::get('/admin/votacion/conteo/tabla', [ServicioController::class,'tablaVotacionConteo']);
-*/
 
 
 //*****************************   FRONTEND   ******************************************
@@ -186,12 +212,14 @@ Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descar
 Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSoborno']);
 
 
-// vista de Sugerencias
+
+
+// VISTA DE BUZON DE SUGERENCIAS
 Route::get('/sugerencias', [FrontendController::class,'vistaSugerencias']);
 Route::post('/enviar/sugerencias', [FrontendController::class,'registrarSugerencia']);
 
 
-
+Route::post('/buscar/distrito/servicios', [FrontendController::class,'informacionDistritoServicios']);
 
 
 

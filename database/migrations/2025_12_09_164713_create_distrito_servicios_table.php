@@ -7,19 +7,16 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * DISTRITO SERVICIOS
      */
     public function up(): void
     {
-        Schema::create('sugerencias', function (Blueprint $table) {
+        Schema::create('distrito_servicios', function (Blueprint $table) {
             $table->id();
-
-            $table->date('fecha');
-
+            $table->unsignedBigInteger('id_distrito');
             $table->string('nombre', 100);
-            $table->string('telefono', 25);
-            $table->string('correo', 100)->nullable();
-            $table->text('comentarios');
+
+            $table->foreign('id_distrito')->references('id')->on('distrito')->onDelete('cascade');
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sugerencias');
+        Schema::dropIfExists('distrito_servicios');
     }
 };

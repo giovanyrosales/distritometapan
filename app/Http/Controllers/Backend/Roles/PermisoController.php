@@ -43,6 +43,7 @@ class PermisoController extends Controller
         $registro->usuario = $request->usuario;
         $registro->password = bcrypt($request->password);
         $registro->activo = 1;
+        $registro->id_distrito = 0;
         $registro->save();
 
         $role = Role::findById($request->rol);
