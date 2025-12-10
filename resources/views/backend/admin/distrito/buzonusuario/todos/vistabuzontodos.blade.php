@@ -35,7 +35,7 @@
                     <label style="color: #686868">Servicios:</label>
                     <br>
                     <select class="form-control" id="select-servicio" onchange="seleccion()">
-                        <option value="0">Seleccionar Opción</option>
+                        <option value="0">TODOS</option>
                         @foreach($arrayServicios as $sel)
                             <option  value="{{ $sel->id }}">{{ $sel->nombre }}</option>
                         @endforeach
