@@ -370,6 +370,32 @@
     }
 
 
+    /* =========================
+       📱 OPTIMIZACIÓN MÓVIL
+    ========================= */
+    @media (max-width: 992px) {
+
+        /* Layout pasa a una sola columna */
+        .rifa-layout{
+            grid-template-columns: 1fr;
+            margin: 90px auto 40px;
+            padding: 0 14px;
+            gap: 24px;
+        }
+
+        .rifa-left,
+        .rifa-right{
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Cards ocupan todo el ancho */
+        .rifa-card,
+        .tabla-card{
+            border-radius: 16px;
+            padding: 20px;
+        }
+    }
 
 
 
