@@ -251,114 +251,11 @@
     }
 
 
-    /* ===== FIX DATATABLE ADMINLTE ===== */
-
-    /* Evita transparencia */
-    .tabla-card,
-    .tabla-card * {
-        background-color: #ffffff !important;
-    }
-
-    /* Wrapper general */
-    .tabla-card .dataTables_wrapper {
-        background: #ffffff;
-        padding: 0;
-    }
-
-    /* Tabla */
-    .tabla-card table.dataTable {
-        width: 100% !important;
-        border-collapse: collapse !important;
-        background: #ffffff !important;
-    }
-
-    /* Cabecera */
-    .tabla-card table.dataTable thead th {
-        background: #1e349c !important;
-        color: #ffffff !important;
-        font-weight: 700;
-        border: none !important;
-        padding: 12px;
-        font-size: .95rem;
-    }
-
-    /* Celdas */
-    .tabla-card table.dataTable tbody td {
-        background: #ffffff !important;
-        padding: 12px;
-        border-bottom: 1px solid #e5e7eb;
-        font-size: .95rem;
-        color: #0f172a;
-    }
-
-    /* Hover */
-    .tabla-card table.dataTable tbody tr:hover td {
-        background: #f1f5f9 !important;
-    }
-
-    /* Search y selector */
-    .tabla-card .dataTables_length label,
-    .tabla-card .dataTables_filter label {
-        font-weight: 600;
-        font-size: .9rem;
-        color: #0f172a;
-    }
-
-    /* Inputs */
-    .tabla-card .dataTables_filter input,
-    .tabla-card .dataTables_length select {
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        padding: 6px 10px;
-        outline: none;
-    }
-
-    /* Paginación */
-    .tabla-card .dataTables_paginate {
-        margin-top: 15px;
-        text-align: right;
-    }
-
-    .tabla-card .paginate_button {
-        background: #e5e7eb !important;
-        border-radius: 8px !important;
-        padding: 6px 12px !important;
-        margin: 0 3px;
-        border: none !important;
-        color: #0f172a !important;
-    }
-
-    .tabla-card .paginate_button.current {
-        background: #1e349c !important;
-        color: #ffffff !important;
-    }
-
-    /* Info */
-    .tabla-card .dataTables_info {
-        font-size: .9rem;
-        color: #475569;
-    }
-
-    #tabla-rifa .dataTables_filter input {
-        height: 30px;
-        font-size: 12px;
-        padding: 2px 6px;
-    }
-
-    #tabla-rifa .dataTables_filter label {
-        font-size: 12px;
-    }
 
 
-    #tabla-rifa .dataTables_paginate,
-    #tabla-rifa .dataTables_info {
-        display: none !important;
-    }
 
-    /* Este es el que normalmente queda vacío */
-    #tabla-rifa .dataTables_wrapper .row:last-child {
-        display: none !important;
-    }
+
+
 
 
     /* ===== TOASTR FIX ICONO + TEXTO ===== */
@@ -472,6 +369,10 @@
         }
     }
 
+
+
+
+
 </style>
 
 <body>
@@ -523,7 +424,7 @@
 
     <!-- DERECHA: TABLA -->
     <div class="rifa-right">
-        <div class="tabla-card">
+        <div class="tabla-card rifa-datatable">
             <h3 class="tabla-title">Listado de Participantes</h3>
             <div id="tablaDatatable"></div>
         </div>
@@ -644,7 +545,32 @@
                 ordering: true,
                 info: false,
                 pageLength: 10,
-                responsive: true
+                responsive: true,
+                "language": {
+                    "search": "Buscar:",
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ entradas",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
             });
         });
     }
@@ -659,9 +585,33 @@
                 paging: true,
                 searching: true,
                 ordering: true,
-                info: false,
                 pageLength: 10,
-                responsive: true
+                responsive: true,
+                "language": {
+                    "search": "Buscar:",
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ entradas",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
             });
         });
     }
