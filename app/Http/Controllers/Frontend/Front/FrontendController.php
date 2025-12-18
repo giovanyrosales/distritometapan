@@ -11,6 +11,7 @@ use App\Models\Finanzas;
 use App\Models\Fotografia;
 use App\Models\Noticia;
 use App\Models\Programa;
+use App\Models\Rifa;
 use App\Models\Servicio;
 use App\Models\Slider;
 use App\Models\Sugerencias;
@@ -399,9 +400,164 @@ class FrontendController extends Controller
     }
 
 
+    public function vistaRifa(Request $request)
+    {
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+        $arrayDistrito = Distrito::orderBy('id', 'DESC')->get();
 
 
 
+        return view('frontend.paginas.rifa.vistarifa', [
+            'serviciosMenu' => $serviciosMenu,
+            'arrayDistrito' => $arrayDistrito
+        ]);
+    }
+
+    public function tablaRifa(){
+
+        $conteo = 0;
+
+        $arrayRifa = Rifa::orderBy('fecha', 'ASC')->get()->map(function ($item) use (&$conteo) {
+
+            $conteo++;
+            $item->conteo = $conteo;
+
+            $item->fechaFormat = date('d-m-Y', strtotime($item->fecha));
+
+            return $item;
+        });
+
+        return view('frontend.paginas.rifa.tablarifa', compact('arrayRifa'));
+    }
+
+    public function tablaRifaGanador(){
+
+        $arrayRifaGanador = Rifa::where('ganador', 1)
+            ->orderBy('fecha', 'ASC')
+            ->get()->map(function($item){
+
+            $item->fechaFormat = date("d-m-Y", strtotime($item->fecha_ganador));
+            return $item;
+        });
+
+        return view('frontend.paginas.rifa.tablarifaganador', compact('arrayRifaGanador'));
+    }
+
+
+    public function registrarRifa(Request $request)
+    {
+        $regla = array(
+            'nombre' => 'required',
+            'dui' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            $registro = new Rifa();
+            $registro->nombre = $request->nombre;
+            $registro->dui = $request->dui;
+            $registro->telefono = $request->telefono;
+            $registro->direccion = $request->direccion;
+            $registro->fecha = Carbon::now('America/El_Salvador');
+            $registro->ganador = 0;
+            $registro->save();
+
+            DB::commit();
+            return ['success' => 1,
+                'redirect' => route('index'),
+            ];
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+
+    public function generarGanadores(Request $request)
+    {
+        $cantidad = (int) $request->cantidad;
+
+        if ($cantidad <= 0) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Cantidad inválida'
+            ]);
+        }
+
+        // Solo participantes que aún no han ganado
+        $query = Rifa::where('ganador', 0);
+
+       /* $disponibles = $query->count();
+
+        if ($cantidad > $disponibles) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'No hay suficientes participantes disponibles'
+            ]);
+        }*/
+
+        DB::beginTransaction();
+
+        try {
+            // Selección aleatoria sin repetir
+            $ganadores = $query
+                ->inRandomOrder()
+                ->limit($cantidad)
+                ->lockForUpdate()
+                ->get();
+
+            foreach ($ganadores as $item) {
+
+                $item->fechaFormat = date("d-m-Y h:i A", strtotime($item->fecha));
+            }
+
+            return response()->json([
+                'success' => 1,
+                'ganadores' => $ganadores
+            ]);
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => 0,
+                'message' => 'Error al generar ganadores'
+            ]);
+        }
+    }
+
+
+    public function registrarGanador(Request $request)
+    {
+        $request->validate([
+            'id' => 'required'
+        ]);
+
+        $rifa = Rifa::find($request->id);
+
+        // Evitar volver a marcar
+        if ($rifa->ganador) {
+            return response()->json([
+                'success' => 0,
+                'message' => 'Este participante ya es ganador'
+            ]);
+        }
+
+        $rifa->ganador = 1;
+        $rifa->fecha_ganador = Carbon::now('America/El_Salvador');
+        $rifa->save();
+
+        return response()->json([
+            'success' => 1
+        ]);
+    }
 
 
 

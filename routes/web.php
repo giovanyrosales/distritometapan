@@ -189,10 +189,6 @@ Route::get('/direccion',[FrontendController::class,'paginaGobierno']);
 Route::post('/admin/informacion-ucp',[ProgramaController::class,'informacionUCP']);
 
 
-
-
-// --- NOTICIAS FRONTEND ---
-
 // --- FINANZAS FRONTEND ---
 Route::get('/finanzas', [FrontendController::class,'indexFinanzas']);
 Route::get('/descargar/finanzas/documento/{id}', [FrontendController::class,'descargarDocumentoFinanzas']);
@@ -211,9 +207,6 @@ Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descar
 // vista politica anti soborno
 Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSoborno']);
 
-
-
-
 // VISTA DE BUZON DE SUGERENCIAS
 Route::get('/sugerencias', [FrontendController::class,'vistaSugerencias']);
 Route::post('/enviar/sugerencias', [FrontendController::class,'registrarSugerencia']);
@@ -223,7 +216,14 @@ Route::post('/buscar/distrito/servicios', [FrontendController::class,'informacio
 
 
 
+Route::get('/rifa', [FrontendController::class,'vistaRifa']);
+Route::get('/rifa/tabla', [FrontendController::class,'tablaRifa']);
+Route::get('/rifa/tablaganador', [FrontendController::class,'tablaRifaGanador']);
 
+
+Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
+Route::post('/rifa/generar', [FrontendController::class,'generarGanadores']);
+Route::post('/rifa/registrar/ganador', [FrontendController::class,'registrarGanador']);
 
 
 
