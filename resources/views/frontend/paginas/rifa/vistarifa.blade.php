@@ -484,7 +484,6 @@
                         <thead style="background:#1e349c;color:#fff">
                         <tr>
                             <th>#</th>
-                            <th style="width: 8%">Fecha Ganador</th>
                             <th>Nombre</th>
                             <th>DUI</th>
                             <th>Teléfono</th>
@@ -715,7 +714,6 @@
             tbody.innerHTML += `
             <tr>
                 <td>${index + 1}</td>
-                <td>${g.fechaFormat}</td>
                 <td>${g.nombre}</td>
                 <td>${g.dui}</td>
                 <td>${g.telefono ?? ''}</td>
