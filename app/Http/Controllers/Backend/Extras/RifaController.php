@@ -168,7 +168,7 @@ class RifaController extends Controller
    <table style='width: 100%; border-collapse: collapse; font-size: 12px;' border='1'>
     <thead>
         <tr style='background-color: #cccccc; color: black; text-align: center;'>
-            <th style='padding: 5px;'>#</th>
+            <th style='padding: 5px; width: 3%'>#</th>
             <th style='padding: 5px;'>Nombre</th>
             <th style='padding: 5px;'>DUI</th>
             <th style='padding: 5px;'>Teléfono</th>
@@ -183,7 +183,7 @@ class RifaController extends Controller
         foreach ($ganadores as $g) {
             $tabla .= "
     <tr>
-        <td style='padding: 5px; text-align: center;'>$contador</td>
+        <td style='padding: 5px; text-align: center; width: 3%'>$contador</td>
         <td style='padding: 5px;'>$g->nombre</td>
         <td style='padding: 5px; text-align: center;'>$g->dui</td>
         <td style='padding: 5px; text-align: center;'>$g->telefono</td>
