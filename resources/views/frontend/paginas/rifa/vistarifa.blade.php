@@ -229,8 +229,17 @@
                 </div>
 
                 <div class="form-group">
-                    <label>DUI <span style="color: red">*</span></label>
-                    <input type="text" id="dui" maxlength="20" autocomplete="off" class="form-control" required>
+                    <label>DUI (Solo números)<span style="color: red">*</span></label>
+                    <input
+                        type="text"
+                        id="dui"
+                        maxlength="9"
+                        autocomplete="off"
+                        class="form-control"
+                        required
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        placeholder=""
+                    >
                 </div>
 
                 <div class="form-group">
