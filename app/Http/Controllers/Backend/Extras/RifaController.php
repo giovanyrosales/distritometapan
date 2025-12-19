@@ -144,7 +144,7 @@ class RifaController extends Controller
                 <h2 style='font-size: 14px; margin: 0; color: #003366; text-transform: uppercase;'>Listado de Ganadores</h2>
             </td>
             <td style='width: 10%; text-align: right;'>
-                <img src='$logoalcaldia' alt='Gobierno de El Salvador' style='max-width: 60px; height: auto;'>
+
             </td>
         </tr>
     </table>
