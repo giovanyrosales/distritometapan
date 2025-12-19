@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backend\Extras\Servicio;
 use App\Http\Controllers\Controller;
 use App\Models\Distrito;
 use App\Models\DistritoServicios;
+use App\Models\Rifa;
+use App\Models\RifaPremios;
 use App\Models\Servicio;
 use App\Models\Sugerencias;
 use App\Models\Votacion;
@@ -680,11 +682,95 @@ class ServicioController extends Controller
 
 
 
+    public function indexRifaPremios(Request $request)
+    {
+        return view('backend.admin.rifa.vistarifapremios');
+    }
+
+    public function tablaRifaPremios(Request $request)
+    {
+
+        $arrayPremios = RifaPremios::orderBy('nombre', 'ASC')->get();
+
+        return view('backend.admin.rifa.tablarifapremios', compact('arrayPremios'));
+    }
 
 
+    public function registrarRifaPremios(Request $request)
+    {
+        $regla = array(
+            'nombre' => 'required',
+        );
 
 
+        $validar = Validator::make($request->all(), $regla);
 
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            $registro = new RifaPremios();
+            $registro->nombre = $request->nombre;
+            $registro->save();
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
+
+
+    public function informacionRifaPremios(Request $request)
+    {
+        $regla = array(
+            'id' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        if($info = RifaPremios::where('id', $request->id)->first()){
+
+            return ['success' => 1, 'info' => $info];
+        }else{
+            return ['success' => 2];
+        }
+    }
+
+    public function editarRifaPremios(Request $request){
+
+        $regla = array(
+            'id' => 'required',
+            'nombre' => 'required',
+        );
+
+        $validar = Validator::make($request->all(), $regla);
+
+        if ($validar->fails()){ return ['success' => 0];}
+
+        DB::beginTransaction();
+        try {
+
+            RifaPremios::where('id', $request->id)
+                ->update([
+                    'nombre' => $request->nombre
+                ]);
+
+            DB::commit();
+            return ['success' => 1];
+
+        }catch(\Throwable $e){
+            Log::info('error: ' . $e);
+            DB::rollback();
+            return ['success' => 99];
+        }
+    }
 
 
 

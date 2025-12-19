@@ -8,6 +8,7 @@
                             <table id="tabla2" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
+                                    <th style="width: 12%">Premio</th>
                                     <th style="width: 12%">Nombre</th>
                                     <th style="width: 8%">DUI</th>
                                     <th style="width: 8%">Teléfono</th>
@@ -17,6 +18,7 @@
                                 <tbody>
                                 @foreach($arrayRifaGanador as $dato)
                                     <tr>
+                                        <td style="width: 12%; font-size: 12px">{{ $dato->nombrepremio }}</td>
                                         <td style="width: 12%; font-size: 12px">{{ $dato->nombre }}</td>
                                         <td style="width: 8%; font-size: 12px">{{ $dato->dui }}</td>
                                         <td style="width: 8%; font-size: 12px">{{ $dato->telefono }}</td>

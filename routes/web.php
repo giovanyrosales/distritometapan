@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\Extras\Compras\ComprasController;
 use App\Http\Controllers\Backend\Extras\Programa\ProgramaController;
 use App\Http\Controllers\Backend\Extras\Servicio\ServicioController;
 use App\Http\Controllers\Frontend\Front\FrontendController;
+use App\Http\Controllers\Backend\Extras\RifaController;
 
 
 Route::get('/admin', [LoginController::class,'index'])->name('login');
@@ -155,6 +156,30 @@ Route::post('/admin/sugerencias/borrar', [ServicioController::class, 'borrarSuge
 Route::post('/admin/sugerencias/buscarservicio', [ServicioController::class, 'borrarSugerencias']);
 
 
+Route::get('/admin/rifapremios/index', [ServicioController::class,'indexRifaPremios'])->name('admin.rifa.premios.index');
+Route::get('/admin/rifapremios/tabla', [ServicioController::class,'tablaRifaPremios']);
+Route::post('/admin/rifapremios/nuevo', [ServicioController::class, 'registrarRifaPremios']);
+Route::post('/admin/rifapremios/informacion', [ServicioController::class, 'informacionRifaPremios']);
+Route::post('/admin/rifapremios/editar', [ServicioController::class, 'editarRifaPremios']);
+
+
+
+Route::get('/rifa/sorteo', [RifaController::class,'vistaRifaPremios']);
+
+Route::get('/rifa/tabla', [RifaController::class,'tablaRifa']);
+Route::get('/rifa/tablaganador', [RifaController::class,'tablaRifaGanador']);
+Route::post('/rifa/generar', [RifaController::class,'generarGanadores']);
+Route::post('/rifa/registrar/ganadores', [RifaController::class,'registrarGanadores']);
+Route::get('/rifa/reportes/{id}', [RifaController::class,'generarReporte']);
+
+
+
+
+
+
+
+
+
 
 
 //*****************************   FRONTEND   ******************************************
@@ -211,19 +236,14 @@ Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSobo
 Route::get('/sugerencias', [FrontendController::class,'vistaSugerencias']);
 Route::post('/enviar/sugerencias', [FrontendController::class,'registrarSugerencia']);
 
-
 Route::post('/buscar/distrito/servicios', [FrontendController::class,'informacionDistritoServicios']);
 
 
-
+// REGISTRAR USUARIOS PARA RIFA
 Route::get('/rifa', [FrontendController::class,'vistaRifa']);
-Route::get('/rifa/tabla', [FrontendController::class,'tablaRifa']);
-Route::get('/rifa/tablaganador', [FrontendController::class,'tablaRifaGanador']);
-
-
 Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
-Route::post('/rifa/generar', [FrontendController::class,'generarGanadores']);
-Route::post('/rifa/registrar/ganador', [FrontendController::class,'registrarGanador']);
+
+
 
 
 

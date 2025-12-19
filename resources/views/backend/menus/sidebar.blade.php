@@ -121,11 +121,12 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('admin.sugerencias.index') }}" target="frameprincipal" class="nav-link">
+                            <a href="{{ route('admin.rifa.premios.index') }}" target="frameprincipal" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Sugerencias</p>
+                                <p>Premios RIFA</p>
                             </a>
                         </li>
+
 
                 @endcan
 
