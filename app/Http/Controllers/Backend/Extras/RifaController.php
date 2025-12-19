@@ -170,7 +170,7 @@ class RifaController extends Controller
         <tr style='background-color: #cccccc; color: black; text-align: center;'>
             <th style='padding: 5px; width: 3%'>#</th>
             <th style='padding: 5px;'>Nombre</th>
-            <th style='padding: 5px;'>DUI</th>
+            <th style='padding: 5px; width: 10%'>DUI</th>
             <th style='padding: 5px;'>Teléfono</th>
             <th style='padding: 5px;'>Dirección</th>
             <th style='padding: 5px; width: 120px;'>Firma</th>
@@ -185,7 +185,7 @@ class RifaController extends Controller
     <tr>
         <td style='padding: 5px; text-align: center; width: 3%'>$contador</td>
         <td style='padding: 5px;'>$g->nombre</td>
-        <td style='padding: 5px; text-align: center;'>$g->dui</td>
+        <td style='padding: 5px; text-align: center; width: 10%'>$g->dui</td>
         <td style='padding: 5px; text-align: center;'>$g->telefono</td>
         <td style='padding: 5px;'>$g->direccion</td>
         <td style='padding: 5px; height: 60px;'></td>
