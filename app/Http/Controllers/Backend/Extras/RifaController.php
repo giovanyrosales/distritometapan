@@ -123,7 +123,10 @@ class RifaController extends Controller
     public function generarReporte($idpremio)
     {
         //$mpdf = new \Mpdf\Mpdf(['format' => 'LETTER']);
-        $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir(), 'format' => 'LETTER']);
+        $mpdf = new \Mpdf\Mpdf([
+            'tempDir' => sys_get_temp_dir(),
+            'format' => 'LETTER-L'
+        ]);
         $mpdf->SetTitle('Reporte');
         $mpdf->showImageErrors = false;
 
@@ -162,38 +165,38 @@ class RifaController extends Controller
             ->get();
 
         $tabla .= "
-    <table style='width: 100%; border-collapse: collapse; font-size: 12px;' border='1'>
-        <thead>
-            <tr style='background-color: #cccccc; color: black; text-align: center;'> <!-- gris más opaco -->
-                <th style='padding: 5px;'>#</th>
-                <th style='padding: 5px;'>Nombre</th>
-                <th style='padding: 5px;'>DUI</th>
-                <th style='padding: 5px;'>Teléfono</th>
-                <th style='padding: 5px;'>Dirección</th>
-                <th style='padding: 5px; width: 120px;'>Firma</th> <!-- columna más ancha -->
-            </tr>
-        </thead>
-        <tbody>
-    ";
+   <table style='width: 100%; border-collapse: collapse; font-size: 12px;' border='1'>
+    <thead>
+        <tr style='background-color: #cccccc; color: black; text-align: center;'>
+            <th style='padding: 5px;'>#</th>
+            <th style='padding: 5px;'>Nombre</th>
+            <th style='padding: 5px;'>DUI</th>
+            <th style='padding: 5px;'>Teléfono</th>
+            <th style='padding: 5px;'>Dirección</th>
+            <th style='padding: 5px; width: 120px;'>Firma</th>
+        </tr>
+    </thead>
+    <tbody>
+";
 
         $contador = 1;
         foreach ($ganadores as $g) {
             $tabla .= "
-        <tr>
-            <td style='padding: 5px; text-align: center;'>$contador</td>
-            <td style='padding: 5px;'>$g->nombre</td>
-            <td style='padding: 5px; text-align: center;'>$g->dui</td>
-            <td style='padding: 5px; text-align: center;'>$g->telefono</td>
-            <td style='padding: 5px;'>$g->direccion</td>
-            <td style='padding: 5px;'></td>
-        </tr>
-        ";
+    <tr>
+        <td style='padding: 5px; text-align: center;'>$contador</td>
+        <td style='padding: 5px;'>$g->nombre</td>
+        <td style='padding: 5px; text-align: center;'>$g->dui</td>
+        <td style='padding: 5px; text-align: center;'>$g->telefono</td>
+        <td style='padding: 5px;'>$g->direccion</td>
+        <td style='padding: 5px; height: 60px;'></td>
+    </tr>
+    ";
             $contador++;
         }
 
         $tabla .= "
-        </tbody>
-    </table>
+    </tbody>
+</table>
     ";
 
         $mpdf->WriteHTML($tabla,2);
