@@ -122,7 +122,8 @@ class RifaController extends Controller
 
     public function generarReporte($idpremio)
     {
-        $mpdf = new \Mpdf\Mpdf(['format' => 'LETTER']);
+        //$mpdf = new \Mpdf\Mpdf(['format' => 'LETTER']);
+        $mpdf = new \Mpdf\Mpdf(['tempDir' => sys_get_temp_dir(), 'format' => 'LETTER']);
         $mpdf->SetTitle('Reporte');
         $mpdf->showImageErrors = false;
 
