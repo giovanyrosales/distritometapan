@@ -257,6 +257,13 @@ class FrontendController extends Controller
     }
 
 
+    public function avisoDePrivacidad(){
+        $serviciosMenu = $this->getServiciosMenu();
+        return view('frontend.paginas.antisoborno.avisoprivacidad', compact(['serviciosMenu']));
+    }
+
+
+
 
     public function vistaVotacion(Request $request)
     {

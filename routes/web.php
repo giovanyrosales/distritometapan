@@ -232,6 +232,12 @@ Route::get('/descargar/politica/antisoborno', [FrontendController::class,'descar
 // vista politica anti soborno
 Route::get('politica-anti-soborno', [FrontendController::class,'politicaAntiSoborno']);
 
+// vista AVISO DE PRIVACIDAD
+Route::get('aviso-de-privacidad', [FrontendController::class,'avisoDePrivacidad']);
+
+
+
+
 // VISTA DE BUZON DE SUGERENCIAS
 Route::get('/sugerencias', [FrontendController::class,'vistaSugerencias']);
 Route::post('/enviar/sugerencias', [FrontendController::class,'registrarSugerencia']);
@@ -240,8 +246,8 @@ Route::post('/buscar/distrito/servicios', [FrontendController::class,'informacio
 
 
 // REGISTRAR USUARIOS PARA RIFA
-Route::get('/rifa', [FrontendController::class,'vistaRifa']);
-Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
+//Route::get('/rifa', [FrontendController::class,'vistaRifa']);
+//Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
 
 
 
