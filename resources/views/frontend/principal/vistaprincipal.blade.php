@@ -223,7 +223,7 @@
     .rf-wrap {
         position: fixed;
         bottom: 28px;
-        right: 28px;
+        right: 80px;
         z-index: 9999;
         display: flex;
         flex-direction: column;
