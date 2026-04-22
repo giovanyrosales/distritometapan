@@ -316,6 +316,14 @@
                                                 Documento 3 – Pólitica de regalos y hospitalidades
                                             </a>
                                         </li>
+                                        <li>
+                                            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M20 7l-9 9-5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <a href="{{ asset('pdf/codigoetica.pdf') }}" target="_blank" style="font-weight:600; color:#0e7490;">
+                                                Documento 4 – Código de ética para los funcionarios y empleados de la Alcaldía Municipal de Santa Ana Norte
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </section>
