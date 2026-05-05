@@ -37,6 +37,10 @@ class ControlController extends Controller
             $ruta = 'admin.buzon.nuevo.index';
         }
 
+        // DIPLOMADO
+        else if($user->hasRole('diplomado')){
+            $ruta = 'admin.diplomado.cursos.index';
+        }
 
         else{
             $ruta = 'no.permisos.index';

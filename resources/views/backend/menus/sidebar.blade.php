@@ -168,6 +168,35 @@
 
 
 
+                    @can('sidebar.diplomado')
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.diplomado.generar.alumno') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Crear</p>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.diplomado.cursos.index') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lista de Cursos</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.diplomado.certificado.index') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lista de Certificados</p>
+                            </a>
+                        </li>
+
+
+                    @endcan
+
+
 
             </ul>
         </nav>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Front;
 
 use App\Http\Controllers\Controller;
 use App\Models\Compras;
+use App\Models\DiplomadoAlumnos;
 use App\Models\Distrito;
 use App\Models\DistritoServicios;
 use App\Models\Documento;
@@ -457,6 +458,20 @@ class FrontendController extends Controller
         }
     }
 
+
+
+    public function verificarDiplomado($codigo)
+    {
+        $certificado = DiplomadoAlumnos::where('codigo_verificacion', $codigo)->first();
+
+        if(!$certificado){
+            return view('frontend.diplomado.vistacertificadoerror'); // no existe
+        }
+
+        return view('frontend.diplomado.vistacertificado', compact('certificado'));
+
+
+    }
 
 
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\Extras\Programa\ProgramaController;
 use App\Http\Controllers\Backend\Extras\Servicio\ServicioController;
 use App\Http\Controllers\Frontend\Front\FrontendController;
 use App\Http\Controllers\Backend\Extras\RifaController;
+use App\Http\Controllers\Backend\Diplomado\DiplomadoController;
 
 
 Route::get('/admin', [LoginController::class,'index'])->name('login');
@@ -174,6 +175,33 @@ Route::get('/rifa/reportes/{id}', [RifaController::class,'generarReporte']);
 
 
 
+//*****************************   DIPLOMADO   ******************************************
+
+// --- CURSOS
+Route::get('/admin/diplomado/cursos/index', [DiplomadoController::class,'indexCursos'])->name('admin.diplomado.cursos.index');
+Route::get('/admin/diplomado/cursos/tabla', [DiplomadoController::class,'tablaCursos']);
+Route::post('/admin/diplomado/cursos/nuevo', [DiplomadoController::class, 'registrarCursos']);
+Route::post('/admin/diplomado/cursos/informacion', [DiplomadoController::class, 'informacionCursos']);
+Route::post('/admin/diplomado/cursos/editar', [DiplomadoController::class, 'editarCursos']);
+
+// --- CERTIFICADO
+Route::get('/admin/diplomado/certificado/index', [DiplomadoController::class,'indexCertificado'])->name('admin.diplomado.certificado.index');
+Route::get('/admin/diplomado/certificado/tabla', [DiplomadoController::class,'tablaCertificado']);
+Route::post('/admin/diplomado/certificado/nuevo', [DiplomadoController::class, 'registrarCertificado']);
+Route::post('/admin/diplomado/certificado/informacion', [DiplomadoController::class, 'informacionCertificado']);
+Route::post('/admin/diplomado/certificado/editar', [DiplomadoController::class, 'editarCertificado']);
+
+// --- ALUMNO
+Route::get('/admin/diplomado/alumno/index', [DiplomadoController::class,'indexGenerarCertificado'])->name('admin.diplomado.generar.alumno');
+Route::post('/admin/diplomado/alumno/crear', [DiplomadoController::class, 'crearCertificacion']);
+
+Route::get('/qr/{codigo}', [DiplomadoController::class, 'qr']);
+Route::get('/verificar/{codigo}', [FrontendController::class, 'verificarDiplomado']);
+
+
+
+
+
 
 
 
@@ -246,8 +274,10 @@ Route::post('/buscar/distrito/servicios', [FrontendController::class,'informacio
 
 
 // REGISTRAR USUARIOS PARA RIFA
-//Route::get('/rifa', [FrontendController::class,'vistaRifa']);
-//Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
+Route::get('/rifa', [FrontendController::class,'vistaRifa']);
+Route::post('/rifa/registro', [FrontendController::class,'registrarRifa']);
+
+
 
 
 
