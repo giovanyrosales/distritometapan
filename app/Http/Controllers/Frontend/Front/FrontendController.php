@@ -468,15 +468,6 @@ class FrontendController extends Controller
         $arrayDistrito = Distrito::orderBy('id', 'DESC')->get();
 
 
-
-
-        if(!$certificado){
-            return view('frontend.diplomado.vistacertificadoerror', [
-                'serviciosMenu' => $serviciosMenu,
-                'arrayDistrito' => $arrayDistrito
-            ]);
-        }
-
         return view('frontend.diplomado.vistacertificado', [
             'certificado' => $certificado,
             'serviciosMenu' => $serviciosMenu,
