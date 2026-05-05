@@ -464,13 +464,24 @@ class FrontendController extends Controller
     {
         $certificado = DiplomadoAlumnos::where('codigo_verificacion', $codigo)->first();
 
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+        $arrayDistrito = Distrito::orderBy('id', 'DESC')->get();
+
+
+
+
         if(!$certificado){
-            return view('frontend.diplomado.vistacertificadoerror'); // no existe
+            return view('frontend.diplomado.vistacertificadoerror', [
+                'serviciosMenu' => $serviciosMenu,
+                'arrayDistrito' => $arrayDistrito
+            ]);
         }
 
-        return view('frontend.diplomado.vistacertificado', compact('certificado'));
-
-
+        return view('frontend.diplomado.vistacertificado', [
+            'certificado' => $certificado,
+            'serviciosMenu' => $serviciosMenu,
+            'arrayDistrito' => $arrayDistrito
+        ]);
     }
 
 
