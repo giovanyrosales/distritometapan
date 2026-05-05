@@ -82,7 +82,7 @@
 
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input style="color:#191818" type="text" id="nombre-nuevo" class="form-control" maxlength="100" />
+                                        <input style="color:#191818" type="text" id="nombre-nuevo" autocomplete="off" class="form-control" maxlength="100" />
                                     </div>
 
                                 </div>
@@ -120,7 +120,7 @@
 
                                     <div class="form-group">
                                         <label>Nombre</label>
-                                        <input style="color:#191818" type="text" id="nombre-editar" class="form-control" maxlength="100" />
+                                        <input style="color:#191818" type="text" id="nombre-editar" autocomplete="off" class="form-control" maxlength="100" />
                                     </div>
 
                                 </div>
