@@ -35,6 +35,7 @@
         padding:30px;
         animation:fadeUp .4s ease;
         border:1px solid #e5e7eb;
+        margin-top: 15px;
     }
 
     .status{
@@ -162,23 +163,6 @@
                     <strong>{{ $certificado->certificado }}</strong>
                 </div>
 
-                <div class="row-cert">
-                    <span>Fecha</span>
-                    <strong>{{ \Carbon\Carbon::parse($certificado->fecha)->format('d/m/Y') }}</strong>
-                </div>
-
-                <div class="row-cert">
-                    <span>Código</span>
-                    <strong style="font-size:12px;">{{ $certificado->codigo_verificacion }}</strong>
-                </div>
-            </div>
-
-            <div class="qr">
-                <img src="/qr/{{ $certificado->codigo_verificacion }}">
-                <br>
-                <a href="/qr/{{ $certificado->codigo_verificacion }}" download="qr.svg" class="btn-download">
-                    Descargar QR
-                </a>
             </div>
 
         </div>
