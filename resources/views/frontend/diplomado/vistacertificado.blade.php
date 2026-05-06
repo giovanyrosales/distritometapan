@@ -19,39 +19,38 @@
     }
 
     .cert-container{
-        min-height:80vh;
+        min-height:85vh;
         display:flex;
         justify-content:center;
         align-items:center;
-        padding:20px;
+        padding:30px;
     }
 
     .cert-card{
         width:100%;
-        max-width:520px;
+        max-width:700px; /* 🔥 MÁS GRANDE */
         background:var(--card);
-        border-radius:18px;
-        box-shadow:0 30px 60px -20px rgba(0,0,0,.25);
-        padding:30px;
+        border-radius:20px;
+        box-shadow:0 30px 70px -15px rgba(0,0,0,.25);
+        padding:40px; /* 🔥 MÁS ESPACIO */
         animation:fadeUp .4s ease;
         border:1px solid #e5e7eb;
-        margin-top: 15px;
     }
 
     .status{
         text-align:center;
-        margin-bottom:25px;
+        margin-bottom:30px;
     }
 
     .status .icon{
-        width:70px;
-        height:70px;
+        width:80px;
+        height:80px;
         border-radius:50%;
         display:flex;
         align-items:center;
         justify-content:center;
-        font-size:32px;
-        margin:0 auto 10px;
+        font-size:38px;
+        margin:0 auto 12px;
     }
 
     .success .icon{
@@ -66,22 +65,23 @@
 
     .status h2{
         font-weight:800;
-        margin-bottom:5px;
+        font-size:24px;
+        margin-bottom:6px;
     }
 
     .status p{
         color:var(--muted);
-        font-size:.95rem;
+        font-size:1rem;
     }
 
     .info{
-        margin-top:10px;
+        margin-top:20px;
     }
 
     .row-cert{
         display:flex;
         justify-content:space-between;
-        padding:12px 0;
+        padding:14px 0;
         border-bottom:1px solid #f1f5f9;
     }
 
@@ -91,40 +91,40 @@
 
     .row-cert span{
         color:var(--muted);
-        font-size:.9rem;
+        font-size:.95rem;
     }
 
     .row-cert strong{
         color:var(--text);
-        font-size:.95rem;
+        font-size:1rem;
         text-align:right;
-        max-width:60%;
+        max-width:65%;
     }
 
     .qr{
         text-align:center;
-        margin-top:25px;
+        margin-top:30px;
     }
 
     .qr img{
-        width:140px;
+        width:160px;
     }
 
     .btn-download{
-        margin-top:15px;
+        margin-top:20px;
         display:inline-block;
         background:var(--primary);
         color:#fff;
-        padding:10px 18px;
+        padding:12px 22px;
         border-radius:999px;
-        font-size:.9rem;
+        font-size:1rem;
         text-decoration:none;
         transition:.2s;
     }
 
     .btn-download:hover{
         background:#1d4ed8;
-        transform:translateY(-1px);
+        transform:translateY(-2px);
     }
 
     @keyframes fadeUp{
@@ -148,6 +148,7 @@
             </div>
 
             <div class="info">
+
                 <div class="row-cert">
                     <span>Nombre</span>
                     <strong>{{ $certificado->nombre }}</strong>
@@ -158,12 +159,25 @@
                     <strong>{{ $certificado->curso }}</strong>
                 </div>
 
+                {{-- 🔥 NUEVO CAMPO --}}
+                <div class="row-cert">
+                    <span>Periodo</span>
+                    <strong>{{ $certificado->periodo ?? '—' }}</strong>
+                </div>
+
                 <div class="row-cert">
                     <span>Certificado</span>
                     <strong>{{ $certificado->certificado }}</strong>
                 </div>
 
             </div>
+
+            {{-- QR OPCIONAL --}}
+            @if($certificado->codigo_verificacion)
+                <div class="qr">
+                    <img src="{{ url('/qr/'.$certificado->codigo_verificacion) }}">
+                </div>
+            @endif
 
         </div>
     @else
