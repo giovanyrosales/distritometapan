@@ -150,34 +150,29 @@
             <div class="info">
 
                 <div class="row-cert">
-                    <span>Nombre</span>
-                    <strong>{{ $certificado->nombre }}</strong>
+                    <span style="font-size: 13px">Nombre</span>
+                    <strong style="font-size: 12px">{{ $certificado->nombre }}</strong>
                 </div>
 
                 <div class="row-cert">
-                    <span>Curso</span>
-                    <strong>{{ $certificado->curso }}</strong>
+                    <span style="font-size: 13px">Curso</span>
+                    <strong style="font-size: 12px">{{ $certificado->curso }}</strong>
                 </div>
 
                 {{-- 🔥 NUEVO CAMPO --}}
                 <div class="row-cert">
-                    <span>Periodo</span>
-                    <strong>{{ $certificado->periodo ?? '—' }}</strong>
+                    <span style="font-size: 13px">Periodo</span>
+                    <strong style="font-size: 12px">{{ $certificado->periodo ?? '—' }}</strong>
                 </div>
 
                 <div class="row-cert">
-                    <span>Certificado</span>
-                    <strong>{{ $certificado->certificado }}</strong>
+                    <span style="font-size: 13px">Certificado</span>
+                    <strong style="font-size: 12px">{{ $certificado->certificado }}</strong>
                 </div>
 
             </div>
 
-            {{-- QR OPCIONAL --}}
-            @if($certificado->codigo_verificacion)
-                <div class="qr">
-                    <img src="{{ url('/qr/'.$certificado->codigo_verificacion) }}">
-                </div>
-            @endif
+
 
         </div>
     @else
