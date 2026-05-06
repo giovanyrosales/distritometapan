@@ -8,6 +8,7 @@
                             <thead>
                             <tr>
                                 <th style="width: 10%">Nombre</th>
+                                <th style="width: 10%">Periodo</th>
                                 <th style="width: 3%">Opciones</th>
                             </tr>
                             </thead>
@@ -16,6 +17,7 @@
                             @foreach($arrayCursos as $dato)
                                 <tr>
                                     <td style="width: 10%">{{ $dato->nombre }}</td>
+                                    <td style="width: 10%">{{ $dato->periodo }}</td>
 
                                     <td style="width: 3%">
 

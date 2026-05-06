@@ -199,10 +199,15 @@ Route::get('/qr/{codigo}', [DiplomadoController::class, 'qr']);
 Route::get('/verificar/{codigo}', [FrontendController::class, 'verificarDiplomado']);
 
 
+Route::get('/admin/diplomado/listadoalumnos/index', [DiplomadoController::class, 'indexListadoAlumnos'])->name('admin.diplomado.listado.alumnos.index');
+Route::get('/admin/diplomado/listadoalumnos/tabla', [DiplomadoController::class,'tablaListadoAlumnos']);
+Route::post('/admin/diplomado/listadoalumnos/borrar', [DiplomadoController::class,'borrarListadoAlumnos']);
+Route::post('/admin/diplomado/listadoalumnos/informacion', [DiplomadoController::class,'informacionListadoAlumnos']);
+Route::post('/admin/diplomado/listadoalumnos/actualizar', [DiplomadoController::class,'actualizarListadoAlumnos']);
 
 
-
-
+Route::get('/admin/diplomado/reportes/index', [DiplomadoController::class, 'indexReportes'])->name('admin.diplomado.reportes.index');
+Route::get('/admin/diplomado/reportes/generar', [DiplomadoController::class, 'generarReporte']);
 
 
 

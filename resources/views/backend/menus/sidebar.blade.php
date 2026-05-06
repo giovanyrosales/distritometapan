@@ -158,18 +158,11 @@
                                     <p>Compras</p>
                                 </a>
                             </li>
-
                         </ul>
                     </li>
 
-
                 @endcan
-
-
-
-
                     @can('sidebar.diplomado')
-
 
                         <li class="nav-item">
                             <a href="{{ route('admin.diplomado.generar.alumno') }}" target="frameprincipal" class="nav-link">
@@ -193,6 +186,19 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a href="{{ route('admin.diplomado.listado.alumnos.index') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lista Alumnos</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.diplomado.reportes.index') }}" target="frameprincipal" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Reportes</p>
+                            </a>
+                        </li>
 
                     @endcan
 

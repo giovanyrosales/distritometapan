@@ -66,7 +66,7 @@
     </section>
 
     <div class="modal fade" id="modalAgregar">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Registro</h4>
@@ -85,6 +85,11 @@
                                         <input style="color:#191818" type="text" autocomplete="off" id="nombre-nuevo" class="form-control" maxlength="100" />
                                     </div>
 
+                                    <div class="form-group">
+                                        <label>Periodo</label>
+                                        <input style="color:#191818" type="text" autocomplete="off" id="periodo-nuevo" class="form-control" maxlength="100" />
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -100,7 +105,7 @@
 
     <!-- modal editar -->
     <div class="modal fade" id="modalEditar">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Editar</h4>
@@ -121,6 +126,11 @@
                                     <div class="form-group">
                                         <label>Nombre</label>
                                         <input style="color:#191818" type="text" autocomplete="off" id="nombre-editar" class="form-control" maxlength="100" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Periodo</label>
+                                        <input style="color:#191818" type="text" autocomplete="off" id="periodo-editar" class="form-control" maxlength="100" />
                                     </div>
 
                                 </div>
@@ -176,6 +186,7 @@
 
         function nuevoRegistro(){
             var nombre = document.getElementById('nombre-nuevo').value;
+            var periodo = document.getElementById('periodo-nuevo').value;
 
             if(nombre === ''){
                 toastr.error('Nombre es requerido');
@@ -185,6 +196,7 @@
             openLoading();
             var formData = new FormData();
             formData.append('nombre', nombre);
+            formData.append('periodo', periodo);
 
             axios.post('/admin/diplomado/cursos/nuevo', formData, {
             })
@@ -219,6 +231,7 @@
                         $('#id-editar').val(id);
 
                         $('#nombre-editar').val(response.data.info.nombre);
+                        $('#periodo-editar').val(response.data.info.periodo);
 
                     }else{
                         toastr.error('Información no encontrada');
@@ -233,6 +246,7 @@
         function editarRegistro(){
             var id = document.getElementById('id-editar').value;
             var nombre = document.getElementById('nombre-editar').value;
+            var periodo = document.getElementById('periodo-editar').value;
 
             if(nombre === ''){
                 toastr.error('Nombre es requerido');
@@ -243,6 +257,7 @@
             var formData = new FormData();
             formData.append('id', id);
             formData.append('nombre', nombre);
+            formData.append('periodo', periodo);
 
             axios.post('/admin/diplomado/cursos/editar', formData, {
             })

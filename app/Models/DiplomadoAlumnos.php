@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class DiplomadoAlumnos extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'curso_id', 'certificado_id', 'fecha', 'codigo_verificacion', 'nombre', 'curso', 'certificado'
+        'curso_id', 'certificado_id', 'fecha', 'codigo_verificacion', 'nombre', 'curso', 'periodo', 'certificado'
     ];
+
+    public function getFechaFormateadaAttribute()
+    {
+        return Carbon::parse($this->fecha)->format('d-m-Y');
+    }
 }

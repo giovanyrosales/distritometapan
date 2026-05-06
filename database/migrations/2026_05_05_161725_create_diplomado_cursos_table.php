@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('diplomado_cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 100);
+            $table->string('periodo', 100)->nullable();
         });
     }
 

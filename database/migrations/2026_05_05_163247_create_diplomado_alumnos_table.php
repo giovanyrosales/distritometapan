@@ -28,6 +28,9 @@ return new class extends Migration
             // nombre curso
             $table->string('curso', 100);
 
+            // periodo del curso
+            $table->string('periodo', 100)->nullable();
+
             // nombre certificado
             $table->string('certificado', 100);
 
