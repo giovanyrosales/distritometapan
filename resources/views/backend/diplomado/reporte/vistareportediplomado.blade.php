@@ -55,7 +55,7 @@
 
                     <br>
 
-                    <button onclick="generarPDF()" class="btn btn-danger">
+                    <button onclick="generarPDF()" class="btn btn-success">
                         <i class="fas fa-file-pdf"></i> Generar PDF
                     </button>
 

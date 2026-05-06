@@ -445,7 +445,8 @@ class DiplomadoController extends Controller
         $mpdf = new \Mpdf\Mpdf([
             'format' => 'LETTER',
             'orientation' => 'P',
-            'margin_top' => 10
+            'margin_top' => 10,
+            'tempDir' => storage_path('app/mpdf')
         ]);
 
         $fecha = now()->format('d-m-Y');
