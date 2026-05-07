@@ -241,7 +241,7 @@ class DiplomadoController extends Controller
                 'codigo_verificacion' => $codigo,
                 'nombre' => $request->nombre,
                 'curso' => $infoCurso->nombre,
-                'periodo' => $request->periodo,
+                'periodo' => $infoCurso->periodo,
                 'certificado' => $nombreCertificado,
             ]);
 
