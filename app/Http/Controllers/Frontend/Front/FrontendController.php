@@ -475,6 +475,18 @@ class FrontendController extends Controller
         ]);
     }
 
+        public function vistaRevista(Request $request)
+    {
+        $serviciosMenu = Servicio::orderBy('id', 'DESC')->take(4)->get();
+        $arrayDistrito = Distrito::orderBy('id', 'DESC')->get();
+
+        return view('frontend.paginas.revista.vistarevista', [
+            'serviciosMenu' => $serviciosMenu,
+            'arrayDistrito' => $arrayDistrito
+        ]);
+    }
+
+
 
 
 
