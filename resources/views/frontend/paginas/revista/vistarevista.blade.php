@@ -179,7 +179,15 @@
                                     Cargando revista...
                                 </div>
 
-                                <div id="flipbook"></div>
+                                <div id="pdf-viewer" style="text-align:center;">
+                                    <canvas id="pdf-canvas" style="
+                                        max-width:100%;
+                                        height:auto;
+                                        background:#fff;
+                                        border-radius:10px;
+                                        box-shadow:0 0 20px rgba(0,0,0,.25);
+                                    "></canvas>
+                                </div>
                                 <div class="flipbook-controls" style="display:none">
                                     <button id="btn-prev" type="button">< Anterior</button>
                                     <span class="page-info">
@@ -201,111 +209,140 @@
 
     <!-- PDF.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <!-- StPageFlip (efecto libro) -->
-    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
-
+    
     <script>
-        (function(){
-            // ► Cambia la ruta si tu archivo se llama distinto o está en otra carpeta
-            const PDF_URL = "{{ asset('pdf/revista.pdf') }}";
-            pdfjsLib.GlobalWorkerOptions.workerSrc =
-                "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+(function(){
 
-            const flipbookEl = document.getElementById('flipbook');
-            const loadingMsg = document.getElementById('loading-msg');
-            const controls   = document.querySelector('.flipbook-controls');
-            const btnPrev    = document.getElementById('btn-prev');
-            const btnNext    = document.getElementById('btn-next');
-            const btnFull    = document.getElementById('btn-fullscreen');
-            const pageCur    = document.getElementById('page-current');
-            const pageTotal  = document.getElementById('page-total');
+    const PDF_URL = "{{ asset('pdf/revista.pdf') }}";
 
-            const renderPageToImage = async (pdf, pageNum, scale) => {
-                const page = await pdf.getPage(pageNum);
-                const viewport = page.getViewport({ scale });
-                const canvas = document.createElement('canvas');
-                canvas.width  = viewport.width;
-                canvas.height = viewport.height;
-                const ctx = canvas.getContext('2d');
-                await page.render({ canvasContext: ctx, viewport }).promise;
-                return canvas.toDataURL('image/jpeg');
-            };
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-            const init = async () => {
-                try {
-                    const pdf = await pdfjsLib.getDocument(PDF_URL).promise;
-                    const totalPages = pdf.numPages;
-                    pageTotal.textContent = totalPages;
+    const canvas = document.getElementById('pdf-canvas');
+    const ctx = canvas.getContext('2d');
 
-                    // Tomamos la primera página para conocer la proporción real
-                    const firstPage = await pdf.getPage(1);
-                    const baseViewport = firstPage.getViewport({ scale: 1 });
-                    const ratio = baseViewport.height / baseViewport.width;
+    const loadingMsg = document.getElementById('loading-msg');
+    const controls = document.querySelector('.flipbook-controls');
 
-                    // Tamaño base responsivo
-                    const maxW = Math.min(window.innerWidth - 60, 1100);
-                    const pageW = Math.floor(maxW / 2);
-                    const pageH = Math.floor(pageW * ratio);
-                    // Renderizamos cada página como imagen
-                    const images = [];
-                    for (let i = 1; i <= totalPages; i++) {
-                        const img = await renderPageToImage(pdf, i, 3);
-                        images.push(img);
-                    }
-                    const pageFlip = new St.PageFlip(flipbookEl, {
-                        width: pageW,
-                        height: pageH,
-                        size: 'stretch',
-                        minWidth: 280,
-                        maxWidth: 700,
-                        minHeight: 380,
-                        maxHeight: 1100,
-                        showCover: true,
-                        maxShadowOpacity: 0.4,
-                        mobileScrollSupport: true,
-                        usePortrait: true,
-                        autoSize: true,
-                        drawShadow: true,
-                        flippingTime: 700
-                    });
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const btnFull = document.getElementById('btn-fullscreen');
 
-                    pageFlip.loadFromImages(images);
+    const pageCur = document.getElementById('page-current');
+    const pageTotal = document.getElementById('page-total');
 
-                    pageFlip.on('flip', (e) => {
-                        pageCur.textContent = e.data + 1;
-                    });
-                    btnPrev.addEventListener('click', () => pageFlip.flipPrev());
-                    btnNext.addEventListener('click', () => pageFlip.flipNext());
+    let pdfDoc = null;
+    let currentPage = 1;
 
-                    document.addEventListener('keydown', (e) => {
-                        if (e.key === 'ArrowLeft')  pageFlip.flipPrev();
-                        if (e.key === 'ArrowRight') pageFlip.flipNext();
-                    });
+    async function renderPage(pageNum) {
 
-                    btnFull.addEventListener('click', () => {
-                        const el = document.getElementById('flipbook-wrapper');
-                        if (!document.fullscreenElement) {
-                            el.requestFullscreen && el.requestFullscreen();
-                        } else {
-                            document.exitFullscreen && document.exitFullscreen();
-                        }
-                    });
-                    loadingMsg.style.display = 'none';
-                    controls.style.display = 'flex';
-                } catch (err) {
-                    console.error(err);
-                    loadingMsg.innerHTML =
-                        'Error al cargar la revista. Verifique que el archivo PDF exista en la ruta indicada.';
-                }
-            };
+        const page = await pdfDoc.getPage(pageNum);
 
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', init);
-            } else {
-                init();
-            }
-        })();
-    </script>
+        const containerWidth = Math.min(
+            document.querySelector('.banner').clientWidth - 40,
+            1000
+        );
+
+        const viewport = page.getViewport({ scale: 1 });
+
+        const scale = containerWidth / viewport.width;
+
+        const scaledViewport = page.getViewport({ scale });
+
+        canvas.width = scaledViewport.width;
+        canvas.height = scaledViewport.height;
+
+        await page.render({
+            canvasContext: ctx,
+            viewport: scaledViewport
+        }).promise;
+
+        pageCur.textContent = pageNum;
+
+        btnPrev.disabled = pageNum <= 1;
+        btnNext.disabled = pageNum >= pdfDoc.numPages;
+    }
+
+    async function init() {
+
+        try {
+
+            pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
+
+            pageTotal.textContent = pdfDoc.numPages;
+
+            await renderPage(1);
+
+            loadingMsg.style.display = 'none';
+            controls.style.display = 'flex';
+
+        } catch(err) {
+
+            console.error(err);
+
+            loadingMsg.innerHTML =
+                'Error al cargar la revista.';
+        }
+    }
+
+    btnPrev.addEventListener('click', async () => {
+
+        if(currentPage <= 1) return;
+
+        currentPage--;
+
+        await renderPage(currentPage);
+    });
+
+    btnNext.addEventListener('click', async () => {
+
+        if(currentPage >= pdfDoc.numPages) return;
+
+        currentPage++;
+
+        await renderPage(currentPage);
+    });
+
+    document.addEventListener('keydown', async (e) => {
+
+        if(e.key === 'ArrowLeft' && currentPage > 1){
+
+            currentPage--;
+
+            await renderPage(currentPage);
+        }
+
+        if(e.key === 'ArrowRight' && currentPage < pdfDoc.numPages){
+
+            currentPage++;
+
+            await renderPage(currentPage);
+        }
+    });
+
+    btnFull.addEventListener('click', () => {
+
+        const el = document.getElementById('pdf-viewer');
+
+        if(!document.fullscreenElement){
+
+            el.requestFullscreen();
+
+        }else{
+
+            document.exitFullscreen();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+
+        renderPage(currentPage);
+    });
+
+    init();
+
+})();
+</script>
 </div>
 </body>
 </html>
