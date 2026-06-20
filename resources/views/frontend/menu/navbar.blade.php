@@ -8,13 +8,13 @@
                 <div class="col-xs-9 text-left menu-1">
                     <ul style="width: 100%; margin-bottom: 5%;">
                         <li class="active"><strong><a href="/">Inicio</a></strong></li>
-                        <!-- Pestaña para revista
-							<li><strong><a href="{{ url('https://metapanfiestas.alcaldiademetapan.gob.sv/index.html') }}" target="_blank">Revista</a></strong></li>
-							fin pesta;a revista -->
-                        <li><strong><a href="{{ url('noticias/') }}">Noticias</a></strong></li>
+
+                        <li><strong><a href="{{ route('revista') }}">Revista</a></strong></li>
+
                         <li class="has-dropdown"><strong>
                                 <a >Servicios</a></strong>
                             <ul class="dropdown">
+                                <li><strong><a href="{{ url('noticias/') }}">Noticias</a></strong></li>
                                 @foreach($serviciosMenu as $dato3)
                                     <li><strong><a href="{{ url('servicio/'.$dato3->slug) }}">{{$dato3->nombreservicio}}</a></strong></li>
                                 @endforeach

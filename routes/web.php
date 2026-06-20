@@ -239,7 +239,7 @@ Route::get('/historia',[FrontendController::class,'paginaHistoria']);
 Route::get('/direccion',[FrontendController::class,'paginaGobierno']);
 
 //REVISTA
-Route::get('/revista', [FrontendController::class,'vistaRevista']);
+Route::get('/revista', [FrontendController::class,'vistaRevista'])->name('revista');
 
 
 // UCP
