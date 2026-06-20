@@ -228,7 +228,7 @@
                 canvas.height = viewport.height;
                 const ctx = canvas.getContext('2d');
                 await page.render({ canvasContext: ctx, viewport }).promise;
-                return canvas.toDataURL('image/jpeg', 0.92);
+                return canvas.toDataURL('image/jpeg');
             };
 
             const init = async () => {
@@ -249,7 +249,7 @@
                     // Renderizamos cada página como imagen
                     const images = [];
                     for (let i = 1; i <= totalPages; i++) {
-                        const img = await renderPageToImage(pdf, i, 1.6);
+                        const img = await renderPageToImage(pdf, i, 3);
                         images.push(img);
                     }
                     const pageFlip = new St.PageFlip(flipbookEl, {
