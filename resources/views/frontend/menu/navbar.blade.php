@@ -9,7 +9,18 @@
                     <ul style="width: 100%; margin-bottom: 5%;">
                         <li class="active"><strong><a href="/">Inicio</a></strong></li>
 
-                        <li><strong><a href="{{ route('revista') }}">Revista</a></strong></li>
+                        <li>
+                            <strong>
+                                <a href="{{ asset('pdf/revista2026.pdf') }}" target="_blank">Revista</a>
+                            </strong>
+                        </li>
+
+
+
+
+
+
+
 
                         <li class="has-dropdown"><strong>
                                 <a >Servicios</a></strong>
