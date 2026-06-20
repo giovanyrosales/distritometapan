@@ -239,9 +239,7 @@ Route::get('/historia',[FrontendController::class,'paginaHistoria']);
 Route::get('/direccion',[FrontendController::class,'paginaGobierno']);
 
 //REVISTA
-Route::get('/revista', function () {
-    return redirect(asset('revista/revista.pdf'));
-})->name('revista');
+Route::get('/revista', [FrontendController::class,'vistaRevista']);
 
 // UCP
 Route::post('/admin/informacion-ucp',[ProgramaController::class,'informacionUCP']);

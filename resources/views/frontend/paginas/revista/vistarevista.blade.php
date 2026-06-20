@@ -207,7 +207,7 @@
     <script>
         (function(){
             // ► Cambia la ruta si tu archivo se llama distinto o está en otra carpeta
-            const PDF_URL = "{{ asset('revista/revista.pdf') }}";
+            const PDF_URL = "{{ asset('pdf/revista.pdf') }}";
             pdfjsLib.GlobalWorkerOptions.workerSrc =
                 "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
